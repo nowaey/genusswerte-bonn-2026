@@ -767,3 +767,60 @@
     transition: none;
   }
 }
+
+/* ---------------------------------------------------------
+   Ranken-Trenner (section-ornament)
+   Nur Mobile: dort stapeln sich Bildblöcke, die auf Desktop
+   nebeneinander liegen. Zwei große Fotos direkt übereinander
+   wirken zusammenhanglos — die Ranke setzt eine ruhige Zäsur
+   und greift die Linienführung des Logos auf.
+   --------------------------------------------------------- */
+.section-ornament {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .section-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    color: var(--color-gold);
+  }
+
+  .section-ornament__rule {
+    flex: 1 1 auto;
+    max-width: 88px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201, 169, 110, 0.55));
+  }
+
+  .section-ornament__rule:last-child {
+    background: linear-gradient(to left, transparent, rgba(201, 169, 110, 0.55));
+  }
+
+  .section-ornament__mark {
+    flex: 0 0 auto;
+    width: 46px;
+    height: auto;
+    opacity: 0.9;
+  }
+}
+
+/* Abstände rund um den Trenner.
+   Höhere Spezifität (.section.x) als die generischen Sektions-Regeln
+   in layout.css, damit diese Feinjustierung dort nichts umschreiben
+   muss und alles zum Ornament an einer Stelle steht. */
+@media (max-width: 768px) {
+  .section.tasting-teaser {
+    padding-bottom: var(--space-6);
+  }
+
+  .section.about-section {
+    padding-top: var(--space-4);
+  }
+
+  .section-ornament {
+    margin-bottom: var(--space-10);
+  }
+}

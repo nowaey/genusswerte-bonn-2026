@@ -112,6 +112,24 @@
     <!-- 3. SORTIMENT -->
     <section class="section about-section" id="ueber-uns" aria-label="Über Genusswerte Bonn">
       <div class="container">
+
+        <!-- Ranken-Trenner: trennt auf Mobile die beiden großen Bilder
+             (Tasting-Loop / Ladeninhaber), die sonst direkt aufeinander
+             stoßen. Auf Desktop ausgeblendet — dort stehen die Bilder
+             nebeneinander und brauchen keine Trennung. -->
+        <div class="section-ornament" aria-hidden="true">
+          <span class="section-ornament__rule"></span>
+          <!-- Verschachtelte Bögen — greift die Feld-/Hügellinien auf,
+               die im Logo in allen drei Feldern vorkommen. -->
+          <svg class="section-ornament__mark" viewBox="0 0 44 18" fill="none" focusable="false">
+            <g stroke="currentColor" stroke-width="1.1" stroke-linecap="round">
+              <path d="M2 16A20 20 0 0 1 42 16"/>
+              <path d="M8 16A14 14 0 0 1 36 16"/>
+              <path d="M14 16A8 8 0 0 1 30 16"/>
+            </g>
+          </svg>
+          <span class="section-ornament__rule"></span>
+        </div>
         <div class="about-split">
           <figure class="about-split__image js-animate">
             <img src="assets/images/ladeninhaber-genusswerte-bonn.jpg" alt="Ladeninhaber von Genusswerte Bonn in seiner Feinkost-Boutique in Poppelsdorf" width="1100" height="1375" loading="lazy">
