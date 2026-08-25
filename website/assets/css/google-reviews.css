@@ -1,0 +1,135 @@
+/* =========================================================
+   GOOGLE-REVIEWS.CSS — Genusswerte Bonn
+   Kompakter, durchlaufender Bewertungs-Streifen, eingebettet in
+   die rechte Spalte des Abschluss-CTA-Bands auf index.html.
+   Betrifft nur ".closing-cta--with-reviews" (index.html) —
+   die normale .closing-cta auf tastings.html bleibt unangetastet.
+   ========================================================= */
+
+.closing-cta--with-reviews .closing-cta__split {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: var(--space-12);
+  max-width: none;
+  text-align: left;
+  margin-inline: 0;
+}
+
+.closing-cta--with-reviews .closing-cta__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 42ch;
+}
+
+.closing-cta--with-reviews .closing-cta__title,
+.closing-cta--with-reviews .closing-cta__subtitle {
+  max-width: none;
+}
+
+.closing-cta--with-reviews .closing-cta__actions {
+  justify-content: flex-start;
+  margin-top: var(--space-2);
+}
+
+/* --- Bewertungs-Spalte --- */
+.closing-cta__reviews {
+  min-width: 0;
+}
+
+.closing-cta__reviews-rating {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--space-4);
+}
+
+.closing-cta__reviews-rating span[aria-hidden] {
+  color: var(--color-gold-light);
+  letter-spacing: 0.1em;
+  margin-right: var(--space-1);
+}
+
+.closing-cta__reviews-track-wrap {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.closing-cta__reviews-track {
+  display: flex;
+  width: max-content;
+  gap: var(--space-3);
+  animation: closing-cta-reviews-scroll 40s linear infinite;
+}
+
+.closing-cta__reviews-track-wrap:hover .closing-cta__reviews-track,
+.closing-cta__reviews-track-wrap:focus-within .closing-cta__reviews-track {
+  animation-play-state: paused;
+}
+
+@keyframes closing-cta-reviews-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .closing-cta__reviews-track {
+    animation: none;
+  }
+  .closing-cta__reviews-track-wrap {
+    overflow-x: auto;
+  }
+}
+
+.mini-review {
+  flex: 0 0 190px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.mini-review p {
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mini-review span {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-gold-light);
+}
+
+/* --- Responsive: unter dem Text statt daneben --- */
+@media (max-width: 900px) {
+  .closing-cta--with-reviews .closing-cta__split {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .closing-cta--with-reviews .closing-cta__content {
+    max-width: 100%;
+    align-items: center;
+  }
+
+  .closing-cta--with-reviews .closing-cta__actions {
+    justify-content: center;
+  }
+
+  .closing-cta__reviews-rating {
+    text-align: center;
+  }
+}

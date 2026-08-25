@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gutschein einlösen — Genusswerte Bonn</title>
+  <meta name="description" content="Löse deinen Tasting-Gutschein ein. Code eingeben, verfügbaren Termin wählen, Bestätigung per E-Mail. Genusswerte Bonn, Bonn-Poppelsdorf.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gutschein einlösen — Genusswerte Bonn">
+  <meta property="og:description" content="Code eingeben, verfügbaren Termin wählen, Bestätigung per E-Mail.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/redeem.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="index.html" class="nav__logo-link" aria-label="Genusswerte Bonn – Startseite">
+          <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+               alt="Genusswerte Bonn" class="nav__logo" width="160" height="48">
+        </a>
+
+        <button class="nav__toggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-menu">
+          <span class="nav__hamburger" aria-hidden="true"></span>
+        </button>
+
+        <ul class="nav__menu" id="nav-menu" role="list">
+          <li><a href="tastings.html" class="nav__link">Tastings</a></li>
+          <li><span class="nav__link nav__link--disabled" aria-disabled="true">Genussboxen</span></li>
+          <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
+          <li class="nav__cta">
+            <a href="gutschein-einloesen.html" class="btn btn--primary" aria-current="page">Gutschein einlösen</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- =====================================================
+         PAGE HERO
+         ===================================================== -->
+    <div class="page-hero" aria-label="Gutschein einlösen">
+      <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+           alt="Genusswerte Bonn" class="page-hero__logo" width="130" height="39">
+      <span class="page-hero__eyebrow">Tasting-Gutschein</span>
+      <h1 class="page-hero__title">Deinen Gutschein einlösen</h1>
+      <p class="page-hero__subtitle">Code eingeben &mdash; Termin w&auml;hlen &mdash; Best&auml;tigung per E-Mail.</p>
+    </div>
+
+    <!-- =====================================================
+         3-SCHRITT-HINWEIS
+         ===================================================== -->
+    <section class="section section--alt" aria-label="Ablauf">
+      <div class="container">
+        <ol class="steps" role="list" aria-label="So läuft die Einlösung ab">
+
+          <li class="step">
+            <div class="step__number" aria-hidden="true">1</div>
+            <div class="step__text">
+              <h2 class="step__title">Gutscheincode pr&uuml;fen</h2>
+              <p class="step__body">Gib deinen Gutscheincode ein &mdash; wir pr&uuml;fen ihn sofort und zeigen dir, welches Tasting du gebucht hast.</p>
+            </div>
+          </li>
+
+          <li class="step">
+            <div class="step__number" aria-hidden="true">2</div>
+            <div class="step__text">
+              <h2 class="step__title">Verf&uuml;gbaren Termin w&auml;hlen</h2>
+              <p class="step__body">W&auml;hle direkt einen der verf&uuml;gbaren Tasting-Termine &mdash; ganz ohne Wartezeit.</p>
+            </div>
+          </li>
+
+          <li class="step">
+            <div class="step__number" aria-hidden="true">3</div>
+            <div class="step__text">
+              <h2 class="step__title">Best&auml;tigung per E-Mail</h2>
+              <p class="step__body">Trage deine Kontaktdaten ein und buche deinen Termin verbindlich. Du erh&auml;ltst sofort eine Best&auml;tigung per E-Mail.</p>
+            </div>
+          </li>
+
+        </ol>
+
+      </div>
+    </section>
+
+    <!-- =====================================================
+         REDEMPTION FORM
+         ===================================================== -->
+    <section class="section" id="formular" aria-label="Einlöseformular">
+      <div class="container">
+
+        <div class="redemption-layout">
+
+          <!-- 3-Schritt-Einlöse-Flow -->
+          <div class="redemption-form-col">
+            <div class="redemption-form-wrapper">
+
+              <!-- ─── Schritt 1: Code prüfen ─────────────────── -->
+              <div id="step-1" class="redemption-step">
+                <h2 style="font-family: var(--font-serif); font-size: 1.75rem; color: var(--color-green); margin-bottom: 0.5rem;">Deinen Gutschein einl&ouml;sen</h2>
+                <p style="color: var(--color-text-muted); font-size: 0.9375rem; margin-bottom: 1.5rem;">Gib deinen Gutscheincode ein &mdash; wir pr&uuml;fen ihn sofort.</p>
+
+                <div class="form-group">
+                  <label class="form-label" for="gutschein-code">
+                    Gutscheincode <span class="required-mark" aria-hidden="true">*</span>
+                  </label>
+                  <input class="form-input" type="text" id="gutschein-code"
+                         placeholder="GW-GIN-2026-XXXXXXXX" autocomplete="off"
+                         aria-required="true" spellcheck="false">
+                </div>
+
+                <p class="form-error" id="validate-error" aria-live="polite" hidden style="margin-top: 0.75rem;"></p>
+
+                <button class="btn btn--primary" id="btn-validate" type="button"
+                        style="width: 100%; justify-content: center; padding: 1rem; margin-top: 1.25rem;">
+                  Gutschein pr&uuml;fen
+                </button>
+              </div>
+
+              <!-- ─── Schritt 2: Termin wählen ───────────────── -->
+              <div id="step-2" class="redemption-step" hidden>
+                <button class="step-back-btn" id="btn-back-1" type="button">
+                  &larr; Anderen Code eingeben
+                </button>
+
+                <div id="voucher-info" class="voucher-info"></div>
+
+                <p class="step-heading">Verf&uuml;gbaren Termin w&auml;hlen</p>
+
+                <div id="slots-list" class="slots-list"></div>
+                <p class="form-error" id="slots-error" aria-live="polite" hidden style="margin-top: 0.75rem;"></p>
+              </div>
+
+              <!-- ─── Schritt 3: Kontaktdaten ────────────────── -->
+              <div id="step-3" class="redemption-step" hidden>
+                <button class="step-back-btn" id="btn-back-2" type="button">
+                  &larr; Anderen Termin w&auml;hlen
+                </button>
+
+                <div id="chosen-slot-info" class="voucher-info"></div>
+
+                <p class="step-heading">Deine Kontaktdaten</p>
+                <p style="color: var(--color-text-muted); font-size: 0.9375rem; margin-bottom: 1.5rem;">Felder mit <span style="color: #C0392B;">*</span> sind Pflichtfelder.</p>
+
+                <form id="schedule-form" novalidate aria-label="Termin verbindlich buchen">
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label class="form-label" for="s-name">
+                        Name <span class="required-mark" aria-hidden="true">*</span>
+                      </label>
+                      <input class="form-input" type="text" id="s-name" name="name"
+                             required autocomplete="name" aria-required="true">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="s-email">
+                        E-Mail-Adresse <span class="required-mark" aria-hidden="true">*</span>
+                      </label>
+                      <input class="form-input" type="email" id="s-email" name="email"
+                             required autocomplete="email" aria-required="true">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="s-telefon">Telefon</label>
+                    <input class="form-input" type="tel" id="s-telefon" name="telefon"
+                           autocomplete="tel" placeholder="Optional">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="s-adresse">Adresse</label>
+                    <input class="form-input" type="text" id="s-adresse" name="adresse"
+                           autocomplete="street-address" placeholder="Optional">
+                  </div>
+
+                  <p class="form-error" id="schedule-error" aria-live="polite" hidden style="margin-top: 0.75rem;"></p>
+
+                  <button class="btn btn--primary" type="submit"
+                          style="width: 100%; justify-content: center; padding: 1rem; margin-top: 1.25rem;">
+                    Termin verbindlich buchen
+                  </button>
+
+                  <p class="form-privacy">
+                    Mit dem Absenden erklärst du dich einverstanden, dass wir deine Angaben zur Buchungsabwicklung verwenden. Mehr in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.
+                  </p>
+
+                </form>
+              </div>
+
+              <!-- ─── Erfolgs-Screen ─────────────────────────── -->
+              <div class="form-success" id="form-success" role="alert" aria-live="polite">
+                <span class="form-success__icon" aria-hidden="true">&#10003;</span>
+                <p class="form-success__title">Termin gebucht!</p>
+                <p class="form-success__body" id="success-body">Dein Termin ist best&auml;tigt. Du erh&auml;ltst in K&uuml;rze eine Best&auml;tigung per E-Mail.</p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Weitere Hinweise, unter dem Formular statt seitlich gequetscht -->
+          <div class="redemption-extras">
+
+            <div class="sidebar-block">
+              <h3>Du hast noch keinen Gutschein?</h3>
+              <p>Wähle dein Tasting aus und sichere dir deinen persönlichen Gutschein direkt online.</p>
+              <a href="tastings.html"
+                 class="btn btn--primary"
+                 style="margin-top: 0.5rem;">
+                Tasting-Gutschein kaufen
+              </a>
+            </div>
+
+            <div class="sidebar-block">
+              <h3>Kontakt</h3>
+              <p>Bei Fragen erreichst Du uns auch direkt:</p>
+              <a class="location-phone" href="tel:+4922825908928" style="margin-top: 0.5rem; display: inline-flex;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                +49 228 2590 8928
+              </a>
+            </div>
+
+          </div>
+
+        </div><!-- .redemption-layout -->
+      </div><!-- .container -->
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="site-footer" aria-label="Seitenfu&szlig;">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer__brand">
+          <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+               alt="Genusswerte Bonn" class="footer__logo" width="140" height="42">
+          <p class="footer__tagline">Feinkost-Boutique in Bonn-Poppelsdorf.<br>Taste &ndash; Discover &ndash; Enjoy.</p>
+          <address class="footer__address" style="font-style: normal;">
+            Clemens-August-Straße 38–40<br>
+            53115 Bonn – Poppelsdorf<br>
+            <a href="tel:+4922825908928" style="color: rgba(255,255,255,0.65);">+49 228 2590 8928</a>
+          </address>
+        </div>
+
+        <div class="footer__col">
+          <h4>Navigation</h4>
+          <nav class="footer__nav" aria-label="Footer Navigation">
+            <a href="tastings.html">Tastings</a>
+            <span>Genussboxen</span>
+            <a href="gutschein-einloesen.html">Gutschein einlösen</a>
+            <a href="kontakt.html">Kontakt</a>
+            <a href="https://www.instagram.com/genusswerte.bonn/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </nav>
+        </div>
+
+        <div class="footer__col">
+          <h4>Rechtliches</h4>
+          <nav class="footer__nav" aria-label="Rechtliche Links">
+            <a href="impressum.html">Impressum</a>
+            <a href="datenschutz.html">Datenschutz</a>
+            <a href="mailto:info@genusswerte-bonn.com">Kontakt</a>
+          </nav>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2025 Genusswerte Bonn. Alle Rechte vorbehalten.</p>
+        <nav class="footer__legal" aria-label="Rechtliche Pflichtlinks">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/voucher-form.js"></script>
+</body>
+</html>

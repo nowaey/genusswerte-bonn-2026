@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D4A3E"/>
+      <stop offset="100%" stop-color="#1A3028"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="500" fill="url(#g)"/>
+  <!-- Shelf lines -->
+  <g fill="rgba(201,169,110,0.12)">
+    <rect x="40" y="120" width="520" height="8" rx="4"/>
+    <rect x="40" y="240" width="520" height="8" rx="4"/>
+    <rect x="40" y="360" width="520" height="8" rx="4"/>
+    <!-- Shelf brackets -->
+    <rect x="50" y="120" width="8" height="260"/>
+    <rect x="270" y="120" width="8" height="260"/>
+    <rect x="490" y="120" width="8" height="260"/>
+    <rect x="540" y="120" width="8" height="260"/>
+  </g>
+  <!-- Bottles on shelves -->
+  <g fill="rgba(255,255,255,0.2)">
+    <!-- Top shelf -->
+    <rect x="80" y="80" width="18" height="38" rx="3"/>
+    <rect x="108" y="82" width="16" height="36" rx="3"/>
+    <rect x="134" y="78" width="18" height="40" rx="3"/>
+    <rect x="162" y="84" width="15" height="34" rx="3"/>
+    <rect x="187" y="80" width="17" height="38" rx="3"/>
+    <rect x="300" y="82" width="16" height="36" rx="3"/>
+    <rect x="326" y="78" width="18" height="40" rx="3"/>
+    <rect x="354" y="80" width="17" height="38" rx="3"/>
+    <rect x="382" y="84" width="15" height="34" rx="3"/>
+    <!-- Mid shelf -->
+    <rect x="80" y="200" width="18" height="38" rx="3"/>
+    <rect x="108" y="195" width="16" height="43" rx="3"/>
+    <rect x="135" y="202" width="15" height="36" rx="3"/>
+    <rect x="300" y="198" width="17" height="40" rx="3"/>
+    <rect x="327" y="200" width="18" height="38" rx="3"/>
+    <rect x="355" y="195" width="16" height="43" rx="3"/>
+  </g>
+  <!-- Cheese wheels -->
+  <g fill="rgba(220,180,80,0.3)">
+    <circle cx="215" cy="100" r="20"/>
+    <circle cx="250" cy="105" r="16"/>
+    <circle cx="420" cy="100" r="18"/>
+  </g>
+  <!-- Logo watermark -->
+  <text x="300" y="430" text-anchor="middle" font-size="13" font-family="Georgia,serif" fill="rgba(201,169,110,0.5)" letter-spacing="5">GENUSSWERTE BONN</text>
+  <text x="300" y="460" text-anchor="middle" font-size="10" font-family="Georgia,serif" fill="rgba(255,255,255,0.3)" letter-spacing="3">FEINKOST · POPPELSDORF</text>
+</svg>

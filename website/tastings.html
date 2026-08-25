@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tastings in Bonn — Genusswerte Bonn</title>
+  <meta name="description" content="Wähle dein Tasting und finde einen passenden Termin — Wein, Champagner, Gin, Whisky und Feinkost in Bonn-Poppelsdorf.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Tastings in Bonn — Genusswerte Bonn">
+  <meta property="og:description" content="Wähle dein Tasting und finde einen passenden Termin — persönlich moderiert in Bonn-Poppelsdorf.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/modal.css">
+  <link rel="stylesheet" href="assets/css/closing-cta-depth.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="index.html" class="nav__logo-link" aria-label="Genusswerte Bonn – Startseite">
+          <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+               alt="Genusswerte Bonn" class="nav__logo" width="160" height="48">
+        </a>
+        <button class="nav__toggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-menu">
+          <span class="nav__hamburger" aria-hidden="true"></span>
+        </button>
+        <ul class="nav__menu" id="nav-menu" role="list">
+          <li><a href="tastings.html" class="nav__link" aria-current="page">Tastings</a></li>
+          <li><span class="nav__link nav__link--disabled" aria-disabled="true">Genussboxen</span></li>
+          <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
+          <li class="nav__cta">
+            <a href="gutschein-einloesen.html" class="btn btn--primary">Gutschein einlösen</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- 1. HERO — zweispaltig, kompakt -->
+    <section class="section tasting-hero" aria-label="Tastings in Bonn">
+      <div class="container">
+        <div class="tasting-hero__split">
+          <div class="tasting-hero__text js-animate">
+            <span class="section__eyebrow">Tastings in Bonn</span>
+            <h1 class="tasting-hero__headline">Wähle dein Tasting.<br>Finde deinen Genussmoment.</h1>
+            <p class="tasting-hero__body">Entdecke Wein, Champagner, Gin, Whisky und Feinkost in persönlicher Runde &mdash; und wähle direkt einen passenden Termin für deinen Gutschein.</p>
+            <div class="tasting-hero__actions">
+              <a href="#tastings-uebersicht" class="tasting-hero__cta">Tastings ansehen &rarr;</a>
+            </div>
+            <p class="tasting-hero__meta">Gutscheine mit Terminwahl &middot; persönlich moderiert &middot; in Bonn-Poppelsdorf</p>
+          </div>
+          <figure class="tasting-hero__image js-animate" data-delay="1">
+            <img src="assets/images/tasting-hero-weinglaeser.jpg" alt="Drei Weingläser werden beim Tasting bei Genusswerte Bonn befüllt" width="736" height="920" loading="eager">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. SO FUNKTIONIERT'S -->
+    <section class="section section--alt how-it-works" aria-label="So funktionieren unsere Tastings">
+      <div class="container">
+        <div class="how-it-works__inner js-animate">
+          <span class="section__eyebrow">So funktioniert&rsquo;s</span>
+          <h2 class="how-it-works__title">In drei Schritten zum Tasting-Gutschein.</h2>
+          <ol class="how-it-works__steps">
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">01</span>
+              <h3 class="how-it-works__step-title">Tasting wählen</h3>
+              <p class="how-it-works__step-text">Finde unten das Format, das zu dir oder deinem Anlass passt.</p>
+            </li>
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">02</span>
+              <h3 class="how-it-works__step-title">Gutschein kaufen</h3>
+              <p class="how-it-works__step-text">Wähle die Anzahl Personen und sichere dir den Tasting-Gutschein.</p>
+            </li>
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">03</span>
+              <h3 class="how-it-works__step-title">Termin später einlösen</h3>
+              <p class="how-it-works__step-text">Den passenden Termin wählst du später bequem über <a href="gutschein-einloesen.html">Gutschein einlösen</a>.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TASTING-CARDS — werden per JS aus tastings-data.js gerendert -->
+    <section class="section" id="tastings-uebersicht" aria-label="Alle Tasting-Formate">
+      <div class="container">
+        <div class="section__header text-center js-animate">
+          <span class="section__eyebrow">Unsere Formate</span>
+          <h2 class="section__title">Welches Tasting passt zu dir?</h2>
+          <p class="section__subtitle">Neun Formate — von entspanntem Afterwork bis zum kulinarischen Highlight.</p>
+        </div>
+
+        <div class="card-grid" id="tasting-cards" data-tasting-cards></div>
+
+        <noscript>
+          <div class="noscript-fallback">
+            <p>Für die interaktive Tasting-Auswahl wird JavaScript benötigt. Schreib uns gerne eine Anfrage über <a href="kontakt.html">unsere Kontaktseite</a> oder ruf uns an unter <a href="tel:+4922825908928">+49 228 2590 8928</a> &mdash; wir beraten dich persönlich.</p>
+          </div>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- 4. GRUPPEN -->
+    <section class="section section--alt group-section" id="gruppen" aria-label="Private Tastings und Gruppen">
+      <div class="container">
+        <div class="group-cta js-animate">
+          <span class="section__eyebrow">Für größere Runden</span>
+          <h2 class="group-cta__title">Private Tastings <span class="amp">&amp;</span> Gruppen</h2>
+          <p class="group-cta__body">Für Gruppen ab 7 Personen, Teams oder private Anlässe planen wir individuelle Genussmomente persönlich mit dir.</p>
+          <div class="group-cta__actions">
+            <a href="kontakt.html#gruppen-anfrage" class="group-cta__btn">Gruppenanfrage stellen &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ABSCHLUSS-CTA -->
+    <section class="section section--dark closing-cta" aria-label="Tasting entdecken oder Gutschein einlösen">
+      <div class="container">
+        <div class="closing-cta__inner js-animate">
+          <span class="closing-cta__eyebrow">Tasting verschenken oder selbst erleben</span>
+          <h2 class="closing-cta__title">Bereit für deinen Genussmoment?</h2>
+          <p class="closing-cta__subtitle">Wähle dein Tasting oben aus &mdash; oder löse einen bereits erhaltenen Gutschein direkt ein.</p>
+          <div class="closing-cta__actions">
+            <a href="#tastings-uebersicht" class="btn btn--hero-outline closing-cta__primary">Tastings ansehen</a>
+            <a href="gutschein-einloesen.html" class="closing-cta__link">Gutschein einlösen &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TASTING MODAL — native <dialog>, gefüllt per JS -->
+  <dialog class="tasting-modal" id="tasting-modal" aria-labelledby="tasting-modal-title">
+    <form method="dialog" class="tasting-modal__form">
+
+      <!-- Header: Tasting-Identität -->
+      <header class="tasting-modal__header">
+        <div class="tasting-modal__header-main">
+          <span class="tasting-modal__eyebrow" data-modal-category></span>
+          <h2 class="tasting-modal__title" id="tasting-modal-title" data-modal-title></h2>
+          <p class="tasting-modal__description" data-modal-description></p>
+          <p class="tasting-modal__meta">
+            <span data-modal-duration></span><span class="tasting-modal__meta-dot" aria-hidden="true">&middot;</span><span data-modal-price></span>
+          </p>
+        </div>
+        <button type="button" class="tasting-modal__close" data-modal-close aria-label="Modal schließen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Body: scrollbarer Inhalt -->
+      <div class="tasting-modal__body">
+
+        <!-- Anzahl Personen -->
+        <div class="tasting-modal__persons">
+          <p class="tasting-modal__persons-label">F&uuml;r wie viele Personen?</p>
+          <div class="tasting-modal__stepper">
+            <button type="button" class="tasting-modal__step" data-modal-decrement aria-label="Eine Person weniger">&minus;</button>
+            <span class="tasting-modal__count" data-modal-count aria-live="polite">1</span>
+            <button type="button" class="tasting-modal__step" data-modal-increment aria-label="Eine Person mehr">+</button>
+          </div>
+          <p class="tasting-modal__hint">Bis 6 Personen &mdash; f&uuml;r Gruppen ab 7 bitte <a href="kontakt.html#gruppen-anfrage">anfragen</a>.</p>
+        </div>
+
+        <!-- Zusammenfassung -->
+        <div class="tasting-modal__summary" data-modal-summary aria-live="polite">
+          <div class="tasting-modal__summary-card">
+            <p class="tasting-modal__summary-heading">Dein Gutschein</p>
+            <div class="tasting-modal__summary-rows">
+              <p class="tasting-modal__summary-row" data-summary-title></p>
+              <p class="tasting-modal__summary-row" data-summary-persons></p>
+              <p class="tasting-modal__summary-row tasting-modal__summary-row--muted">Termin w&auml;hlst du sp&auml;ter einl&ouml;sen</p>
+            </div>
+            <div class="tasting-modal__summary-total">
+              <span>Gesamt</span>
+              <strong data-summary-total></strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hinweis-Block (wird nicht mehr aktiv genutzt, bleibt versteckt) -->
+        <div class="tasting-modal__notice" data-modal-notice hidden></div>
+
+      </div>
+
+      <footer class="tasting-modal__footer">
+        <p class="form-error" data-modal-error hidden style="text-align:center; margin-bottom: 0.75rem;"></p>
+        <button type="button" class="tasting-modal__buy" data-modal-buy>Jetzt Gutschein kaufen</button>
+      </footer>
+
+    </form>
+  </dialog>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" aria-label="Seitenfuß">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer__brand">
+          <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+               alt="Genusswerte Bonn" class="footer__logo" width="120" height="36">
+          <p class="footer__tagline">Feinkost-Boutique in Bonn-Poppelsdorf.<br>Taste &ndash; Discover &ndash; Enjoy.</p>
+          <address class="footer__address" style="font-style: normal;">
+            Clemens-August-Stra&szlig;e 38&ndash;40<br>
+            53115 Bonn &ndash; Poppelsdorf<br>
+            <a href="tel:+4922825908928">+49 228 2590 8928</a>
+          </address>
+        </div>
+
+        <div class="footer__col">
+          <h4>Entdecken</h4>
+          <nav class="footer__nav" aria-label="Footer Navigation">
+            <a href="tastings.html">Tastings</a>
+            <span>Genussboxen</span>
+            <a href="gutschein-einloesen.html">Gutschein einlösen</a>
+            <a href="kontakt.html">Kontakt</a>
+          </nav>
+        </div>
+
+        <div class="footer__col">
+          <h4>Folge uns</h4>
+          <nav class="footer__nav" aria-label="Social Links">
+            <a href="https://www.instagram.com/genusswerte.bonn/" target="_blank" rel="noopener noreferrer">Instagram &rarr;</a>
+          </nav>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2025 Genusswerte Bonn. Alle Rechte vorbehalten.</p>
+        <nav class="footer__legal" aria-label="Rechtliche Pflichtlinks">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/tastings-data.js"></script>
+  <script src="assets/js/checkout.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

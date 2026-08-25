@@ -1,0 +1,19 @@
+/* =========================================================
+   CLOSING-CTA-DEPTH.CSS — Genusswerte Bonn
+   EXPERIMENT — nicht Teil des Kern-Designsystems.
+
+   Der ".closing-cta"-Block (dunkler Abschluss-CTA auf Startseite
+   und Tastings-Seite) war reine Vollton-Fläche (var(--color-green)).
+   Hier: sanfter Diagonal-Verlauf (Tiefe) + warmer, weicher Gold-Glow
+   hinter der Headline (Licht/Lebendigkeit) — sonst nichts verändert.
+
+   ZURÜCKSETZEN: <link>-Tag auf diese Datei in index.html und
+   tastings.html entfernen (oder Datei löschen). Nichts hängt sonst
+   davon ab.
+   ========================================================= */
+
+.closing-cta {
+  background:
+    radial-gradient(ellipse 640px 380px at 50% 10%, rgba(201, 169, 110, 0.18), transparent 70%),
+    linear-gradient(135deg, var(--color-green-dark) 0%, var(--color-green) 55%, var(--color-green-light) 100%);
+}

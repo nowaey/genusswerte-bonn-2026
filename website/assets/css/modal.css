@@ -1,0 +1,363 @@
+/* =========================================================
+   MODAL.CSS — Genusswerte Bonn
+   Tasting-Modal (native <dialog>) — nur tastings.html
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Tasting Modal — native <dialog>
+   --------------------------------------------------------- */
+.tasting-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  width: min(620px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  color: var(--color-text);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22), 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tasting-modal::backdrop {
+  background: rgba(20, 14, 6, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.tasting-modal__form {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 2rem);
+}
+
+/* --- Header --- */
+.tasting-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-7) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.tasting-modal__header-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.tasting-modal__eyebrow {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.tasting-modal__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2.8vw, 1.625rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tasting-modal__description {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tasting-modal__meta {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tasting-modal__meta-dot {
+  margin-inline: 0.4em;
+  opacity: 0.45;
+}
+
+.tasting-modal__close {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  background: transparent;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.tasting-modal__close:hover,
+.tasting-modal__close:focus-visible {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
+}
+
+/* --- Body --- */
+.tasting-modal__body {
+  padding: var(--space-6) var(--space-7);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  flex: 1;
+}
+
+/* --- Personen --- */
+.tasting-modal__persons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tasting-modal__persons-label {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.tasting-modal__stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  align-self: flex-start;
+}
+
+.tasting-modal__step {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 50%;
+  font-size: 1.125rem;
+  color: var(--color-green);
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.tasting-modal__step:hover:not(:disabled),
+.tasting-modal__step:focus-visible:not(:disabled) {
+  border-color: var(--color-gold);
+  background-color: var(--color-bg-alt);
+}
+
+.tasting-modal__step:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.tasting-modal__count {
+  min-width: 2ch;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.tasting-modal__hint {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tasting-modal__hint a {
+  color: var(--color-green);
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 1px;
+}
+
+.tasting-modal__hint a:hover,
+.tasting-modal__hint a:focus-visible {
+  color: var(--color-green-light);
+}
+
+/* --- Zusammenfassung --- */
+.tasting-modal__summary-card {
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tasting-modal__summary-heading {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin: 0;
+}
+
+.tasting-modal__summary-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.tasting-modal__summary-row {
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.tasting-modal__summary-row--muted {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+}
+
+.tasting-modal__summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-1);
+}
+
+.tasting-modal__summary-total span {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+.tasting-modal__summary-total strong {
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--color-green-dark);
+}
+
+/* --- Bestätigung nach Button-Klick --- */
+.tasting-modal__notice {
+  background: var(--color-bg-alt);
+  border-left: 3px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tasting-modal__notice[hidden] {
+  display: none;
+}
+
+.tasting-modal__notice p {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--color-text);
+  line-height: 1.7;
+}
+
+.tasting-modal__notice-link {
+  display: inline-flex;
+  align-self: flex-start;
+  color: var(--color-green);
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 2px;
+}
+
+.tasting-modal__notice-link:hover,
+.tasting-modal__notice-link:focus-visible {
+  color: var(--color-green-light);
+}
+
+/* --- Footer --- */
+.tasting-modal__footer {
+  padding: var(--space-4) var(--space-7) var(--space-6);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-white);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tasting-modal__payment-note {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tasting-modal__buy {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+  background-color: var(--color-green);
+  border: 1.5px solid var(--color-green);
+  border-radius: var(--radius-btn);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.tasting-modal__buy:hover:not(:disabled),
+.tasting-modal__buy:focus-visible:not(:disabled) {
+  background-color: var(--color-green-light);
+  border-color: var(--color-green-light);
+  box-shadow: 0 4px 16px rgba(45, 74, 62, 0.3);
+}
+
+.tasting-modal__buy:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+body.has-modal-open {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   Responsive — Tablet (max 1024px)
+   --------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .tasting-modal {
+    width: calc(100vw - 1rem);
+    max-height: calc(100dvh - 1rem);
+    border-radius: var(--radius-sm);
+  }
+
+  .tasting-modal__form {
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .tasting-modal__header,
+  .tasting-modal__body,
+  .tasting-modal__footer {
+    padding-inline: var(--space-5);
+  }
+}

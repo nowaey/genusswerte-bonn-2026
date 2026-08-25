@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B6040"/>
+      <stop offset="100%" stop-color="#3A2010"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g)"/>
+  <!-- Wooden crate look -->
+  <rect x="70" y="110" width="260" height="120" rx="8" fill="rgba(180,120,60,0.2)" stroke="rgba(200,150,80,0.3)" stroke-width="2"/>
+  <line x1="70" y1="150" x2="330" y2="150" stroke="rgba(200,150,80,0.25)" stroke-width="2"/>
+  <line x1="155" y1="110" x2="155" y2="230" stroke="rgba(200,150,80,0.25)" stroke-width="2"/>
+  <line x1="245" y1="110" x2="245" y2="230" stroke="rgba(200,150,80,0.25)" stroke-width="2"/>
+  <!-- Pretzel -->
+  <g fill="rgba(220,170,100,0.7)" transform="translate(95,120)">
+    <path d="M25 15 Q10 0 5 10 Q0 22 12 28 Q22 32 28 22 Q35 10 25 0 Q15 -8 8 5"/>
+    <circle cx="10" cy="32" r="6"/>
+    <circle cx="28" cy="32" r="6"/>
+  </g>
+  <!-- Beer bottle silhouette -->
+  <g fill="rgba(255,255,255,0.35)" transform="translate(155,75)">
+    <rect x="13" y="0" width="14" height="18" rx="3"/>
+    <rect x="8" y="18" width="24" height="80" rx="6"/>
+  </g>
+  <!-- Sausage shape -->
+  <g fill="rgba(180,80,40,0.6)" transform="translate(250,125)">
+    <ellipse cx="25" cy="10" rx="25" ry="10" transform="rotate(-15,25,10)"/>
+  </g>
+  <!-- Mustard jar -->
+  <g fill="rgba(220,180,60,0.6)" transform="translate(260,145)">
+    <rect x="0" y="0" width="28" height="32" rx="4"/>
+    <rect x="-2" y="-5" width="32" height="8" rx="4"/>
+  </g>
+  <rect x="0" y="248" width="400" height="52" fill="rgba(0,0,0,0.4)"/>
+  <text x="200" y="271" text-anchor="middle" font-size="11" font-family="Georgia,serif" fill="rgba(201,169,110,0.9)" letter-spacing="3">GENUSSBOX</text>
+  <text x="200" y="290" text-anchor="middle" font-size="14" font-family="Georgia,serif" font-weight="bold" fill="white" letter-spacing="1">Der Deutsche Klassiker</text>
+</svg>

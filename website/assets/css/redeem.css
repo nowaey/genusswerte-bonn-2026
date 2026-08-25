@@ -1,0 +1,236 @@
+/* =========================================================
+   REDEEM.CSS — Gutschein-Einlösung & Slot-Kalender
+   Genusswerte Bonn
+   ========================================================= */
+
+/* ── Kalender Wrapper ────────────────────────────────── */
+.slot-calendar {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--color-white);
+  margin-bottom: 1rem;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ── Monat-Navigation ────────────────────────────────── */
+.slot-cal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-green);
+  color: var(--color-white);
+  padding: 0.8125rem 1.25rem;
+}
+
+.slot-cal__month-label {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.slot-cal__arrow {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.875rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.125rem;
+  transition: color var(--transition-fast);
+  display: flex;
+  align-items: center;
+}
+.slot-cal__arrow:hover:not(:disabled) { color: var(--color-white); }
+.slot-cal__arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+/* ── Wochentag-Kopfzeile ─────────────────────────────── */
+.slot-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.slot-cal__weekday {
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+
+/* ── Tages-Zellen ────────────────────────────────────── */
+.slot-cal__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: 2.875rem;
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  border: none;
+  background: none;
+  cursor: default;
+  padding: 0;
+  line-height: 1;
+  outline-offset: -2px;
+}
+
+.slot-cal__day--avail {
+  color: var(--color-green);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background var(--transition-fast);
+}
+.slot-cal__day--avail:hover {
+  background: var(--color-bg-alt);
+}
+.slot-cal__day--avail:focus-visible {
+  outline: 2px solid var(--color-green);
+  border-radius: 4px;
+}
+
+.slot-cal__day--sel {
+  background: var(--color-green) !important;
+  color: var(--color-white) !important;
+  border-radius: 4px;
+}
+.slot-cal__day--sel .slot-cal__day-dot {
+  background: rgba(255, 255, 255, 0.55) !important;
+}
+
+.slot-cal__day--today .slot-cal__day-num {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Punkt unter verfügbaren Tagen */
+.slot-cal__day-dot {
+  display: none;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  flex-shrink: 0;
+}
+.slot-cal__day--avail .slot-cal__day-dot { display: block; }
+
+/* ── Legende ─────────────────────────────────────────── */
+.slot-cal__legend {
+  display: flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+}
+.slot-cal__legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  flex-shrink: 0;
+}
+
+/* ── Uhrzeit-Auswahl ─────────────────────────────────── */
+.slot-times {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1rem 1.125rem 1.125rem;
+  background: var(--color-bg-alt);
+  margin-bottom: 0.5rem;
+  animation: fadeSlideIn 0.18s ease;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.slot-times__label {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  margin-bottom: 0.875rem;
+}
+
+.slot-times__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.slot-times__chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 1.125rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  background: var(--color-white);
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+.slot-times__chip:hover,
+.slot-times__chip:focus-visible {
+  border-color: var(--color-green);
+  background: var(--color-green);
+  outline: none;
+}
+.slot-times__chip:hover .chip-time,
+.slot-times__chip:focus-visible .chip-time   { color: var(--color-white); }
+.slot-times__chip:hover .chip-seats,
+.slot-times__chip:focus-visible .chip-seats  { color: rgba(255, 255, 255, 0.72); }
+
+.chip-time {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-green);
+  line-height: 1.2;
+  font-family: var(--font-sans);
+}
+.chip-seats {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+/* ── Lade-Zustand ────────────────────────────────────── */
+.slots-loading {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+/* ── Keine Termine verfügbar ─────────────────────────── */
+.slots-empty {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  padding: 1.5rem 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-bg-alt);
+  text-align: center;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 480px) {
+  .slot-cal__day       { min-height: 2.375rem; }
+  .slot-cal__weekday   { font-size: 0.625rem;  padding: 0.5rem 0; }
+  .slot-cal__month-label { font-size: 1rem; }
+  .slot-times__chip    { padding: 0.4375rem 0.875rem; }
+}

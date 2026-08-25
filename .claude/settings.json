@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git add -A; git diff --staged --quiet; $ec = $LASTEXITCODE; if ($ec -ne 0) { git commit -m \"Auto-sync von Claude Code $(Get-Date -Format 'yyyy-MM-dd HH:mm')\"; git push }",
+            "shell": "powershell",
+            "timeout": 60,
+            "statusMessage": "Hochladen auf GitHub..."
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git *)"
+    ]
+  }
+}

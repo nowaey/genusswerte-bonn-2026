@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3A5A8C"/>
+      <stop offset="100%" stop-color="#0E2040"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g)"/>
+  <!-- Rhine wave lines -->
+  <g fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2">
+    <path d="M0 200 Q50 185 100 200 Q150 215 200 200 Q250 185 300 200 Q350 215 400 200"/>
+    <path d="M0 215 Q50 200 100 215 Q150 230 200 215 Q250 200 300 215 Q350 230 400 215"/>
+    <path d="M0 230 Q50 215 100 230 Q150 245 200 230 Q250 215 300 230 Q350 245 400 230"/>
+  </g>
+  <!-- Beethoven monument silhouette (simplified) -->
+  <g fill="rgba(255,255,255,0.15)" transform="translate(185,55)">
+    <!-- Pedestal -->
+    <rect x="0" y="100" width="30" height="50"/>
+    <rect x="-10" y="95" width="50" height="10"/>
+    <!-- Figure -->
+    <rect x="5" y="40" width="20" height="55"/>
+    <!-- Head -->
+    <circle cx="15" cy="30" r="14"/>
+    <!-- Arms -->
+    <rect x="-8" y="50" width="12" height="5" rx="2" transform="rotate(-20,-8,50)"/>
+    <rect x="26" y="55" width="15" height="5" rx="2" transform="rotate(15,26,55)"/>
+  </g>
+  <!-- Local product bubbles -->
+  <g fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.3)" stroke-width="1">
+    <circle cx="95" cy="130" r="30"/>
+    <circle cx="310" cy="140" r="25"/>
+    <circle cx="75" cy="185" r="20"/>
+    <circle cx="330" cy="185" r="22"/>
+  </g>
+  <text x="95" y="134" text-anchor="middle" font-size="10" font-family="Georgia,serif" fill="rgba(255,255,255,0.7)">Regional</text>
+  <text x="310" y="144" text-anchor="middle" font-size="10" font-family="Georgia,serif" fill="rgba(255,255,255,0.7)">Lokal</text>
+  <rect x="0" y="248" width="400" height="52" fill="rgba(0,0,0,0.4)"/>
+  <text x="200" y="271" text-anchor="middle" font-size="11" font-family="Georgia,serif" fill="rgba(201,169,110,0.9)" letter-spacing="3">GENUSSBOX</text>
+  <text x="200" y="290" text-anchor="middle" font-size="15" font-family="Georgia,serif" font-weight="bold" fill="white" letter-spacing="1">Bonn Probierbox</text>
+</svg>

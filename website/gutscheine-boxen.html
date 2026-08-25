@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genussboxen — Genusswerte Bonn</title>
+  <meta name="description" content="Genussboxen und Wertgutscheine — persönlich zusammengestellt in Bonn-Poppelsdorf. Das perfekte Geschenk für Weinliebhaber und Genießer.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Genussboxen — Genusswerte Bonn">
+  <meta property="og:description" content="Genussboxen und Wertgutscheine — persönlich zusammengestellt in Bonn-Poppelsdorf.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+
+  <!-- HEADER -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="index.html" class="nav__logo-link" aria-label="Genusswerte Bonn – Startseite">
+          <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+               alt="Genusswerte Bonn" class="nav__logo" width="160" height="48">
+        </a>
+        <button class="nav__toggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-menu">
+          <span class="nav__hamburger" aria-hidden="true"></span>
+        </button>
+        <ul class="nav__menu" id="nav-menu" role="list">
+          <li><a href="tastings.html" class="nav__link">Tastings</a></li>
+          <li><span class="nav__link nav__link--disabled" aria-disabled="true">Genussboxen</span></li>
+          <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
+          <li class="nav__cta">
+            <a href="gutschein-einloesen.html" class="btn btn--primary">Gutschein einlösen</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- PAGE HERO -->
+    <div class="page-hero" aria-label="Genussboxen">
+      <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+           alt="Genusswerte Bonn" class="page-hero__logo" width="130" height="39">
+      <span class="page-hero__eyebrow">Schenken &amp; Erleben</span>
+      <h1 class="page-hero__title">Genussboxen</h1>
+      <p class="page-hero__subtitle">Das perfekte Geschenk f&uuml;r Weinliebhaber, Genie&szlig;er und neugierige Entdecker.</p>
+    </div>
+
+    <!-- GENUSSBOXEN -->
+    <section class="section" id="genussboxen">
+      <div class="container">
+        <div class="section__header text-center js-animate">
+          <span class="section__eyebrow">Genussboxen &amp; Geschenkkörbe</span>
+          <h2 class="section__title">Kuratierte Freude zum Verschenken</h2>
+          <p class="section__subtitle">Handverlesene Produkte, stimmig zusammengestellt &mdash; für jeden Anlass und jeden Geschmack. Direkt lieferbar oder zur Abholung im Laden.</p>
+        </div>
+
+        <div class="card-grid">
+
+          <!-- Der Deutsche Klassiker -->
+          <article class="card js-animate" data-delay="1" aria-label="Der Deutsche Klassiker Genussbox">
+            <div class="card__image">
+              <img src="assets/images/box-klassiker.svg" alt="Der Deutsche Klassiker Genussbox" width="400" height="300" loading="lazy">
+            </div>
+            <div class="card__body">
+              <span class="card__eyebrow">Genussbox</span>
+              <h3 class="card__title">Der Deutsche Klassiker</h3>
+              <p class="card__description">Senf, Sauerteigcracker, Landjaeger, Brotaufstrich und ein Bier aus der Region &mdash; das Beste aus Deutschland, sorgfältig verpackt.</p>
+              <div class="card__variants" aria-label="Größen">
+                <span class="variant-pill">Klein 29,90 &euro;</span>
+                <span class="variant-pill">Medium 49,90 &euro;</span>
+                <span class="variant-pill">Gross 79,90 &euro;</span>
+              </div>
+              <p class="card__price">ab 29,90 &euro;</p>
+              <div class="card__action">
+                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Der Deutsche Klassiker">
+                  Bestellen
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Bella Italia Box -->
+          <article class="card js-animate" data-delay="2" aria-label="Bella Italia Box">
+            <div class="card__image">
+              <img src="assets/images/box-bella-italia.svg" alt="Bella Italia Genussbox" width="400" height="300" loading="lazy">
+            </div>
+            <div class="card__body">
+              <span class="card__eyebrow">Genussbox</span>
+              <h3 class="card__title">Bella Italia Box</h3>
+              <p class="card__description">Olivenöl, Pasta, Pesto, Antipasti-Spezialitäten &mdash; ein Stueck Italien für zuhause oder als besonderes Geschenk.</p>
+              <div class="card__variants" aria-label="Größen">
+                <span class="variant-pill">Klein 34,90 &euro;</span>
+                <span class="variant-pill">Medium 54,90 &euro;</span>
+                <span class="variant-pill">Gross 89,90 &euro;</span>
+              </div>
+              <p class="card__price">ab 34,90 &euro;</p>
+              <div class="card__action">
+                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Bella Italia Box">
+                  Bestellen
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Aperitivo Box -->
+          <article class="card js-animate" data-delay="3" aria-label="Aperitivo Box">
+            <div class="card__image">
+              <img src="assets/images/box-aperitivo.svg" alt="Aperitivo Genussbox" width="400" height="300" loading="lazy">
+            </div>
+            <div class="card__body">
+              <span class="card__eyebrow">Genussbox</span>
+              <h3 class="card__title">Aperitivo Box</h3>
+              <p class="card__description">Aperitivo-Zutaten, Cracker, Oliven, Crostini &mdash; alles für den perfekten Aperitivo-Abend zuhause.</p>
+              <div class="card__variants" aria-label="Größen">
+                <span class="variant-pill">Klein 34,90 &euro;</span>
+                <span class="variant-pill">Medium 57,90 &euro;</span>
+                <span class="variant-pill">Gross 89,90 &euro;</span>
+              </div>
+              <p class="card__price">ab 34,90 &euro;</p>
+              <div class="card__action">
+                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Aperitivo Box">
+                  Bestellen
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Bonn Probierbox -->
+          <article class="card js-animate" data-delay="4" aria-label="Bonn Probierbox">
+            <div class="card__image">
+              <img src="assets/images/box-bonn.svg" alt="Bonn Probierbox Genussbox" width="400" height="300" loading="lazy">
+            </div>
+            <div class="card__body">
+              <span class="card__eyebrow">Genussbox</span>
+              <h3 class="card__title">Bonn Probierbox</h3>
+              <p class="card__description">Lokale Produzenten, regionale Spezialitäten &mdash; der Genuss der Bonner Umgebung, liebevoll verpackt als Geschenk oder für sich selbst.</p>
+              <div class="card__variants" aria-label="Größen">
+                <span class="variant-pill">Klein 27,90 &euro;</span>
+                <span class="variant-pill">Medium 44,90 &euro;</span>
+                <span class="variant-pill">Gross 74,90 &euro;</span>
+              </div>
+              <p class="card__price">ab 27,90 &euro;</p>
+              <div class="card__action">
+                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Bonn Probierbox">
+                  Bestellen
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Date Night Box -->
+          <article class="card js-animate" data-delay="5" aria-label="Date Night Box">
+            <div class="card__image">
+              <img src="assets/images/box-date-night.svg" alt="Date Night Genussbox" width="400" height="300" loading="lazy">
+            </div>
+            <div class="card__body">
+              <span class="card__eyebrow">Genussbox</span>
+              <h3 class="card__title">Date Night Box</h3>
+              <p class="card__description">Schaumwein, Schokolade, Käse und alles für einen romantischen Abend zu zweit &mdash; das perfekte Geschenk für besondere Momente.</p>
+              <div class="card__variants" aria-label="Größen">
+                <span class="variant-pill">Klein 39,90 &euro;</span>
+                <span class="variant-pill">Medium 64,90 &euro;</span>
+                <span class="variant-pill">Gross 99,90 &euro;</span>
+              </div>
+              <p class="card__price">ab 39,90 &euro;</p>
+              <div class="card__action">
+                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Date Night Box">
+                  Bestellen
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Feierabend Box -->
+          <article class="card js-animate" data-delay="6" aria-label="Feierabend Box">
+            <div class="card__image">
+              <img src="assets/images/box-feierabend.svg" alt="Feierabend Genussbox" width="400" height="300" loading="lazy">
+            </div>
+            <div class="card__body">
+              <span class="card__eyebrow">Genussbox</span>
+              <h3 class="card__title">Feierabend Box</h3>
+              <p class="card__description">Bier oder Wein nach Wahl, Snacks, Nüsse, Chips &mdash; der perfekte Begleiter für den entspannten Feierabend nach einem langen Tag.</p>
+              <div class="card__variants" aria-label="Größen">
+                <span class="variant-pill">Klein 24,90 &euro;</span>
+                <span class="variant-pill">Medium 42,90 &euro;</span>
+                <span class="variant-pill">Gross 67,90 &euro;</span>
+              </div>
+              <p class="card__price">ab 24,90 &euro;</p>
+              <div class="card__action">
+                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Feierabend Box">
+                  Bestellen
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- .card-grid -->
+
+        <!-- Order note (shown by JS) -->
+        <div id="order-note" class="order-note" style="display:none;" role="alert" aria-live="polite"></div>
+
+      </div><!-- .container -->
+    </section>
+
+    <!-- WERTGUTSCHEINE -->
+    <section class="section section--alt" id="wertgutscheine">
+      <div class="container">
+        <div class="section__header text-center js-animate">
+          <span class="section__eyebrow">Flexibel Schenken</span>
+          <h2 class="section__title">Wertgutscheine</h2>
+          <p class="section__subtitle">Du weißt nicht genau was? Kein Problem &mdash; verschenke Genuss in freier Form.</p>
+        </div>
+        <div class="sortiment-split js-animate">
+          <div class="sortiment-split__content" style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <p style="color: var(--color-text-muted); line-height: 1.85; font-size: 1.0625rem; margin-bottom: 1.5rem;">
+              Wertgutscheine sind für beliebige Beträge erhältlich und können flexibel eingelöst werden &mdash; für ein Tasting-Erlebnis, eine Genussbox oder als Zahlungsmittel direkt im Laden.
+            </p>
+            <p style="color: var(--color-text-muted); line-height: 1.85; font-size: 1.0625rem; margin-bottom: 2rem;">
+              Wir stellen den Gutschein persönlich für dich aus &mdash; digital per E-Mail oder als hochwertiges Kartenmotiv zur Abholung in Poppelsdorf.
+            </p>
+            <a class="btn btn--primary"
+               href="https://wa.me/4922825908928?text=Hallo%20Genusswerte%20Bonn%2C%0A%0Aich%20m%C3%B6chte%20einen%20Wertgutschein%20anfragen.%0A%0ABetrag%3A%0AZustellung%3A%20digital%20%2F%20Abholung%20im%20Laden%0AName%3A%0ANachricht%3A"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="Wertgutschein per WhatsApp anfragen">
+              Wertgutschein anfragen
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HINWEIS-BAND -->
+    <section class="section section--dark" aria-label="Bestellhinweis Genussboxen">
+      <div class="container">
+        <div class="cta-band js-animate">
+          <span class="cta-band__eyebrow">Individuelle Zusammenstellung</span>
+          <h2 class="cta-band__title">Jede Box wird pers&ouml;nlich f&uuml;r dich zusammengestellt</h2>
+          <p class="cta-band__subtitle">Genussboxen werden auf Anfrage zusammengestellt &mdash; zur Abholung im Laden oder auf Wunsch versendet. Kein Webshop, kein Checkout.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" aria-label="Seitenfu&szlig;">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer__brand">
+          <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+               alt="Genusswerte Bonn" class="footer__logo" width="140" height="42">
+          <p class="footer__tagline">Feinkost-Boutique in Bonn-Poppelsdorf.<br>Taste &ndash; Discover &ndash; Enjoy.</p>
+          <address class="footer__address" style="font-style: normal;">
+            Clemens-August-Stra&szlig;e 38&ndash;40<br>
+            53115 Bonn &ndash; Poppelsdorf<br>
+            <a href="tel:+4922825908928" style="color: rgba(255,255,255,0.65);">+49 228 2590 8928</a>
+          </address>
+        </div>
+
+        <div class="footer__col">
+          <h4>Navigation</h4>
+          <nav class="footer__nav" aria-label="Footer Navigation">
+            <a href="tastings.html">Tastings</a>
+            <span>Genussboxen</span>
+            <a href="gutschein-einloesen.html">Gutschein einlösen</a>
+            <a href="kontakt.html">Kontakt</a>
+            <a href="https://www.instagram.com/genusswerte.bonn/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </nav>
+        </div>
+
+        <div class="footer__col">
+          <h4>Rechtliches</h4>
+          <nav class="footer__nav" aria-label="Rechtliche Links">
+            <a href="impressum.html">Impressum</a>
+            <a href="datenschutz.html">Datenschutz</a>
+            <a href="mailto:info@genusswerte-bonn.com">Kontakt</a>
+          </nav>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">&copy; 2025 Genusswerte Bonn. Alle Rechte vorbehalten.</p>
+        <nav class="footer__legal" aria-label="Rechtliche Pflichtlinks">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    function showOrderNote(btn) {
+      var note = document.getElementById('order-note');
+      var box  = btn.getAttribute('data-box') || 'diese Box';
+      note.innerHTML =
+        '<strong>Onlineshop kommt bald!</strong> ' +
+        'F&uuml;r "' + box + '" kontaktiere uns telefonisch unter ' +
+        '<a href="tel:+4922825908928" style="color:var(--color-green);font-weight:600;text-decoration:underline;">+49 228 2590 8928</a> ' +
+        'oder komm einfach im Laden vorbei.';
+      note.style.display = 'block';
+      note.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>

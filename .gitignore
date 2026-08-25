@@ -1,0 +1,27 @@
+# Betriebssystem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Temporäre Dateien
+*.tmp
+*.log
+
+# Admin Panel (Node/Vite)
+admin-panel/node_modules/
+admin-panel/dist/
+admin-panel/.env
+admin-panel/.env.local
+
+# Supabase CLI — lokale Cache-Dateien, ändern sich ständig von selbst
+supabase/.temp/
+
+# Nirgendwo sollten Secrets liegen, aber sicher ist sicher
+*.env
+!.env.example
+!admin-panel/.env.example

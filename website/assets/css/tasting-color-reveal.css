@@ -1,0 +1,35 @@
+/* =========================================================
+   TASTING-COLOR-REVEAL.CSS — Genusswerte Bonn
+   EXPERIMENT — nicht Teil des Kern-Designsystems.
+
+   Idee: Tasting-Fotos sind in Ruhe zurückhaltend/entsättigt (der
+   bestehende Schwarz-Weiß-Look bleibt Standard). Bei Hover/Fokus
+   einer Karte blendet die echte Farbe des Fotos auf — "das Glas
+   kommt zum Leben". Dazu ein leichter Gold-Schimmer im Schatten
+   als Marken-Anker.
+
+   ZURÜCKSETZEN: Einfach den <link>-Tag auf diese Datei in
+   tastings.html entfernen (oder diese Datei löschen). Sonst nichts
+   im Projekt hängt von dieser Datei ab.
+   ========================================================= */
+
+.tasting-card .card__image img {
+  filter: grayscale(88%) contrast(1.05) brightness(0.96);
+  transition: filter 0.7s ease, transform var(--transition-slow);
+}
+
+.tasting-card:hover .card__image img,
+.tasting-card:focus-within .card__image img {
+  filter: grayscale(0%) contrast(1.05) brightness(1.02);
+}
+
+.tasting-card:hover,
+.tasting-card:focus-within {
+  box-shadow: 0 10px 32px rgba(201, 169, 110, 0.4), 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tasting-card .card__image img {
+    transition: none;
+  }
+}
