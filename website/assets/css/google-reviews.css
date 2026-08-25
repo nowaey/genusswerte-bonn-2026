@@ -131,5 +131,43 @@
 
   .closing-cta__reviews-rating {
     text-align: center;
+    font-size: 0.875rem;
+    margin-bottom: var(--space-5);
+  }
+}
+
+/* --- Mobile: ruhiger Lauf, lesbare Karten ---------------------
+   Auf schmalen Screens durchquert eine Karte das Sichtfeld deutlich
+   schneller als auf dem Desktop (gleiche Strecke, kleineres Fenster).
+   Darum: klar längere Dauer + größere, luftigere Karten mit mehr
+   Zeilen, damit die Zitate nicht mitten im Satz abgeschnitten werden.
+   --------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .closing-cta__reviews-track {
+    animation-duration: 105s;
+    gap: var(--space-4);
+  }
+
+  /* Randabblendung weicher — die Karten "gleiten" hinein statt zu poppen */
+  .closing-cta__reviews-track-wrap {
+    mask-image: linear-gradient(to right, transparent, black 14%, black 86%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 14%, black 86%, transparent);
+  }
+
+  .mini-review {
+    flex-basis: 245px;
+    padding: var(--space-5);
+    gap: var(--space-4);
+    border-radius: var(--radius-card);
+  }
+
+  .mini-review p {
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    -webkit-line-clamp: 6;
+  }
+
+  .mini-review span {
+    font-size: 0.75rem;
   }
 }

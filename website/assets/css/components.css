@@ -738,6 +738,28 @@
 .js-animate[data-delay="8"] { transition-delay: 0.64s; }
 .js-animate[data-delay="9"] { transition-delay: 0.72s; }
 
+/* Mobile: kürzerer Weg, ruhigerer Lauf.
+   32px Versatz sind auf einem 375px-Screen proportional weit mehr als
+   auf dem Desktop — die Inhalte "sprangen" beim Scrollen sichtbar.
+   Auch die gestaffelten Delays werden gekürzt: untereinander gestapelt
+   erscheinen die Karten sonst spürbar nacheinander statt als Gruppe. */
+@media (max-width: 768px) {
+  .js-animate {
+    transform: translateY(18px);
+    transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .js-animate[data-delay="1"] { transition-delay: 0.05s; }
+  .js-animate[data-delay="2"] { transition-delay: 0.10s; }
+  .js-animate[data-delay="3"] { transition-delay: 0.15s; }
+  .js-animate[data-delay="4"] { transition-delay: 0.20s; }
+  .js-animate[data-delay="5"] { transition-delay: 0.24s; }
+  .js-animate[data-delay="6"] { transition-delay: 0.28s; }
+  .js-animate[data-delay="7"] { transition-delay: 0.31s; }
+  .js-animate[data-delay="8"] { transition-delay: 0.34s; }
+  .js-animate[data-delay="9"] { transition-delay: 0.36s; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .js-animate {
     opacity: 1;

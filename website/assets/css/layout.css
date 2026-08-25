@@ -1756,6 +1756,84 @@
   /* Touch-Targets: Buttons auf Mobile mind. 44px hoch (Tap-Genauigkeit) */
   .btn {
     min-height: 44px;
+    /* Lange Labels dürfen umbrechen statt aus dem Button zu laufen */
+    white-space: normal;
+    text-wrap: balance;
+    padding-block: 0.8rem;
+  }
+
+  /* --- Vertikaler Rhythmus -------------------------------------
+     Der Abstand Header→Inhalt (4rem) war größer als der Abstand
+     zwischen den Sektionen (3.5rem). Dadurch trieben Überschrift und
+     zugehöriger Inhalt auseinander und die Seite zerfiel in lose
+     Fragmente. Jetzt: Header nah an seinem Inhalt, klare Zäsur
+     zwischen den Sektionen.
+     --------------------------------------------------------------- */
+  .section__header {
+    margin-bottom: var(--space-10);
+  }
+
+  .tasting-teaser,
+  .about-section,
+  .visit-section {
+    padding-block: var(--space-12) var(--space-16);
+  }
+
+  /* Gestapelte Spalten brauchen weniger Trennung als nebeneinander */
+  .intro-split,
+  .tasting-teaser__split,
+  .about-split,
+  .visit-grid {
+    gap: var(--space-8);
+  }
+
+  /* Karten im Stapel: mehr Luft, damit sie einzeln wirken */
+  .card-grid,
+  .card-grid--4,
+  .card-grid--2up {
+    gap: var(--space-8);
+  }
+
+  /* --- Typografie ----------------------------------------------
+     Fließtext war mit 17px/1.8 auf schmaler Spalte sehr weitläufig.
+     Etwas kompakter gesetzt liest er sich als zusammenhängender
+     Absatz statt als lose Zeilen. Silbentrennung fängt die langen
+     deutschen Komposita ab (Geschmackssinn, Entdeckungsreise …),
+     die sonst hässliche Löcher im Flattersatz reißen.
+     --------------------------------------------------------------- */
+  .section__subtitle,
+  .tasting-teaser__body,
+  .about-split__body,
+  .visit-info__body {
+    font-size: 1rem;
+    line-height: 1.72;
+  }
+
+  .section__subtitle,
+  .tasting-teaser__body,
+  .about-split__body,
+  .visit-info__body,
+  .card__description,
+  .step__body {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+
+  /* Überschriften brechen ausgewogen statt mit einzelnem Restwort.
+     Lange deutsche Komposita ("Datenschutzerklärung") sind als ein
+     Wort breiter als der Screen — sie müssen trennen dürfen, sonst
+     laufen sie über den Rand hinaus. */
+  .section__title,
+  .tasting-teaser__headline,
+  .about-split__headline,
+  .visit-info__headline,
+  .closing-cta__title,
+  .page-hero__title,
+  .card__title {
+    text-wrap: balance;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    overflow-wrap: break-word;
   }
 
   /* Nav */
@@ -1808,20 +1886,57 @@
     justify-content: center;
   }
 
+  /* Der Desktop-Scrim läuft diagonal (110deg) und deckt seitlich ab.
+     Zentrierter Text auf Mobile braucht Deckung von oben und unten,
+     sonst steht die Schrift auf den unruhigsten Stellen des Fotos. */
+  .hero::before {
+    background: linear-gradient(to bottom,
+      rgba(12, 6, 1, 0.66) 0%,
+      rgba(14, 7, 1, 0.34) 26%,
+      rgba(14, 7, 1, 0.38) 52%,
+      rgba(9, 4, 1, 0.74) 100%);
+  }
+
   .hero__content {
     align-items: center;
     text-align: center;
     padding-left: var(--space-5);
     padding-right: var(--space-5);
     max-width: 100%;
+    gap: var(--space-4);
+  }
+
+  .hero__headline {
+    font-size: clamp(2.3rem, 9.4vw, 3rem);
+  }
+
+  /* Zweite Zeile war zu blass, um über dem Bild zu tragen */
+  .hero__headline-sub {
+    font-size: 0.54em;
+    color: rgba(255, 255, 255, 0.84);
+    margin-top: 0.42em;
   }
 
   .hero__desc {
     margin-inline: auto;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 34ch;
   }
 
+  /* Umbruch in gleichmäßige Zeilen statt einer langen + einer kurzen */
   .hero__trust {
     text-align: center;
+    font-size: 0.6875rem;
+    line-height: 2;
+    letter-spacing: 0.11em;
+    color: rgba(255, 255, 255, 0.56);
+    max-width: 26ch;
+    margin-inline: auto;
+  }
+
+  /* Scroll-Hinweis kollidierte mit der unteren Textkante */
+  .hero__scroll-hint {
+    bottom: var(--space-5);
   }
 
   .hero__cta-group {
@@ -1864,10 +1979,28 @@
     font-size: clamp(1.75rem, 7vw, 2.5rem);
   }
 
+  /* --- Bilder ---------------------------------------------------
+     Feste Pixelhöhen schneiden je nach Gerätebreite unterschiedlich
+     viel vom Motiv ab. Seitenverhältnisse skalieren stattdessen mit
+     und halten den Bildausschnitt auf jedem Gerät gleich.
+     --------------------------------------------------------------- */
   .tasting-loop {
-    height: 350px;
+    height: auto;
+    aspect-ratio: 4 / 3;
     min-height: unset;
     flex: none;
+  }
+
+  /* Weicherer Bildwechsel — 1,4s wirkte auf Mobile hektisch */
+  .tasting-loop__slide {
+    transition: opacity 1.8s ease;
+  }
+
+  /* Porträt statt Querformat: 4/3 beschneidet die Person seitlich,
+     das Hochformat lässt Motiv und Laden im Bild. */
+  .about-split__image {
+    aspect-ratio: 4 / 5;
+    max-height: none;
   }
 
   .card-grid--2up {
@@ -1943,6 +2076,54 @@
     text-align: center;
     justify-content: center;
   }
+
+  .closing-cta {
+    padding-block: var(--space-12);
+  }
+
+  /* --- Übergänge zwischen den Bändern ---------------------------
+     Creme (--color-bg) und Sandton (--color-bg-alt) stießen als harte
+     Kante aneinander — auf Mobile, wo alles untereinander liegt, wirkt
+     das wie aneinandergeklebte Blöcke. Eine schmale Verlaufszone lässt
+     die hellen Bänder ineinanderlaufen.
+
+     Bewusst NUR hell↔hell: die Kanten zum dunklen Abschlussband und
+     zum Hero sind gewollte Zäsuren und bleiben scharf. Die Geschwister-
+     Selektoren sorgen dafür von selbst — sie greifen nur, wenn die
+     vorherige Sektion ebenfalls hell ist.
+     --------------------------------------------------------------- */
+  .section:not(.section--dark):not(.section--alt) + .section--alt,
+  .section--alt + .section:not(.section--dark):not(.section--alt) {
+    position: relative;
+  }
+
+  .section:not(.section--dark):not(.section--alt) + .section--alt > .container,
+  .section--alt + .section:not(.section--dark):not(.section--alt) > .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section:not(.section--dark):not(.section--alt) + .section--alt::before,
+  .section--alt + .section:not(.section--dark):not(.section--alt)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--space-10);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Creme läuft in Sand aus */
+  .section:not(.section--dark):not(.section--alt) + .section--alt::before {
+    background: linear-gradient(to bottom, var(--color-bg), transparent);
+  }
+
+  /* Sand läuft in Creme aus */
+  .section--alt + .section:not(.section--dark):not(.section--alt)::before {
+    background: linear-gradient(to bottom, var(--color-bg-alt), transparent);
+  }
 }
 
 /* ---------------------------------------------------------
@@ -1963,6 +2144,27 @@
 
   .page-hero {
     padding-block: var(--space-12) var(--space-10);
+  }
+
+  /* Karteninhalt: etwas engerer Rand, damit die Textspalte breiter
+     wird und Zeilen nicht nach 3–4 Wörtern umbrechen */
+  .card__body {
+    padding: var(--space-5);
+    gap: var(--space-3);
+  }
+
+  /* Preis-Pills: höher (Touch) und mit ruhigerem Abstand */
+  .variant-pill {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8125rem;
+  }
+
+  .card__variants {
+    gap: var(--space-2);
+  }
+
+  .hours-card {
+    padding: var(--space-6) var(--space-5) var(--space-5);
   }
 }
 
