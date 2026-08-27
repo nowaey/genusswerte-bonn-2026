@@ -4,6 +4,66 @@
    ========================================================= */
 
 /* ---------------------------------------------------------
+   Schriften — lokal gehostet statt von Google-Servern geladen.
+   Grund: Google Fonts von fonts.googleapis.com/fonts.gstatic.com
+   einzubinden überträgt bei jedem Seitenaufruf die Besucher-IP an
+   Google (USA) — datenschutzrechtlich umstritten (u. a. LG München I,
+   Urt. v. 20.01.2022, Az. 3 O 17493/20). Lokal gehostet entfällt
+   diese Übertragung komplett, kein Hinweis in der Datenschutz-
+   erklärung nötig.
+
+   Nur die "latin"-Subsets (deckt Deutsch inkl. Umlaute/ß sowie
+   Akzentzeichen wie in "Apéro" ab) — cyrillic/greek/vietnamese
+   werden hier nicht gebraucht.
+
+   Inter und Playfair Display sind Variable Fonts: eine Datei deckt
+   mehrere Schriftschnitte ab (deshalb dieselbe src bei mehreren
+   font-weight-Regeln — kein Duplikat, das ist beabsichtigt).
+   --------------------------------------------------------- */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/inter-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/inter-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/inter-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/playfair-display-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/playfair-display-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/playfair-display-italic-latin.woff2') format('woff2');
+}
+
+/* ---------------------------------------------------------
    Design Tokens
    --------------------------------------------------------- */
 :root {
