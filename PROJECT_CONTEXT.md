@@ -37,24 +37,34 @@ nachgezogen werden (Dashboard-Copy-Paste wie beim ersten `submit-group-inquiry`-
 8. `website/robots.txt` ergänzt (fehlte), `website/.gitignore` als Verteidigung in der
    Tiefe gegen versehentlich committete `.env`/`.sql`/`.bak`-Dateien im FTP-Deploy-Ordner.
 
-**Deployment-Checkliste — diese Reihenfolge einhalten:**
-1. **Migration zuerst**: `supabase/migrations/013_rate_limiting.sql` im Supabase SQL Editor
-   ausführen (Dashboard → SQL Editor → Datei-Inhalt einfügen → Run). Ohne das schlägt
-   `submit-group-inquiry` nicht fehl (Rate-Limit-Fehler werden bewusst durchgelassen,
-   siehe Kommentar im Code), aber das Limit greift dann noch nicht.
-2. **Alle 6 Edge Functions neu deployen** — Code für jede liegt im Repo unter
-   `supabase/functions/<name>/index.ts`. Bei `create-checkout-session` und
-   `submit-group-inquiry`: der Import `from '../_shared/cors.ts'` funktioniert nur bei
-   CLI-Deploy; beim Dashboard-Copy-Paste (wie bisher) muss der Inhalt von `_shared/cors.ts`
-   wieder inline in die jeweilige Datei kopiert werden (`getCorsHeaders`-Funktion), analog
-   zum ersten `submit-group-inquiry`-Deploy in dieser Session.
-3. **JWT-Verifizierung prüfen** — falls beim Neu-Deployen über das Dashboard der Schalter
-   „Enforce JWT Verification" wieder auf „an" zurückspringt (ist uns bei
-   `submit-group-inquiry` passiert), erneut ausschalten.
-4. Website-Dateien (`.htaccess`, `robots.txt`, `.gitignore`, alle `assets/`) ganz normal
-   per FTP hochladen — kein Sonderfall.
-5. Nach dem Deploy: CSP-Header per Browser-DevTools (Network-Tab → Response Headers) auf
-   der echten Domain gegenchecken, nicht blind vertrauen.
+**Bewusst gestaffelt — nicht alles auf einmal deployen:**
+Solange das Buchungssystem pausiert ist (siehe unten), wird von den 6 Edge Functions nur
+**`submit-group-inquiry`** tatsächlich von der Live-Seite aufgerufen. Die Lücken in den
+übrigen 5 (`create-checkout-session`, `validate-voucher`, `get-available-slots`,
+`schedule-voucher`, `stripe-webhook`) sind real, aber latent — niemand kann sie über die
+Website erreichen, solange `bookingEnabled: false` steht. Deshalb:
+
+**JETZT nötig (aktiv genutzt):**
+1. Migration `supabase/migrations/013_rate_limiting.sql` im Supabase SQL Editor ausführen
+   (Dashboard → SQL Editor → Inhalt einfügen → Run).
+2. `submit-group-inquiry` neu deployen — fertige Dashboard-Version (Cors inline statt
+   Import) liegt unter `supabase/functions/submit-group-inquiry/index.ts`, muss beim
+   Dashboard-Copy-Paste wie gehabt inline umgebaut werden (`getCorsHeaders`-Funktion statt
+   `import ... from '../_shared/cors.ts'`).
+3. JWT-Verifizierung checken — Schalter „Enforce JWT Verification" muss aus sein (springt
+   beim Neu-Deploy über das Dashboard manchmal wieder auf „an").
+
+**SPÄTER, zusammen mit dem Buchungs-Relaunch** (siehe „Relaunch später" unten — hier nur
+ergänzt, nicht separat vorziehen):
+4. Die übrigen 5 Edge Functions neu deployen — Code liegt fertig in
+   `supabase/functions/<name>/index.ts`, gleiches Cors-Inline-Vorgehen wie oben.
+
+**Immer, unabhängig vom Zeitpunkt:**
+5. Website-Dateien (`.htaccess`, `robots.txt`, `.gitignore`, alle `assets/`) ganz normal
+   per FTP hochladen — kein Sonderfall, kann jederzeit passieren.
+6. Nach jedem Function-Deploy: kurz live testen (Formular abschicken / E-Mail kommt an).
+7. Nach dem Website-Upload: CSP-Header per Browser-DevTools (Network-Tab → Response
+   Headers) auf der echten Domain gegenchecken, nicht blind vertrauen.
 
 ---
 
