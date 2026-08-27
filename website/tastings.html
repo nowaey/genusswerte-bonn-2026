@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tastings in Bonn — Genusswerte Bonn</title>
-  <meta name="description" content="Wähle dein Tasting und finde einen passenden Termin — Wein, Champagner, Gin, Whisky und Feinkost in Bonn-Poppelsdorf.">
+  <meta name="description" content="Wähle dein Tasting — Wein, Champagner, Gin, Whisky und Feinkost in kleiner Runde, persönlich moderiert in Bonn-Poppelsdorf.">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Tastings in Bonn — Genusswerte Bonn">
-  <meta property="og:description" content="Wähle dein Tasting und finde einen passenden Termin — persönlich moderiert in Bonn-Poppelsdorf.">
+  <meta property="og:description" content="Wähle dein Tasting — Wein, Champagner, Gin, Whisky und Feinkost in kleiner Runde, persönlich moderiert in Bonn-Poppelsdorf.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="de_DE">
 
@@ -26,6 +26,9 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/modal.css">
   <link rel="stylesheet" href="assets/css/closing-cta-depth.css">
+  <!-- Buchungs-Schalter. MUSS im <head> und ohne defer/async stehen,
+       damit ausgeblendete Elemente nicht kurz aufblitzen. -->
+  <script src="assets/js/config.js"></script>
 </head>
 <body>
 
@@ -45,8 +48,12 @@
         <ul class="nav__menu" id="nav-menu" role="list">
           <li><a href="tastings.html" class="nav__link" aria-current="page">Tastings</a></li>
           <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
-          <li class="nav__cta">
+          <!-- data-booking-only: kommt zurueck sobald config.js bookingEnabled:true — nicht loeschen -->
+          <li class="nav__cta" data-booking-only>
             <a href="gutschein-einloesen.html" class="btn btn--primary">Gutschein einlösen</a>
+          </li>
+          <li class="nav__cta" data-booking-off-only>
+            <a href="tastings.html#tastings-uebersicht" class="btn btn--primary">Tasting buchen</a>
           </li>
         </ul>
       </nav>
@@ -62,11 +69,11 @@
           <div class="tasting-hero__text js-animate">
             <span class="section__eyebrow">Tastings in Bonn</span>
             <h1 class="tasting-hero__headline">Wähle dein Tasting.<br>Finde deinen Genussmoment.</h1>
-            <p class="tasting-hero__body">Entdecke Wein, Champagner, Gin, Whisky und Feinkost in persönlicher Runde &mdash; und wähle direkt einen passenden Termin für deinen Gutschein.</p>
+            <p class="tasting-hero__body">Entdecke Wein, Champagner, Gin, Whisky und Feinkost in persönlicher Runde &mdash; such dir dein Format aus und sichere dir deinen Platz.</p>
             <div class="tasting-hero__actions">
               <a href="#tastings-uebersicht" class="tasting-hero__cta">Tastings ansehen &rarr;</a>
             </div>
-            <p class="tasting-hero__meta">Gutscheine mit Terminwahl &middot; persönlich moderiert &middot; in Bonn-Poppelsdorf</p>
+            <p class="tasting-hero__meta">Persönlich moderiert &middot; kleine Runden &middot; in Bonn-Poppelsdorf</p>
           </div>
           <figure class="tasting-hero__image js-animate" data-delay="1">
             <img src="assets/images/tasting-hero-weinglaeser.jpg" alt="Drei Weingläser werden beim Tasting bei Genusswerte Bonn befüllt" width="736" height="920" loading="eager">
@@ -80,8 +87,9 @@
       <div class="container">
         <div class="how-it-works__inner js-animate">
           <span class="section__eyebrow">So funktioniert&rsquo;s</span>
-          <h2 class="how-it-works__title">In drei Schritten zum Tasting-Gutschein.</h2>
-          <ol class="how-it-works__steps">
+          <!-- data-booking-only: kommt zurueck sobald config.js bookingEnabled:true — nicht loeschen -->
+          <h2 class="how-it-works__title" data-booking-only>In drei Schritten zum Tasting-Gutschein.</h2>
+          <ol class="how-it-works__steps" data-booking-only>
             <li class="how-it-works__step">
               <span class="how-it-works__step-num">01</span>
               <h3 class="how-it-works__step-title">Tasting wählen</h3>
@@ -96,6 +104,26 @@
               <span class="how-it-works__step-num">03</span>
               <h3 class="how-it-works__step-title">Termin später einlösen</h3>
               <p class="how-it-works__step-text">Den passenden Termin wählst du später bequem über <a href="gutschein-einloesen.html">Gutschein einlösen</a>.</p>
+            </li>
+          </ol>
+
+          <!-- data-booking-off-only: sichtbar solange die Buchung ueber das externe System laeuft -->
+          <h2 class="how-it-works__title" data-booking-off-only>In drei Schritten zu deinem Tasting.</h2>
+          <ol class="how-it-works__steps" data-booking-off-only>
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">01</span>
+              <h3 class="how-it-works__step-title">Tasting wählen</h3>
+              <p class="how-it-works__step-text">Stöber unten durch unsere neun Formate und finde das, was zu dir oder deinem Anlass passt.</p>
+            </li>
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">02</span>
+              <h3 class="how-it-works__step-title">Termin aussuchen</h3>
+              <p class="how-it-works__step-text">Ein Klick auf &bdquo;Tasting buchen&ldquo; öffnet unsere Terminübersicht &mdash; dort siehst du sofort, wann noch Plätze frei sind.</p>
+            </li>
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">03</span>
+              <h3 class="how-it-works__step-title">Platz sichern</h3>
+              <p class="how-it-works__step-text">Termin auswählen, Daten eintragen &mdash; fertig. Deine Bestätigung kommt direkt per E-Mail.</p>
             </li>
           </ol>
         </div>
@@ -136,15 +164,16 @@
     </section>
 
     <!-- 5. ABSCHLUSS-CTA -->
-    <section class="section section--dark closing-cta" aria-label="Tasting entdecken oder Gutschein einlösen">
+    <section class="section section--dark closing-cta" aria-label="Tastings entdecken">
       <div class="container">
         <div class="closing-cta__inner js-animate">
           <span class="closing-cta__eyebrow">Tasting verschenken oder selbst erleben</span>
           <h2 class="closing-cta__title">Bereit für deinen Genussmoment?</h2>
-          <p class="closing-cta__subtitle">Wähle dein Tasting oben aus &mdash; oder löse einen bereits erhaltenen Gutschein direkt ein.</p>
+          <p class="closing-cta__subtitle" data-booking-only>Wähle dein Tasting oben aus &mdash; oder löse einen bereits erhaltenen Gutschein direkt ein.</p>
+          <p class="closing-cta__subtitle" data-booking-off-only>Wähle dein Tasting oben aus &mdash; den passenden Termin sicherst du dir direkt im Anschluss.</p>
           <div class="closing-cta__actions">
             <a href="#tastings-uebersicht" class="btn btn--hero-outline closing-cta__primary">Tastings ansehen</a>
-            <a href="gutschein-einloesen.html" class="closing-cta__link">Gutschein einlösen &rarr;</a>
+            <a href="gutschein-einloesen.html" class="closing-cta__link" data-booking-only>Gutschein einlösen &rarr;</a>
           </div>
         </div>
       </div>
@@ -236,7 +265,7 @@
           <h4>Entdecken</h4>
           <nav class="footer__nav" aria-label="Footer Navigation">
             <a href="tastings.html">Tastings</a>
-            <a href="gutschein-einloesen.html">Gutschein einlösen</a>
+            <a href="gutschein-einloesen.html" data-booking-only>Gutschein einlösen</a>
             <a href="kontakt.html">Kontakt</a>
           </nav>
         </div>
@@ -260,7 +289,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/config.js"></script>
   <script src="assets/js/tastings-data.js"></script>
   <script src="assets/js/checkout.js"></script>
   <script src="assets/js/main.js"></script>

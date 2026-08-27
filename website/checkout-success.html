@@ -100,6 +100,9 @@
       color: var(--color-white);
     }
   </style>
+  <!-- Buchungs-Schalter. MUSS im <head> und ohne defer/async stehen,
+       damit ausgeblendete Elemente nicht kurz aufblitzen. -->
+  <script src="assets/js/config.js"></script>
 </head>
 <body>
 
@@ -118,8 +121,12 @@
         <ul class="nav__menu" id="nav-menu" role="list">
           <li><a href="tastings.html" class="nav__link">Tastings</a></li>
           <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
-          <li class="nav__cta">
+          <!-- data-booking-only: kommt zurueck sobald config.js bookingEnabled:true — nicht loeschen -->
+          <li class="nav__cta" data-booking-only>
             <a href="gutschein-einloesen.html" class="btn btn--primary">Gutschein einlösen</a>
+          </li>
+          <li class="nav__cta" data-booking-off-only>
+            <a href="tastings.html#tastings-uebersicht" class="btn btn--primary">Tasting buchen</a>
           </li>
         </ul>
       </nav>
@@ -146,7 +153,7 @@
           </p>
 
           <div class="success-actions">
-            <a href="gutschein-einloesen.html" class="btn btn--primary">Gutschein einl&ouml;sen &rarr;</a>
+            <a href="gutschein-einloesen.html" class="btn btn--primary" data-booking-only>Gutschein einl&ouml;sen &rarr;</a>
             <a href="index.html" class="btn--outline">Zur&uuml;ck zur Startseite</a>
           </div>
 
@@ -174,7 +181,7 @@
           <h4>Entdecken</h4>
           <nav class="footer__nav" aria-label="Footer Navigation">
             <a href="tastings.html">Tastings</a>
-            <a href="gutschein-einloesen.html">Gutschein einl&ouml;sen</a>
+            <a href="gutschein-einloesen.html" data-booking-only>Gutschein einl&ouml;sen</a>
             <a href="kontakt.html">Kontakt</a>
           </nav>
         </div>
@@ -198,7 +205,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/config.js"></script>
   <script src="assets/js/main.js"></script>
 
 </body>

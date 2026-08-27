@@ -30,4 +30,12 @@ AddDefaultCharset UTF-8
   Header always set X-Content-Type-Options "nosniff"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # config.js ist der Schalter fuer das Buchungssystem und darf
+  # NIE aus dem Cache bedient werden. Ohne diese Regel wuerden
+  # wiederkehrende Besucher nach einem Umschalten bis zu einer
+  # Woche (siehe mod_expires oben) den alten Zustand sehen.
+  <FilesMatch "config\.js$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
 </IfModule>

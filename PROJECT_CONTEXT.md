@@ -3,6 +3,34 @@
 
 ---
 
+## ⚠️ Buchungssystem ist PAUSIERT (seit 27.08.2026)
+
+Das eigene Gutschein-/Einlösesystem ist **frontseitig abgeschaltet**. Die Tastings werden
+über das externe Genusswerte-System gebucht (`genusswerte.com/shop/products/detail/...`).
+
+**Der Schalter:** `website/assets/js/config.js` → `bookingEnabled: false`
+
+Backend bleibt vollständig deployed und unangetastet — Edge Functions, Stripe, DB, Admin-Panel.
+Pausiert ist ausschließlich die Sichtbarkeit im Frontend.
+
+**Wie es funktioniert:**
+- `config.js` liegt im `<head>` aller 8 Seiten (ohne `defer`/`async`) und hängt `gw-booking-off`
+  bzw. `gw-booking-on` an `<html>`
+- `base.css` blendet darüber `[data-booking-only]` bzw. `[data-booking-off-only]` aus
+- Karten-Buttons auf `tastings.html` rendern als externe `<a>` statt Modal-Button (`main.js`, `renderTastingCards`)
+- Modal und Checkout sind per Guard inaktiv; `gutschein-einloesen.html` zeigt einen On-Hold-Hinweis
+  und bekommt automatisch `noindex`
+
+**Relaunch:** `bookingEnabled: true` setzen, `config.js` hochladen. Fertig.
+Vorher prüfen: Stripe-Live-Keys gesetzt (läuft aktuell im **Testmodus**), `WEBSITE_URL` korrekt,
+`tasting_slots` angelegt, Edge Functions erreichbar.
+Kontrolle, dass keine Marker verloren gingen: `grep -o 'data-booking-only' website/*.html | grep -v off-only | wc -l` → **34**,
+`grep -o 'data-booking-off-only' website/*.html | wc -l` → **14**.
+
+**Nichts mit `data-booking-only` / `data-booking-off-only` löschen** — das ist der Rücksprung-Pfad.
+
+---
+
 ## Backend-Status (Stand: August 2026)
 
 Das komplette Payment-Flow läuft produktionsbereit:

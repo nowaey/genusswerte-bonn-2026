@@ -1,4 +1,12 @@
 {
   "outputDirectory": "website",
-  "buildCommand": null
+  "buildCommand": null,
+  "headers": [
+    {
+      "source": "/assets/js/config.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+      ]
+    }
+  ]
 }

@@ -24,6 +24,9 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/redeem.css">
+  <!-- Buchungs-Schalter. MUSS im <head> und ohne defer/async stehen,
+       damit ausgeblendete Elemente nicht kurz aufblitzen. -->
+  <script src="assets/js/config.js"></script>
 </head>
 <body>
 
@@ -47,8 +50,12 @@
         <ul class="nav__menu" id="nav-menu" role="list">
           <li><a href="tastings.html" class="nav__link">Tastings</a></li>
           <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
-          <li class="nav__cta">
+          <!-- data-booking-only: kommt zurueck sobald config.js bookingEnabled:true — nicht loeschen -->
+          <li class="nav__cta" data-booking-only>
             <a href="gutschein-einloesen.html" class="btn btn--primary" aria-current="page">Gutschein einlösen</a>
+          </li>
+          <li class="nav__cta" data-booking-off-only>
+            <a href="tastings.html#tastings-uebersicht" class="btn btn--primary">Tasting buchen</a>
           </li>
         </ul>
       </nav>
@@ -65,13 +72,36 @@
            alt="Genusswerte Bonn" class="page-hero__logo" width="130" height="39">
       <span class="page-hero__eyebrow">Tasting-Gutschein</span>
       <h1 class="page-hero__title">Deinen Gutschein einlösen</h1>
-      <p class="page-hero__subtitle">Code eingeben &mdash; Termin w&auml;hlen &mdash; Best&auml;tigung per E-Mail.</p>
+      <!-- data-booking-only: kommt zurueck sobald config.js bookingEnabled:true — nicht loeschen -->
+      <p class="page-hero__subtitle" data-booking-only>Code eingeben &mdash; Termin w&auml;hlen &mdash; Best&auml;tigung per E-Mail.</p>
+      <p class="page-hero__subtitle" data-booking-off-only>Die Online-Einlösung pausiert gerade &mdash; wir kümmern uns persönlich darum.</p>
     </div>
+
+    <!-- =====================================================
+         ON-HOLD-HINWEIS
+         Sichtbar solange die Buchung über das externe System läuft.
+         Verhindert, dass Besucher über ein altes Lesezeichen in einer
+         Sackgasse landen.
+         ===================================================== -->
+    <section class="section" data-booking-off-only aria-label="Hinweis zur Terminbuchung">
+      <div class="container">
+        <div class="sidebar-block" style="max-width: 42rem; margin-inline: auto;">
+          <h3>Termine buchst du gerade direkt beim Tasting</h3>
+          <p>Die Online-Einlösung über diese Seite pausiert im Moment. Deine Tasting-Termine
+             findest du dafür direkt bei den einzelnen Formaten &mdash; dort siehst du auf einen
+             Blick, wann noch Plätze frei sind.</p>
+          <p>Du hast noch einen Gutschein von uns und bist dir nicht sicher, wie du ihn
+             einlöst? Ruf uns kurz an &mdash; wir klären das persönlich.</p>
+          <a href="tastings.html#tastings-uebersicht" class="btn btn--primary">Zu den Tastings</a>
+          <a href="tel:+4922825908928" class="btn btn--secondary">+49 228 2590 8928</a>
+        </div>
+      </div>
+    </section>
 
     <!-- =====================================================
          3-SCHRITT-HINWEIS
          ===================================================== -->
-    <section class="section section--alt" aria-label="Ablauf">
+    <section class="section section--alt" data-booking-only aria-label="Ablauf">
       <div class="container">
         <ol class="steps" role="list" aria-label="So läuft die Einlösung ab">
 
@@ -107,7 +137,7 @@
     <!-- =====================================================
          REDEMPTION FORM
          ===================================================== -->
-    <section class="section" id="formular" aria-label="Einlöseformular">
+    <section class="section" id="formular" data-booking-only aria-label="Einlöseformular">
       <div class="container">
 
         <div class="redemption-layout">
@@ -270,7 +300,7 @@
           <h4>Navigation</h4>
           <nav class="footer__nav" aria-label="Footer Navigation">
             <a href="tastings.html">Tastings</a>
-            <a href="gutschein-einloesen.html">Gutschein einlösen</a>
+            <a href="gutschein-einloesen.html" data-booking-only>Gutschein einlösen</a>
             <a href="kontakt.html">Kontakt</a>
             <a href="https://www.instagram.com/genusswerte.bonn/" target="_blank" rel="noopener noreferrer">Instagram</a>
           </nav>
@@ -297,7 +327,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/config.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/voucher-form.js"></script>
 </body>

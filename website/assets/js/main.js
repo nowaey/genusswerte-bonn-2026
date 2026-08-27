@@ -170,7 +170,28 @@
     var grid = document.querySelector('[data-tasting-cards]');
     if (!grid || !window.GW_TASTINGS) return;
 
+    /* Buchung pausiert? Dann statt des Modal-Buttons ein Link auf das
+       externe Buchungssystem — gleiche CSS-Klassen, optisch identisch. */
+    var cfg       = window.GW_CONFIG || {};
+    var ext       = cfg.externalBooking || {};
+    var extUrls   = ext.urls || {};
+    var extLabel  = ext.buttonLabel || 'Tasting buchen';
+    var bookingOn = cfg.bookingEnabled === true;
+
     var html = window.GW_TASTINGS.map(function (t, i) {
+      var action;
+      if (bookingOn) {
+        action = '<button type="button" class="btn btn--secondary tasting-card__btn"'
+               + ' data-tasting-open="' + t.id + '">Tasting-Gutschein kaufen</button>';
+      } else if (extUrls[t.id]) {
+        action = '<a href="' + extUrls[t.id] + '" target="_blank" rel="noopener noreferrer"'
+               + ' class="btn btn--secondary tasting-card__btn"'
+               + ' aria-label="' + t.title + ' buchen (öffnet in neuem Tab)">' + extLabel + '</a>';
+      } else {
+        /* Falls eine URL noch fehlt: nie ein toter Button */
+        action = '<a href="kontakt.html" class="btn btn--secondary tasting-card__btn">Termin anfragen</a>';
+      }
+
       return ''
         + '<article class="card tasting-card js-animate" data-delay="' + ((i % 3) + 1) + '" aria-label="' + t.title + '">'
         + '  <div class="card__image">'
@@ -182,7 +203,7 @@
         + '    <p class="card__description">' + t.description + '</p>'
         + '    <p class="card__price">ab ' + formatPrice(t.pricePerPerson) + ' p. P.</p>'
         + '    <div class="card__action">'
-        + '      <button type="button" class="btn btn--secondary tasting-card__btn" data-tasting-open="' + t.id + '">Tasting-Gutschein kaufen</button>'
+        + '      ' + action
         + '    </div>'
         + '  </div>'
         + '</article>';
@@ -207,6 +228,11 @@
   }
 
   function initTastingModal() {
+    /* Buchung pausiert: Modal bleibt komplett inaktiv. Die Karten
+       rendern dann ohnehin keinen [data-tasting-open]-Button mehr —
+       dies ist die zweite Absicherung. */
+    if (!window.GW_CONFIG || window.GW_CONFIG.bookingEnabled !== true) return;
+
     var modal = document.getElementById('tasting-modal');
     if (!modal || !window.GW_TASTINGS) return;
 
@@ -342,5 +368,28 @@
     initOpeningHoursToday();
     renderTastingCards();
     initTastingModal();
+    initCheckoutCancelledNotice();
+  }
+
+  /* --- Abgebrochener Stripe-Checkout ---------------------
+     Stripe schickt bei Abbruch auf tastings.html?checkout=cancelled.
+     Bisher wurde der Parameter nirgends ausgewertet — der Besucher
+     landete kommentarlos wieder im Karten-Raster. Greift erst,
+     wenn das eigene Buchungssystem wieder aktiv ist. */
+  function initCheckoutCancelledNotice() {
+    if (!window.GW_CONFIG || window.GW_CONFIG.bookingEnabled !== true) return;
+    if (location.search.indexOf('checkout=cancelled') === -1) return;
+
+    var host = document.querySelector('[data-tasting-cards]');
+    if (!host || !host.parentNode) return;
+
+    var p = document.createElement('p');
+    p.className = 'noscript-fallback';
+    p.setAttribute('role', 'status');
+    p.textContent = 'Der Kauf wurde abgebrochen — es wurde nichts berechnet. '
+                  + 'Du kannst jederzeit erneut starten.';
+    host.parentNode.insertBefore(p, host);
+
+    history.replaceState(null, '', location.pathname);
   }
 })();

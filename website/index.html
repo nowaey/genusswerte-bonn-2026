@@ -27,6 +27,9 @@
   <!-- EXPERIMENT (siehe Datei-Kommentar) — zum Zurücksetzen diese Zeile entfernen -->
   <link rel="stylesheet" href="assets/css/closing-cta-depth.css">
   <link rel="stylesheet" href="assets/css/google-reviews.css">
+  <!-- Buchungs-Schalter. MUSS im <head> und ohne defer/async stehen,
+       damit ausgeblendete Elemente nicht kurz aufblitzen. -->
+  <script src="assets/js/config.js"></script>
 </head>
 <body>
 
@@ -52,8 +55,12 @@
         <ul class="nav__menu" id="nav-menu" role="list">
           <li><a href="tastings.html" class="nav__link">Tastings</a></li>
           <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
-          <li class="nav__cta">
+          <!-- data-booking-only: kommt zurueck sobald config.js bookingEnabled:true — nicht loeschen -->
+          <li class="nav__cta" data-booking-only>
             <a href="gutschein-einloesen.html" class="btn btn--primary">Gutschein einlösen</a>
+          </li>
+          <li class="nav__cta" data-booking-off-only>
+            <a href="tastings.html#tastings-uebersicht" class="btn btn--primary">Tasting buchen</a>
           </li>
         </ul>
       </nav>
@@ -71,7 +78,7 @@
         <p class="hero__desc">Wein, Feinkost und besondere Genussmomente &mdash; persönlich, hochwertig und in kleiner Runde.</p>
         <div class="hero__cta-group">
           <a href="tastings.html" class="btn btn--hero-gold">Tastings entdecken</a>
-          <a href="gutschein-einloesen.html" class="hero__cta-link">Gutschein einlösen&nbsp;→</a>
+          <a href="gutschein-einloesen.html" class="hero__cta-link" data-booking-only>Gutschein einlösen&nbsp;→</a>
         </div>
         <p class="hero__trust">Kleine Gruppen &middot; Persönliche Beratung &middot; Feinkost vor Ort</p>
       </div>
@@ -233,7 +240,7 @@
             <p class="closing-cta__subtitle">Wein, Champagner, Gin oder Feinkost &mdash; f&uuml;r besondere Momente in kleiner Runde.</p>
             <div class="closing-cta__actions">
               <a href="tastings.html" class="btn btn--hero-outline closing-cta__primary">Tastings entdecken</a>
-              <a href="gutschein-einloesen.html" class="closing-cta__link">Gutschein einl&ouml;sen &rarr;</a>
+              <a href="gutschein-einloesen.html" class="closing-cta__link" data-booking-only>Gutschein einl&ouml;sen &rarr;</a>
             </div>
           </div>
 
@@ -298,7 +305,7 @@
           <h4>Entdecken</h4>
           <nav class="footer__nav" aria-label="Footer Navigation">
             <a href="tastings.html">Tastings</a>
-            <a href="gutschein-einloesen.html">Gutschein einl&ouml;sen</a>
+            <a href="gutschein-einloesen.html" data-booking-only>Gutschein einl&ouml;sen</a>
             <a href="kontakt.html">Kontakt</a>
           </nav>
         </div>

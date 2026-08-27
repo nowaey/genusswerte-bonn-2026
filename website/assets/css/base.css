@@ -207,3 +207,16 @@ strong { font-weight: 600; }
   background-color: var(--color-green);
   color: var(--color-white);
 }
+
+/* ---------------------------------------------------------
+   Buchung pausiert / aktiv — gesteuert von config.js
+
+   .gw-booking-off = externes Buchungssystem (aktuell)
+   .gw-booking-on  = eigenes Gutscheinsystem
+
+   NICHTS hiervon löschen — das ist der Rücksprung-Pfad.
+   Die versteckten Elemente bleiben vollständig im HTML und
+   kommen zurück, sobald in config.js bookingEnabled: true steht.
+   --------------------------------------------------------- */
+.gw-booking-off [data-booking-only]     { display: none !important; }
+.gw-booking-on  [data-booking-off-only] { display: none !important; }
