@@ -3,131 +3,158 @@
 
 ---
 
-## ⚠️ Security-Härtung (27.08.2026) — Deployment noch offen
-
-Ein Audit + Härtungsdurchgang wurde gemacht. Der **Code liegt fertig im Repo**, ist aber
-**noch nicht live** — Supabase-Edge-Functions und die neue Migration müssen manuell
-nachgezogen werden (Dashboard-Copy-Paste wie beim ersten `submit-group-inquiry`-Deploy).
-
-**Was geändert wurde:**
-1. **HTML-Injection behoben** — `stripe-webhook` und `schedule-voucher` interpolierten den
-   Kundennamen unescaped in HTML-E-Mails (`esc()`-Helper ergänzt, wie ihn `submit-group-inquiry`
-   schon hatte).
-2. **CORS von `*` auf Allowlist** — `supabase/functions/_shared/cors.ts` exportiert jetzt
-   `getCorsHeaders(origin)` statt eines statischen `*`-Objekts. Erlaubt: `genusswerte-bonn.de`,
-   `*.vercel.app`, `localhost`. **Betrifft alle 6 Functions** — jede berechnet `cors` jetzt
-   pro Request neu (wichtig: nicht auf Modulebene, sonst Race Condition zwischen
-   gleichzeitigen Requests unterschiedlicher Herkunft).
-3. **Stripe-Webhook: Replay-Schutz** — Signatur-Zeitstempel wird jetzt gegen ein
-   300s-Toleranzfenster geprüft (wie Stripes eigenes SDK), Vergleich läuft timing-safe.
-4. **Eingabelängen gedeckelt** — `schedule-voucher` und `submit-group-inquiry` lehnen
-   überlange Eingaben ab (vorher nur Pflichtfeld-Check, keine Obergrenze).
-5. **Rate-Limiting** — neue Migration `013_rate_limiting.sql` (Tabelle `rate_limit_hits` +
-   Funktion `check_rate_limit()`, DB-basiert weil Edge-Function-Instanzen zustandslos sind).
-   Aktuell nur in `submit-group-inquiry` eingebunden (8 Anfragen/IP/Stunde) — das anfälligste
-   Formular, weil es ohne Zahlungsschranke E-Mails auslöst. Bei Bedarf auf weitere Functions
-   übertragbar, gleiches Muster.
-6. **`gutscheine-boxen.html`**: Inline-`onclick`/`<script>` nach `assets/js/gutscheine-boxen.js`
-   ausgelagert (addEventListener statt onclick) — nötig, damit die neue CSP ohne
-   `unsafe-inline` für Scripts nicht die Bestellen-Buttons blockiert.
-7. **HTTP-Security-Header** — `website/.htaccess` UND `vercel.json` (Vercel ignoriert
-   `.htaccess` komplett, hatte vorher NULL Security-Header) setzen jetzt beide:
-   Content-Security-Policy, Strict-Transport-Security, Permissions-Policy. Lokal gegen
-   alle 9 Seiten getestet (0 CSP-Verstöße).
-8. `website/robots.txt` ergänzt (fehlte), `website/.gitignore` als Verteidigung in der
-   Tiefe gegen versehentlich committete `.env`/`.sql`/`.bak`-Dateien im FTP-Deploy-Ordner.
-
-**Bewusst gestaffelt — nicht alles auf einmal deployen:**
-Solange das Buchungssystem pausiert ist (siehe unten), wird von den 6 Edge Functions nur
-**`submit-group-inquiry`** tatsächlich von der Live-Seite aufgerufen. Die Lücken in den
-übrigen 5 (`create-checkout-session`, `validate-voucher`, `get-available-slots`,
-`schedule-voucher`, `stripe-webhook`) sind real, aber latent — niemand kann sie über die
-Website erreichen, solange `bookingEnabled: false` steht. Deshalb:
-
-**JETZT nötig (aktiv genutzt):**
-1. Migration `supabase/migrations/013_rate_limiting.sql` im Supabase SQL Editor ausführen
-   (Dashboard → SQL Editor → Inhalt einfügen → Run).
-2. `submit-group-inquiry` neu deployen — fertige Dashboard-Version (Cors inline statt
-   Import) liegt unter `supabase/functions/submit-group-inquiry/index.ts`, muss beim
-   Dashboard-Copy-Paste wie gehabt inline umgebaut werden (`getCorsHeaders`-Funktion statt
-   `import ... from '../_shared/cors.ts'`).
-3. JWT-Verifizierung checken — Schalter „Enforce JWT Verification" muss aus sein (springt
-   beim Neu-Deploy über das Dashboard manchmal wieder auf „an").
-
-**SPÄTER, zusammen mit dem Buchungs-Relaunch** (siehe „Relaunch später" unten — hier nur
-ergänzt, nicht separat vorziehen):
-4. Die übrigen 5 Edge Functions neu deployen — Code liegt fertig in
-   `supabase/functions/<name>/index.ts`, gleiches Cors-Inline-Vorgehen wie oben.
-
-**Immer, unabhängig vom Zeitpunkt:**
-5. Website-Dateien (`.htaccess`, `robots.txt`, `.gitignore`, alle `assets/`) ganz normal
-   per FTP hochladen — kein Sonderfall, kann jederzeit passieren.
-6. Nach jedem Function-Deploy: kurz live testen (Formular abschicken / E-Mail kommt an).
-7. Nach dem Website-Upload: CSP-Header per Browser-DevTools (Network-Tab → Response
-   Headers) auf der echten Domain gegenchecken, nicht blind vertrauen.
-
----
-
-## ⚠️ Buchungssystem ist PAUSIERT (seit 27.08.2026)
+## ⚠️ Buchungssystem ist PAUSIERT (seit 27.08.2026) — HIER STEHT DIE VOLLSTÄNDIGE RELAUNCH-CHECKLISTE
 
 Das eigene Gutschein-/Einlösesystem ist **frontseitig abgeschaltet**. Die Tastings werden
 über das externe Genusswerte-System gebucht (`genusswerte.com/shop/products/detail/...`).
 
 **Der Schalter:** `website/assets/js/config.js` → `bookingEnabled: false`
 
-Backend bleibt vollständig deployed und unangetastet — Edge Functions, Stripe, DB, Admin-Panel.
-Pausiert ist ausschließlich die Sichtbarkeit im Frontend.
+Backend bleibt vollständig deployed — Edge Functions, Stripe, DB, Admin-Panel. Pausiert ist
+ausschließlich die Sichtbarkeit im Frontend. **Zusätzlich** gibt es seit dem Security-Audit
+vom 27.08.2026 (Details siehe „Security-Härtung" weiter unten) noch **5 Edge Functions mit
+fertigem, aber nicht deploytem Fix-Code** — die müssen beim Relaunch mit rein, siehe Schritt 2
+unten. Das ist der Teil, den man beim schnellen Überfliegen leicht übersieht — deshalb
+steht hier alles an einer Stelle.
 
-**Wie es funktioniert:**
+**Wie die Pause technisch funktioniert:**
 - `config.js` liegt im `<head>` aller 9 Seiten (ohne `defer`/`async`) und hängt `gw-booking-off`
   bzw. `gw-booking-on` an `<html>`
 - `base.css` blendet darüber `[data-booking-only]` bzw. `[data-booking-off-only]` aus
 - Karten-Buttons auf `tastings.html` rendern als externe `<a>` statt Modal-Button (`main.js`, `renderTastingCards`)
 - Modal und Checkout sind per Guard inaktiv; `gutschein-einloesen.html` zeigt einen On-Hold-Hinweis
   und bekommt automatisch `noindex`
+- **Nav-CTA ist NICHT Teil des Schalters:** Der Button oben rechts zeigt seit Einführung von
+  „Gruppen & Events" dauerhaft dorthin, unabhängig von `bookingEnabled`. Beim Relaunch taucht
+  „Gutschein einlösen" wieder in Footer/Hero/Closing-CTA auf (weiterhin `data-booking-only`),
+  aber **nicht** im Nav-Slot — dort bleibt „Gruppen & Events" stehen. So ist es gewollt.
 
-**Relaunch:** `bookingEnabled: true` setzen, `config.js` hochladen. Fertig.
-Vorher prüfen: Stripe-Live-Keys gesetzt (läuft aktuell im **Testmodus**), `WEBSITE_URL` korrekt,
-`tasting_slots` angelegt, Edge Functions erreichbar.
+**Nichts mit `data-booking-only` / `data-booking-off-only` löschen** — das ist der Rücksprung-Pfad.
 Kontrolle, dass keine Marker verloren gingen: `grep -o 'data-booking-only' website/*.html | wc -l` → **19**,
 `grep -o 'data-booking-off-only' website/*.html | wc -l` → **6**.
 
-**Nichts mit `data-booking-only` / `data-booking-off-only` löschen** — das ist der Rücksprung-Pfad.
+### ✅ RELAUNCH-CHECKLISTE — komplett, in dieser Reihenfolge
 
-**Wichtig — Nav-CTA ist NICHT mehr Teil des Schalters (seit 27.08.2026):**
-Der prominente Button oben rechts in der Navigation zeigt seit der Einführung von
-„Gruppen & Events" **dauerhaft** dorthin, unabhängig von `bookingEnabled`. Das war
-ursprünglich anders (dort wechselte „Gutschein einlösen" ↔ „Tasting buchen"), wurde aber
-bewusst geändert — Gruppenanfragen sind ein eigenständiges Thema. Beim Relaunch taucht
-„Gutschein einlösen" wieder in Footer/Hero/Closing-CTA auf (weiterhin `data-booking-only`),
-aber **nicht** mehr im Nav-Slot — dort bleibt „Gruppen & Events" stehen.
+**1. Die 5 noch offenen Edge-Function-Fixes deployen** (Details/Hintergrund siehe
+   „Security-Härtung" weiter unten — hier nur die Handlungsschritte):
+   - `create-checkout-session`, `validate-voucher`, `get-available-slots`,
+     `schedule-voucher`, `stripe-webhook` — Code liegt fertig in
+     `supabase/functions/<name>/index.ts`.
+   - Bei den 4 Functions außer `stripe-webhook`: Dashboard-Copy-Paste braucht den
+     `getCorsHeaders`-Code **inline** statt `import ... from '../_shared/cors.ts'`
+     (Dashboard-Editor kennt nur eine Datei pro Function). Muster/Vorlage: wie bei
+     `submit-group-inquiry` bereits gemacht (siehe „Security-Härtung" unten für den
+     genauen Inline-Block).
+   - `stripe-webhook` braucht keinen Umbau, kein `_shared`-Import vorhanden — 1:1 einfügen.
+   - Nach jedem Deploy: „Enforce JWT Verification" muss AUS sein (Dashboard → Function →
+     Settings) — springt beim Neu-Deploy manchmal wieder auf „an".
+2. **Stripe-Live-Keys setzen** — läuft aktuell im **Testmodus** (`STRIPE_SECRET_KEY` /
+   `STRIPE_WEBHOOK_SECRET` in Supabase Secrets auf echte Live-Keys umstellen).
+3. **`WEBSITE_URL`-Secret prüfen** — muss auf die echte, aktuelle Produktions-Domain zeigen
+   (aktuell hinterlegt: `https://genusswerte-bonn.de`).
+4. **`tasting_slots` anlegen** — über Admin Panel, sonst zeigt die Einlöseseite keine
+   echten Termine.
+5. **`bookingEnabled: true`** in `website/assets/js/config.js` setzen, Datei per FTP hochladen.
+   Das ist der eigentliche Schalter — Nav/Footer/Hero-Links, Modal und Checkout kommen
+   damit sofort zurück.
+6. **Live testen**: einen echten Testkauf durchklicken (kleiner Betrag oder Stripe-Testkarte
+   falls Testmodus versehentlich noch aktiv), prüfen dass die Bestätigungsmail ankommt und
+   der Gutschein sich einlösen lässt.
+7. **Suchmaschinen-Reindexierung** — `gutschein-einloesen.html` war während der Pause
+   `noindex`. In der Google Search Console (falls vorhanden) eine Neuindexierung anstoßen,
+   nicht auf den nächsten Crawl warten.
 
 ---
 
-## Gruppen- & Event-Anfragen (seit 27.08.2026)
+## Security-Härtung (27.08.2026) — Hintergrund zu Schritt 1 oben
 
-Neue Seite `website/gruppen-events.html` mit Formular (Name, E-Mail, Telefon, Anlass,
+Audit + Härtungsdurchgang. **`submit-group-inquiry` ist deployed und live-getestet**
+(CORS-Allowlist + Rate-Limit per curl bestätigt: fremde Origin wird abgewiesen, 8.
+Anfrage/Stunde bekommt `429`). **Die anderen 5 Functions sind nur Code im Repo, noch
+nicht deployed** — das ist Schritt 1 der Relaunch-Checkliste oben.
+
+**Was geändert wurde (gilt für alle 6 Functions gleichermaßen, ob schon deployed oder nicht):**
+1. **HTML-Injection behoben** — `stripe-webhook` und `schedule-voucher` interpolierten den
+   Kundennamen unescaped in HTML-E-Mails (`esc()`-Helper ergänzt, wie ihn `submit-group-inquiry`
+   schon hatte).
+2. **CORS von `*` auf Allowlist** — `supabase/functions/_shared/cors.ts` exportiert
+   `getCorsHeaders(origin)` statt eines statischen `*`-Objekts. Erlaubt: `genusswerte-bonn.de`,
+   `*.vercel.app`, `localhost`. Jede Function berechnet `cors` pro Request neu (nicht auf
+   Modulebene — sonst Race Condition zwischen gleichzeitigen Requests unterschiedlicher Herkunft).
+3. **Stripe-Webhook: Replay-Schutz** — Signatur-Zeitstempel wird gegen ein 300s-Toleranzfenster
+   geprüft (wie Stripes eigenes SDK), Vergleich läuft timing-safe.
+4. **Eingabelängen gedeckelt** — `schedule-voucher` und `submit-group-inquiry` lehnen
+   überlange Eingaben ab.
+5. **Rate-Limiting** — Migration `013_rate_limiting.sql` (Tabelle `rate_limit_hits` + Funktion
+   `check_rate_limit()`, DB-basiert weil Edge-Function-Instanzen zustandslos sind). Aktuell
+   nur in `submit-group-inquiry` eingebunden (8 Anfragen/IP/Stunde). Bei Bedarf auf weitere
+   Functions übertragbar, gleiches Muster — RPC-Call vor der eigentlichen Logik, siehe
+   `submit-group-inquiry/index.ts`.
+6. **`gutscheine-boxen.html`**: Inline-`onclick`/`<script>` nach `assets/js/gutscheine-boxen.js`
+   ausgelagert — nötig, damit die neue CSP ohne `unsafe-inline` für Scripts nicht die
+   Bestellen-Buttons blockiert.
+7. **HTTP-Security-Header** — `website/.htaccess` UND `vercel.json` (Vercel ignoriert
+   `.htaccess`, hatte vorher NULL Security-Header) setzen: Content-Security-Policy,
+   Strict-Transport-Security, Permissions-Policy. Lokal gegen alle 9 Seiten getestet
+   (0 CSP-Verstöße). Bereits live (kam mit dem normalen FTP-Upload mit).
+8. `website/robots.txt` ergänzt, `website/.gitignore` gegen versehentlich committete
+   `.env`/`.sql`/`.bak`-Dateien im FTP-Deploy-Ordner. Bereits live.
+
+**Dashboard-Deploy der restlichen 5 Functions — der Cors-Inline-Block** (Dashboard-Editor
+kennt nur eine Datei pro Function, kein Import möglich). Bei `create-checkout-session`,
+`validate-voucher`, `get-available-slots`, `schedule-voucher` ersetzt dieser Block die
+Zeile `import { getCorsHeaders } from '../_shared/cors.ts'`:
+```ts
+/* Origin-Allowlist inline (Dashboard-Editor kennt nur eine Datei pro
+   Funktion, kein Import von _shared/cors.ts moeglich). Repo-Version
+   nutzt stattdessen den gemeinsamen Import — bei CLI-Deploy die
+   Repo-Datei verwenden, nicht diese hier zurueckspielen. */
+const ALLOWED_ORIGINS = [
+  'https://genusswerte-bonn.de',
+  'https://www.genusswerte-bonn.de',
+]
+const ALLOWED_ORIGIN_SUFFIXES = ['.vercel.app']
+const ALLOWED_ORIGIN_PREFIXES = ['http://localhost:', 'http://127.0.0.1:']
+function isAllowedOrigin(origin) {
+  if (ALLOWED_ORIGINS.includes(origin)) return true
+  if (ALLOWED_ORIGIN_SUFFIXES.some((s) => origin.endsWith(s))) return true
+  if (ALLOWED_ORIGIN_PREFIXES.some((p) => origin.startsWith(p))) return true
+  return false
+}
+function getCorsHeaders(origin) {
+  const allowOrigin = origin && isAllowedOrigin(origin) ? origin : ALLOWED_ORIGINS[0]
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Vary': 'Origin',
+  }
+}
+```
+`stripe-webhook` braucht diesen Block NICHT (kein `_shared`-Import, läuft Server-zu-Server
+ohne CORS) — die Datei 1:1 einfügen.
+
+**Häufigster Stolperstein beim Dashboard-Deploy** (ist uns selbst passiert): Beim Markieren
+im Editor nicht ganz oben angefangen → `getCorsHeaders is not defined`-Fehler zur Laufzeit.
+Immer Strg+A (alles markieren) statt manuell ziehen, dann Zeile 1 nach dem Einfügen
+gegenchecken.
+
+---
+
+## Gruppen- & Event-Anfragen (seit 27.08.2026) — LIVE
+
+Seite `website/gruppen-events.html` mit Formular (Name, E-Mail, Telefon, Anlass,
 Personenanzahl, Wunschtermin, Nachricht). Ersetzt den alten `kontakt.html#gruppen-anfrage`-
-Mailto-Umweg als primären Weg für Gruppenanfragen.
+Mailto-Umweg als primären Weg für Gruppenanfragen. Nav-CTA zeigt dauerhaft hierhin
+(siehe „Buchungssystem PAUSIERT" oben).
 
-**Versand:** neue Edge Function `supabase/functions/submit-group-inquiry/index.ts` —
-schickt die Formulardaten per Resend als E-Mail an `info@genusswerte-bonn.com`,
-`reply_to` ist die Absender-Adresse (direktes Antworten möglich). Keine DB-Schreibung,
-keine Speicherung — reine Weiterleitung.
+**Versand:** Edge Function `supabase/functions/submit-group-inquiry/index.ts` — **deployed,
+live getestet**. Schickt die Formulardaten per Resend an `info@genusswerte-bonn.com`,
+`reply_to` ist die Absender-Adresse. Keine DB-Schreibung der Anfrage selbst — nur die
+Rate-Limit-Zählung landet in der DB (siehe „Security-Härtung" oben).
 
-**⚠️ Muss noch deployed werden** — ist nur als Code im Repo vorhanden, aber (Stand jetzt)
-noch nicht auf Supabase live. Bis dahin zeigt das Formular beim Absenden einen
-Verbindungsfehler. Deploy z. B. über die Supabase CLI:
-```
-supabase functions deploy submit-group-inquiry
-```
-oder über das Supabase-Dashboard (Edge Functions → New Function → Code einfügen).
-`RESEND_API_KEY` ist als Secret bereits vorhanden (wird von anderen Functions mitgenutzt),
-kein neues Secret nötig.
-
-Frontend-Logik: `website/assets/js/group-inquiry-form.js`. Wiederverwendet komplett die
-bestehenden Formular-Klassen aus `components.css` (`.form-group`, `.form-input`, `.form-grid`,
-`.form-success` etc.) — keine neue CSS-Datei.
+Frontend-Logik: `website/assets/js/group-inquiry-form.js`. Nutzt die bestehenden
+Formular-Klassen aus `components.css` — keine neue CSS-Datei.
 
 ---
 
@@ -139,7 +166,11 @@ Das komplette Payment-Flow läuft produktionsbereit:
 **Supabase-URL:** `https://dwreeykpjptfncjijjmg.supabase.co`  
 **Website-Config:** `website/assets/js/config.js` → `apiBase` zeigt auf diese URL
 
-### Edge Functions (alle deployed, alle mit `--no-verify-jwt`)
+### Edge Functions (alle mit `--no-verify-jwt` / „Enforce JWT Verification" aus)
+
+⚠️ Bei den ersten 5 läuft aktuell noch der **alte Code ohne die Security-Fixes** vom
+27.08.2026 — deployed heißt hier nicht „aktueller Stand", siehe Relaunch-Checkliste ganz
+oben in diesem Dokument.
 
 | Function | Aufrufer | Aufgabe |
 |---|---|---|
@@ -148,6 +179,7 @@ Das komplette Payment-Flow läuft produktionsbereit:
 | `validate-voucher` | Website | Gutscheincode prüfen |
 | `get-available-slots` | Website | Freie Termine laden |
 | `schedule-voucher` | Website | Termin atomar reservieren |
+| `submit-group-inquiry` | Website (`gruppen-events.html`) | Gruppen-/Event-Anfrage per E-Mail — **aktueller Stand deployed** |
 
 Alle Functions nutzen raw `fetch()` — **kein Stripe SDK** (inkompatibel mit Supabase Deno).  
 Shared CORS-Headers: `supabase/functions/_shared/cors.ts`
@@ -213,10 +245,15 @@ CSS Design-Tokens: `assets/css/base.css`
 
 ## Offene Punkte
 
-1. **⚠️ API Keys rotieren** — Stripe Secret Key, Webhook Secret und Resend Key wurden einmal im Chat geteilt. Neue Keys in Supabase Secrets setzen.
-2. **Tasting-Slots anlegen** — über Admin Panel, damit Gutschein-Einlöseseite echte Termine zeigt.
-3. **`migrations/003_functions.sql`** updaten — `search_path = public, extensions` fehlt noch.
-4. **Root-Bilder** in `assets/images/` verschieben + HTML-Pfade anpassen (Phase 2 aus Plan).
+1. **⚠️ API Keys rotieren** — Stripe Secret Key, Webhook Secret und Resend Key wurden einmal
+   im Chat geteilt (unabhängig vom Booking-Relaunch, sollte zeitnah passieren — nicht erst
+   beim Relaunch). Neue Keys in Supabase Secrets setzen. Außerdem: ein `sb_secret_...`-Key
+   wurde am 27.08.2026 ebenfalls im Chat gepostet, sollte ebenso rotiert sein/werden.
+2. **`migrations/003_functions.sql`** updaten — `search_path = public, extensions` fehlt noch.
+3. **Root-Bilder** in `assets/images/` verschieben + HTML-Pfade anpassen (Phase 2 aus Plan).
+
+(Tasting-Slots anlegen und Stripe-Live-Keys setzen stehen in der Relaunch-Checkliste ganz
+oben, nicht hier — nicht doppelt pflegen.)
 
 ---
 

@@ -21,10 +21,10 @@ window.GW_CONFIG = {
      true  = eigenes Gutscheinsystem mit Stripe-Checkout und
              Termin-Einlösung ist wieder aktiv
 
-     Vor dem Umschalten auf true prüfen:
-     - Stripe-Live-Keys in den Supabase-Secrets hinterlegt?
-     - WEBSITE_URL in Supabase korrekt?
-     - Tasting-Termine (tasting_slots) angelegt?
+     Vor dem Umschalten auf true: vollständige Relaunch-Checkliste in
+     PROJECT_CONTEXT.md befolgen (u. a. 5 Edge Functions mit fertigem
+     Security-Fix-Code, die noch deployed werden müssen — nicht nur
+     diese Datei hochladen und fertig).
      --------------------------------------------------------- */
   bookingEnabled: false,
 
