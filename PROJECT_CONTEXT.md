@@ -3,6 +3,61 @@
 
 ---
 
+## ⚠️ Security-Härtung (27.08.2026) — Deployment noch offen
+
+Ein Audit + Härtungsdurchgang wurde gemacht. Der **Code liegt fertig im Repo**, ist aber
+**noch nicht live** — Supabase-Edge-Functions und die neue Migration müssen manuell
+nachgezogen werden (Dashboard-Copy-Paste wie beim ersten `submit-group-inquiry`-Deploy).
+
+**Was geändert wurde:**
+1. **HTML-Injection behoben** — `stripe-webhook` und `schedule-voucher` interpolierten den
+   Kundennamen unescaped in HTML-E-Mails (`esc()`-Helper ergänzt, wie ihn `submit-group-inquiry`
+   schon hatte).
+2. **CORS von `*` auf Allowlist** — `supabase/functions/_shared/cors.ts` exportiert jetzt
+   `getCorsHeaders(origin)` statt eines statischen `*`-Objekts. Erlaubt: `genusswerte-bonn.de`,
+   `*.vercel.app`, `localhost`. **Betrifft alle 6 Functions** — jede berechnet `cors` jetzt
+   pro Request neu (wichtig: nicht auf Modulebene, sonst Race Condition zwischen
+   gleichzeitigen Requests unterschiedlicher Herkunft).
+3. **Stripe-Webhook: Replay-Schutz** — Signatur-Zeitstempel wird jetzt gegen ein
+   300s-Toleranzfenster geprüft (wie Stripes eigenes SDK), Vergleich läuft timing-safe.
+4. **Eingabelängen gedeckelt** — `schedule-voucher` und `submit-group-inquiry` lehnen
+   überlange Eingaben ab (vorher nur Pflichtfeld-Check, keine Obergrenze).
+5. **Rate-Limiting** — neue Migration `013_rate_limiting.sql` (Tabelle `rate_limit_hits` +
+   Funktion `check_rate_limit()`, DB-basiert weil Edge-Function-Instanzen zustandslos sind).
+   Aktuell nur in `submit-group-inquiry` eingebunden (8 Anfragen/IP/Stunde) — das anfälligste
+   Formular, weil es ohne Zahlungsschranke E-Mails auslöst. Bei Bedarf auf weitere Functions
+   übertragbar, gleiches Muster.
+6. **`gutscheine-boxen.html`**: Inline-`onclick`/`<script>` nach `assets/js/gutscheine-boxen.js`
+   ausgelagert (addEventListener statt onclick) — nötig, damit die neue CSP ohne
+   `unsafe-inline` für Scripts nicht die Bestellen-Buttons blockiert.
+7. **HTTP-Security-Header** — `website/.htaccess` UND `vercel.json` (Vercel ignoriert
+   `.htaccess` komplett, hatte vorher NULL Security-Header) setzen jetzt beide:
+   Content-Security-Policy, Strict-Transport-Security, Permissions-Policy. Lokal gegen
+   alle 9 Seiten getestet (0 CSP-Verstöße).
+8. `website/robots.txt` ergänzt (fehlte), `website/.gitignore` als Verteidigung in der
+   Tiefe gegen versehentlich committete `.env`/`.sql`/`.bak`-Dateien im FTP-Deploy-Ordner.
+
+**Deployment-Checkliste — diese Reihenfolge einhalten:**
+1. **Migration zuerst**: `supabase/migrations/013_rate_limiting.sql` im Supabase SQL Editor
+   ausführen (Dashboard → SQL Editor → Datei-Inhalt einfügen → Run). Ohne das schlägt
+   `submit-group-inquiry` nicht fehl (Rate-Limit-Fehler werden bewusst durchgelassen,
+   siehe Kommentar im Code), aber das Limit greift dann noch nicht.
+2. **Alle 6 Edge Functions neu deployen** — Code für jede liegt im Repo unter
+   `supabase/functions/<name>/index.ts`. Bei `create-checkout-session` und
+   `submit-group-inquiry`: der Import `from '../_shared/cors.ts'` funktioniert nur bei
+   CLI-Deploy; beim Dashboard-Copy-Paste (wie bisher) muss der Inhalt von `_shared/cors.ts`
+   wieder inline in die jeweilige Datei kopiert werden (`getCorsHeaders`-Funktion), analog
+   zum ersten `submit-group-inquiry`-Deploy in dieser Session.
+3. **JWT-Verifizierung prüfen** — falls beim Neu-Deployen über das Dashboard der Schalter
+   „Enforce JWT Verification" wieder auf „an" zurückspringt (ist uns bei
+   `submit-group-inquiry` passiert), erneut ausschalten.
+4. Website-Dateien (`.htaccess`, `robots.txt`, `.gitignore`, alle `assets/`) ganz normal
+   per FTP hochladen — kein Sonderfall.
+5. Nach dem Deploy: CSP-Header per Browser-DevTools (Network-Tab → Response Headers) auf
+   der echten Domain gegenchecken, nicht blind vertrauen.
+
+---
+
 ## ⚠️ Buchungssystem ist PAUSIERT (seit 27.08.2026)
 
 Das eigene Gutschein-/Einlösesystem ist **frontseitig abgeschaltet**. Die Tastings werden

@@ -144,6 +144,20 @@ Deno.serve(async (req) => {
   }
 })
 
+// Toleranzfenster gegen Replay-Angriffe: ein einmal abgefangener, gueltig
+// signierter Payload darf nicht beliebig lange spaeter erneut eingespielt
+// werden koennen. Stripes eigenes SDK nutzt standardmaessig 300s.
+const SIGNATURE_TOLERANCE_SECONDS = 300
+
+function timingSafeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false
+  let diff = 0
+  for (let i = 0; i < a.length; i++) {
+    diff |= a.charCodeAt(i) ^ b.charCodeAt(i)
+  }
+  return diff === 0
+}
+
 async function verifyStripeSignature(
   payload: string,
   signature: string,
@@ -159,6 +173,12 @@ async function verifyStripeSignature(
     const timestamp = parts['t']
     const v1 = parts['v1']
     if (!timestamp || !v1) return false
+
+    // Replay-Schutz: Zeitstempel darf nicht zu alt (oder aus der Zukunft) sein
+    const timestampNum = Number(timestamp)
+    if (!Number.isFinite(timestampNum)) return false
+    const ageSeconds = Math.abs(Date.now() / 1000 - timestampNum)
+    if (ageSeconds > SIGNATURE_TOLERANCE_SECONDS) return false
 
     const encoder = new TextEncoder()
     const key = await crypto.subtle.importKey(
@@ -179,10 +199,21 @@ async function verifyStripeSignature(
       .map((b) => b.toString(16).padStart(2, '0'))
       .join('')
 
-    return expected === v1
+    return timingSafeEqual(expected, v1)
   } catch {
     return false
   }
+}
+
+// HTML-escapen fuer Werte, die aus Nutzereingaben stammen (z.B. der Name,
+// den jemand im Stripe-Checkout-Formular eintraegt) und in die E-Mail-
+// Vorlage eingesetzt werden — verhindert HTML-/Markup-Injection in der
+// versendeten Bestaetigungsmail.
+function esc(s: string): string {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
 }
 
 async function sendConfirmationEmail(opts: {
@@ -231,7 +262,7 @@ async function sendConfirmationEmail(opts: {
 
   <tr><td style="padding:28px 32px 6px;text-align:center;">
     <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:14.5px;line-height:1.75;color:#55503f;">
-      Liebe/r ${name}, dein Gutschein ist bereit &ndash; hier ist dein persönlicher Code.
+      Liebe/r ${esc(name)}, dein Gutschein ist bereit &ndash; hier ist dein persönlicher Code.
     </p>
   </td></tr>
 

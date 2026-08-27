@@ -1,4 +1,4 @@
-import { corsHeaders } from '../_shared/cors.ts'
+import { getCorsHeaders } from '../_shared/cors.ts'
 
 const TASTING_LABELS: Record<string, string> = {
   wein_tasting:                  'Wein Tasting',
@@ -25,8 +25,19 @@ const PRICE_PER_PERSON: Record<string, number> = {
 }
 
 Deno.serve(async (req) => {
+  // Pro Request neu berechnet (nicht auf Modulebene) — sonst koennten sich
+  // bei gleichzeitigen Anfragen unterschiedlicher Herkunft die Origin-
+  // Header vermischen.
+  const cors = getCorsHeaders(req.headers.get('origin'))
+  function json(body: unknown, status = 200) {
+    return new Response(JSON.stringify(body), {
+      status,
+      headers: { ...cors, 'Content-Type': 'application/json' },
+    })
+  }
+
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+    return new Response('ok', { headers: cors })
   }
 
   try {
@@ -89,10 +100,3 @@ Deno.serve(async (req) => {
     return json({ error: 'INTERNAL_ERROR' }, 500)
   }
 })
-
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-  })
-}

@@ -1861,6 +1861,11 @@
   }
 
   .nav__link {
+    /* Ohne display:block bleibt <a> inline: vertikales Padding wird
+       dann fuer den Zeilenumbruch ignoriert, die Border-Box rendert
+       aber trotzdem uebergross und ragt in den naechsten Link hinein
+       (sichtbar als kurzer Strich neben dem folgenden Linktext). */
+    display: block;
     padding-block: var(--space-4);
     border-bottom: 1px solid var(--color-border);
     font-size: 1rem;

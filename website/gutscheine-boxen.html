@@ -87,7 +87,7 @@
               </div>
               <p class="card__price">ab 29,90 &euro;</p>
               <div class="card__action">
-                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Der Deutsche Klassiker">
+                <button class="btn btn--primary btn--order" type="button" data-box="Der Deutsche Klassiker">
                   Bestellen
                 </button>
               </div>
@@ -110,7 +110,7 @@
               </div>
               <p class="card__price">ab 34,90 &euro;</p>
               <div class="card__action">
-                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Bella Italia Box">
+                <button class="btn btn--primary btn--order" type="button" data-box="Bella Italia Box">
                   Bestellen
                 </button>
               </div>
@@ -133,7 +133,7 @@
               </div>
               <p class="card__price">ab 34,90 &euro;</p>
               <div class="card__action">
-                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Aperitivo Box">
+                <button class="btn btn--primary btn--order" type="button" data-box="Aperitivo Box">
                   Bestellen
                 </button>
               </div>
@@ -156,7 +156,7 @@
               </div>
               <p class="card__price">ab 27,90 &euro;</p>
               <div class="card__action">
-                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Bonn Probierbox">
+                <button class="btn btn--primary btn--order" type="button" data-box="Bonn Probierbox">
                   Bestellen
                 </button>
               </div>
@@ -179,7 +179,7 @@
               </div>
               <p class="card__price">ab 39,90 &euro;</p>
               <div class="card__action">
-                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Date Night Box">
+                <button class="btn btn--primary btn--order" type="button" data-box="Date Night Box">
                   Bestellen
                 </button>
               </div>
@@ -202,7 +202,7 @@
               </div>
               <p class="card__price">ab 24,90 &euro;</p>
               <div class="card__action">
-                <button class="btn btn--primary btn--order" type="button" onclick="showOrderNote(this)" data-box="Feierabend Box">
+                <button class="btn btn--primary btn--order" type="button" data-box="Feierabend Box">
                   Bestellen
                 </button>
               </div>
@@ -307,18 +307,6 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
-  <script>
-    function showOrderNote(btn) {
-      var note = document.getElementById('order-note');
-      var box  = btn.getAttribute('data-box') || 'diese Box';
-      note.innerHTML =
-        '<strong>Onlineshop kommt bald!</strong> ' +
-        'F&uuml;r "' + box + '" kontaktiere uns telefonisch unter ' +
-        '<a href="tel:+4922825908928" style="color:var(--color-green);font-weight:600;text-decoration:underline;">+49 228 2590 8928</a> ' +
-        'oder komm einfach im Laden vorbei.';
-      note.style.display = 'block';
-      note.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  </script>
+  <script src="assets/js/gutscheine-boxen.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
-import { corsHeaders } from '../_shared/cors.ts'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { getCorsHeaders } from '../_shared/cors.ts'
 
 /* =========================================================
    SUBMIT-GROUP-INQUIRY
@@ -7,19 +8,61 @@ import { corsHeaders } from '../_shared/cors.ts'
    Mailbox — Reply-To ist die Absender-Adresse, damit direkt
    geantwortet werden kann.
 
-   Kein DB-Schreibvorgang, keine Speicherung — nur Weiterleitung
+   Kein DB-Schreibvorgang fuer die Anfrage selbst — nur Weiterleitung
    per E-Mail. Passend zum aktuell pausierten Buchungssystem
-   (siehe PROJECT_CONTEXT.md).
+   (siehe PROJECT_CONTEXT.md). Die DB wird lediglich fuer das
+   Rate-Limiting genutzt (siehe migrations/013_rate_limiting.sql).
    ========================================================= */
 
 const NOTIFY_TO = 'info@genusswerte-bonn.com'
 
+// Ohne Formular-Absicherung (kein Login, kein Captcha) waere dieser
+// Endpunkt sonst ein offenes Tor, um beliebig viele E-Mails ueber
+// unser Resend-Kontingent an unsere Mailbox zu schicken. 8 Anfragen
+// pro IP und Stunde reicht fuer echte Nutzer bequem, macht Spam aber
+// unattraktiv.
+const RATE_LIMIT_MAX = 8
+const RATE_LIMIT_WINDOW_SECONDS = 60 * 60
+
+function clientIp(req: Request): string {
+  const fwd = req.headers.get('x-forwarded-for')
+  if (fwd) return fwd.split(',')[0].trim()
+  return req.headers.get('x-real-ip') ?? 'unknown'
+}
+
 Deno.serve(async (req) => {
+  // Pro Request neu berechnet — sonst koennten sich bei gleichzeitigen
+  // Anfragen unterschiedlicher Herkunft die Origin-Header vermischen.
+  const cors = getCorsHeaders(req.headers.get('origin'))
+  function json(body: unknown, status = 200) {
+    return new Response(JSON.stringify(body), {
+      status,
+      headers: { ...cors, 'Content-Type': 'application/json' },
+    })
+  }
+
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+    return new Response('ok', { headers: cors })
   }
 
   try {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
+    )
+
+    const { data: allowed, error: rateLimitError } = await supabase.rpc('check_rate_limit', {
+      p_bucket_key: `group-inquiry:${clientIp(req)}`,
+      p_max_hits: RATE_LIMIT_MAX,
+      p_window_seconds: RATE_LIMIT_WINDOW_SECONDS,
+    })
+    // Bei einem Fehler beim Rate-Limit-Check selbst (z.B. Migration noch
+    // nicht eingespielt) lieber durchlassen als den ganzen Endpunkt lahm-
+    // zulegen — das Limit ist ein Zusatzschutz, keine Kernfunktion.
+    if (!rateLimitError && allowed === false) {
+      return json({ error: 'RATE_LIMITED' }, 429)
+    }
+
     const {
       name,
       email,
@@ -39,6 +82,13 @@ Deno.serve(async (req) => {
     const personsNum = Number(persons)
     if (!Number.isInteger(personsNum) || personsNum < 1 || personsNum > 500) {
       return json({ error: 'INVALID_PERSONS' }, 400)
+    }
+    // Laenge deckeln — verhindert ueberdimensionierte Eingaben (E-Mail-Groesse, Missbrauch).
+    if (name.length > 200 || email.length > 200 || occasion.length > 200
+        || (phone && String(phone).length > 60)
+        || (preferred_date && String(preferred_date).length > 200)
+        || message.length > 5000) {
+      return json({ error: 'MISSING_FIELDS' }, 400)
     }
 
     const resendKey = Deno.env.get('RESEND_API_KEY')
@@ -93,10 +143,3 @@ Deno.serve(async (req) => {
     return json({ error: 'INTERNAL_ERROR' }, 500)
   }
 })
-
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-  })
-}

@@ -1,19 +1,18 @@
 import { serve } from "https://deno.land/std@0.208.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-const cors = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { ...cors, "Content-Type": "application/json" },
-  });
-}
+import { getCorsHeaders } from "../_shared/cors.ts";
 
 serve(async (req) => {
+  // Pro Request neu berechnet — sonst koennten sich bei gleichzeitigen
+  // Anfragen unterschiedlicher Herkunft die Origin-Header vermischen.
+  const cors = getCorsHeaders(req.headers.get("origin"));
+  function json(data: unknown, status = 200) {
+    return new Response(JSON.stringify(data), {
+      status,
+      headers: { ...cors, "Content-Type": "application/json" },
+    });
+  }
+
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
 
   try {

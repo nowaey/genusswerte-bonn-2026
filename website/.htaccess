@@ -31,6 +31,26 @@ AddDefaultCharset UTF-8
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
+  # Nur Funktionen erlauben, die diese Seite tatsaechlich nutzt.
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=(), magnetometer=(), gyroscope=(), interest-cohort=()"
+
+  # HSTS: Browser merken sich, die Seite nur noch per HTTPS aufzurufen.
+  # Bewusst OHNE "includeSubDomains" — all-inkl-Hosting hat oft weitere
+  # Subdomains (Mail-Webclient etc.), die nicht zwingend HTTPS-bereit
+  # sind; die waeren mit includeSubDomains sonst mitbetroffen. Bewusst
+  # auch OHNE "preload" — das laesst sich praktisch nicht mehr rueck-
+  # gaengig machen, sobald Browser es uebernommen haben.
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # Content-Security-Policy: schraenkt ein, von wo Skripte/Styles/Bilder/
+  # Verbindungen erlaubt sind. Lokal gegen alle 9 Seiten getestet (kein
+  # einziger Verstoss) — deckt sich mit dem tatsaechlichen Code-Stand:
+  # keine Inline-Skripte, keine externen Ressourcen ausser der eigenen
+  # Supabase-API. Bei Erweiterung um neue externe Dienste (Analytics,
+  # Zahlungs-Widgets etc.) muss die passende Domain hier ergaenzt werden,
+  # sonst blockiert der Browser sie.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://dwreeykpjptfncjijjmg.supabase.co; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+
   # config.js ist der Schalter fuer das Buchungssystem und darf
   # NIE aus dem Cache bedient werden. Ohne diese Regel wuerden
   # wiederkehrende Besucher nach einem Umschalten bis zu einer

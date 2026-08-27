@@ -1,0 +1,11 @@
+# Verteidigung in der Tiefe: dieser Ordner wird 1:1 per FTP auf den
+# Live-Server hochgeladen. Alles hier gelistete darf niemals versehentlich
+# hier landen und mit hochgeladen/committet werden.
+*.env
+.env*
+*.sql
+*.bak
+*.zip
+*.log
+.DS_Store
+Thumbs.db
