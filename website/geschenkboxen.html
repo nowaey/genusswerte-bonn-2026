@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gruppen &amp; Events — Genusswerte Bonn</title>
-  <meta name="description" content="Private Tastings für Gruppen, Firmenfeiern und besondere Anlässe in Bonn-Poppelsdorf. Schreib uns deine Anfrage — wir melden uns persönlich.">
+  <title>Geschenkboxen — Genusswerte Bonn</title>
+  <meta name="description" content="Individuell zusammengestellte Geschenkboxen aus Bonn-Poppelsdorf. Online anfragen oder direkt im Laden zusammenstellen lassen.">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Gruppen &amp; Events — Genusswerte Bonn">
-  <meta property="og:description" content="Private Tastings für Gruppen, Firmenfeiern und besondere Anlässe in Bonn-Poppelsdorf.">
+  <meta property="og:title" content="Geschenkboxen — Genusswerte Bonn">
+  <meta property="og:description" content="Individuell zusammengestellte Geschenkboxen — online anfragen oder direkt im Laden zusammenstellen lassen.">
   <meta property="og:type" content="website">
 
   <!-- Favicon -->
@@ -45,10 +45,10 @@
         <ul class="nav__menu" id="nav-menu" role="list">
           <li><a href="index.html" class="nav__link">Startseite</a></li>
           <li><a href="tastings.html" class="nav__link">Tastings</a></li>
-          <li><a href="geschenkboxen.html" class="nav__link">Geschenkboxen</a></li>
+          <li><a href="geschenkboxen.html" class="nav__link" aria-current="page">Geschenkboxen</a></li>
           <li><a href="kontakt.html" class="nav__link">Kontakt</a></li>
           <li class="nav__cta">
-            <a href="gruppen-events.html" class="btn btn--primary" aria-current="page">Gruppen &amp; Events</a>
+            <a href="gruppen-events.html" class="btn btn--primary">Gruppen &amp; Events</a>
           </li>
         </ul>
       </nav>
@@ -60,12 +60,12 @@
     <!-- =====================================================
          PAGE HERO
          ===================================================== -->
-    <div class="page-hero" aria-label="Gruppen und Events">
+    <div class="page-hero" aria-label="Geschenkboxen">
       <img src="assets/images/genusswerte_bonn_logo_transparent.png"
            alt="Genusswerte Bonn" class="page-hero__logo" width="130" height="39">
-      <span class="page-hero__eyebrow">Für größere Runden</span>
-      <h1 class="page-hero__title">Gruppen &amp; Events</h1>
-      <p class="page-hero__subtitle">Für private Gruppenveranstaltungen, Teams oder besondere Anlässe planen wir individuelle Genussmomente persönlich mit dir.</p>
+      <span class="page-hero__eyebrow">Individuell für dich zusammengestellt</span>
+      <h1 class="page-hero__title">Geschenkboxen</h1>
+      <p class="page-hero__subtitle">Keine Box von der Stange &mdash; wir stellen sie dir ganz nach deinen Wünschen zusammen. Online anfragen oder direkt im Laden zusammenstellen lassen.</p>
     </div>
 
     <!-- =====================================================
@@ -80,70 +80,59 @@
             <div class="redemption-form-wrapper">
 
               <div id="inquiry-form-step">
-                <h2 style="font-family: var(--font-serif); font-size: 1.75rem; color: var(--color-green); margin-bottom: 0.5rem;">Deine Anfrage</h2>
-                <p style="color: var(--color-text-muted); font-size: 0.9375rem; margin-bottom: 1.5rem;">Ob Firmenfeier, Geburtstag oder Junggesellenabschied &mdash; schreib uns kurz, worum es geht. Wir melden uns pers&ouml;nlich mit einem Vorschlag zur&uuml;ck.</p>
+                <h2 style="font-family: var(--font-serif); font-size: 1.75rem; color: var(--color-green); margin-bottom: 0.5rem;">Deine Wunschbox</h2>
+                <p style="color: var(--color-text-muted); font-size: 0.9375rem; margin-bottom: 1.5rem;">Erzähl uns, für wen und welchen Anlass die Box gedacht ist &mdash; wir melden uns mit einem passenden Vorschlag zurück.</p>
 
-                <form id="group-inquiry-form" novalidate aria-label="Gruppen- und Event-Anfrage">
+                <form id="giftbox-inquiry-form" novalidate aria-label="Geschenkbox-Anfrage">
 
                   <div class="form-grid">
                     <div class="form-group">
-                      <label class="form-label" for="gi-name">
+                      <label class="form-label" for="gb-name">
                         Name <span class="required-mark" aria-hidden="true">*</span>
                       </label>
-                      <input class="form-input" type="text" id="gi-name" name="name"
+                      <input class="form-input" type="text" id="gb-name" name="name"
                              required autocomplete="name" aria-required="true">
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="gi-email">
+                      <label class="form-label" for="gb-email">
                         E-Mail-Adresse <span class="required-mark" aria-hidden="true">*</span>
                       </label>
-                      <input class="form-input" type="email" id="gi-email" name="email"
+                      <input class="form-input" type="email" id="gb-email" name="email"
                              required autocomplete="email" aria-required="true">
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label class="form-label" for="gi-telefon">Telefon</label>
-                    <input class="form-input" type="tel" id="gi-telefon" name="telefon"
+                    <label class="form-label" for="gb-telefon">Telefon</label>
+                    <input class="form-input" type="tel" id="gb-telefon" name="telefon"
                            autocomplete="tel" placeholder="Optional">
                   </div>
 
                   <div class="form-grid">
                     <div class="form-group">
-                      <label class="form-label" for="gi-anlass">
-                        Anlass <span class="required-mark" aria-hidden="true">*</span>
-                      </label>
-                      <input class="form-input" type="text" id="gi-anlass" name="anlass"
-                             required aria-required="true"
-                             placeholder="z. B. Firmenfeier, Geburtstag">
+                      <label class="form-label" for="gb-anlass">Anlass</label>
+                      <input class="form-input" type="text" id="gb-anlass" name="anlass"
+                             placeholder="Optional, z. B. Geburtstag, Dankeschön">
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="gi-personen">
-                        Personenanzahl <span class="required-mark" aria-hidden="true">*</span>
-                      </label>
-                      <input class="form-input" type="number" id="gi-personen" name="personen"
-                             min="1" max="500" step="1" required aria-required="true">
+                      <label class="form-label" for="gb-budget">Preisvorstellung</label>
+                      <input class="form-input" type="text" id="gb-budget" name="budget"
+                             placeholder="Optional, z. B. ca. 40 € pro Box">
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label class="form-label" for="gi-termin">Wunschtermin</label>
-                    <input class="form-input" type="text" id="gi-termin" name="termin"
-                           placeholder="Optional, z. B. Anfang Oktober, abends">
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="gi-nachricht">
-                      Nachricht <span class="required-mark" aria-hidden="true">*</span>
+                    <label class="form-label" for="gb-nachricht">
+                      Deine Wünsche <span class="required-mark" aria-hidden="true">*</span>
                     </label>
-                    <textarea class="form-textarea" id="gi-nachricht" name="nachricht"
+                    <textarea class="form-textarea" id="gb-nachricht" name="nachricht"
                               required aria-required="true"
-                              placeholder="Erzähl uns kurz, was du dir vorstellst."></textarea>
+                              placeholder="Welche Produkte, Vorlieben oder Allergien sollen wir berücksichtigen? Wie viele Boxen brauchst du?"></textarea>
                   </div>
 
                   <p class="form-error" id="inquiry-error" aria-live="polite" hidden style="margin-top: 0.75rem;"></p>
 
-                  <button class="btn btn--primary" type="submit" id="gi-submit"
+                  <button class="btn btn--primary" type="submit" id="gb-submit"
                           style="width: 100%; justify-content: center; padding: 1rem; margin-top: 1.25rem;">
                     Anfrage senden
                   </button>
@@ -166,8 +155,16 @@
           </div>
 
           <div class="sidebar-block">
+            <h3>Lieber vor Ort zusammenstellen?</h3>
+            <p>Komm einfach im Laden vorbei &mdash; wir stellen deine Box gemeinsam mit dir zusammen, du siehst und probierst direkt, was hineinkommt.</p>
+            <a class="btn btn--secondary" href="kontakt.html" style="margin-top: 0.5rem; align-self: flex-start;">
+              Adresse &amp; Öffnungszeiten &rarr;
+            </a>
+          </div>
+
+          <div class="sidebar-block">
             <h3>Lieber direkt sprechen?</h3>
-            <p>Ruf uns gerne an &mdash; wir besprechen deine Idee auch am Telefon.</p>
+            <p>Ruf uns gerne an &mdash; wir besprechen deine Wunschbox auch am Telefon.</p>
             <a class="btn btn--secondary" href="tel:+4922825908928" style="margin-top: 0.5rem; align-self: flex-start;">
               +49 228 2590 8928
             </a>
@@ -231,6 +228,6 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/group-inquiry-form.js"></script>
+  <script src="assets/js/giftbox-inquiry-form.js"></script>
 </body>
 </html>
