@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/redeem.css">
+  <link rel="stylesheet" href="assets/css/geschenkboxen.css">
   <!-- Buchungs-Schalter. MUSS im <head> und ohne defer/async stehen,
        damit ausgeblendete Elemente nicht kurz aufblitzen. -->
   <script src="assets/js/config.js"></script>
@@ -58,20 +59,58 @@
   <main id="main-content">
 
     <!-- =====================================================
-         PAGE HERO
+         HERO — bewusst kein .page-hero (das nutzen alle anderen
+         Unterseiten), sondern eine eigene, wärmere Bildsprache in
+         Kraftpapier-/Karamell-Tönen, siehe geschenkboxen.css
          ===================================================== -->
-    <div class="page-hero" aria-label="Geschenkboxen">
-      <img src="assets/images/genusswerte_bonn_logo_transparent.png"
-           alt="Genusswerte Bonn" class="page-hero__logo" width="130" height="39">
-      <span class="page-hero__eyebrow">Individuell für dich zusammengestellt</span>
-      <h1 class="page-hero__title">Geschenkboxen</h1>
-      <p class="page-hero__subtitle">Keine Box von der Stange &mdash; wir stellen sie dir ganz nach deinen Wünschen zusammen. Online anfragen oder direkt im Laden zusammenstellen lassen.</p>
-    </div>
+    <section class="giftbox-hero" aria-label="Geschenkboxen">
+      <div class="giftbox-hero__inner">
+        <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+             alt="Genusswerte Bonn" class="giftbox-hero__logo" width="110" height="33">
+        <span class="giftbox-hero__eyebrow">Individuell für dich zusammengestellt</span>
+        <h1 class="giftbox-hero__title">Geschenkboxen</h1>
+        <p class="giftbox-hero__subtitle">Keine Box von der Stange &mdash; wir stellen sie dir ganz nach deinen Wünschen zusammen. Online anfragen oder direkt im Laden zusammenstellen lassen.</p>
+      </div>
+      <svg class="giftbox-hero__wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+        <path fill="currentColor" d="M0,32 C240,60 480,4 720,20 C960,36 1200,58 1440,28 L1440,60 L0,60 Z"/>
+      </svg>
+    </section>
+
+    <!-- =====================================================
+         MOSAIK — "Was in deine Box kommen kann". Steht bewusst
+         VOR dem Formular, damit die Seite nicht wie eine reine
+         Anfrage-Seite wirkt. Sobald es echte Fotos eurer Boxen
+         gibt: .giftbox-mosaic__tile durch <img>-Kacheln ersetzen,
+         der Rest (Grid, Label-Overlay) bleibt gleich.
+         ===================================================== -->
+    <section class="section" aria-label="Beispiele für deine Box">
+      <div class="container">
+        <div class="section__header text-center js-animate">
+          <span class="section__eyebrow">Ganz nach deinem Geschmack</span>
+          <h2 class="section__title">Was in deine Box kommen kann.</h2>
+          <p class="section__subtitle">Feinkost, Wein, Herzhaftes, Süßes &mdash; du sagst uns, worauf du Lust hast, wir stellen es liebevoll zusammen.</p>
+        </div>
+        <div class="giftbox-mosaic">
+          <div class="giftbox-mosaic__tile giftbox-mosaic__tile--a">
+            <span class="giftbox-mosaic__label">Feinkost &amp; Käse</span>
+          </div>
+          <div class="giftbox-mosaic__tile giftbox-mosaic__tile--b">
+            <span class="giftbox-mosaic__label">Wein &amp; Prickelndes</span>
+          </div>
+          <div class="giftbox-mosaic__tile giftbox-mosaic__tile--c">
+            <span class="giftbox-mosaic__label">Snacks &amp; Herzhaftes</span>
+          </div>
+          <div class="giftbox-mosaic__tile giftbox-mosaic__tile--d">
+            <span class="giftbox-mosaic__label">Süßes zum Naschen</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- =====================================================
          ANFRAGEFORMULAR
          ===================================================== -->
-    <section class="section" id="formular" aria-label="Anfrageformular">
+    <section class="section section--alt" id="formular" aria-label="Anfrageformular">
       <div class="container">
 
         <div class="redemption-layout">

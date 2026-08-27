@@ -1,0 +1,148 @@
+/* =========================================================
+   GESCHENKBOXEN.CSS — Genusswerte Bonn
+   Nur für geschenkboxen.html. Bewusst NICHT die generische
+   .page-hero + .redemption-layout-Optik wie gruppen-events.html
+   oder gutschein-einloesen.html — diese Seite soll sich als
+   "präsente Kategorie" abheben (Auftrag), nicht wie eine Kopie
+   der Anfrage-Seiten wirken.
+
+   Kein echtes Fotomaterial verfügbar — deshalb bewusst KEIN
+   Stockfoto vorgetäuscht. Stattdessen: dieselbe Farbverlauf-
+   Sprache, die im Rest der Seite schon als Bild-Platzhalter
+   dient (siehe components.css .card__image--*), zu einem
+   Mosaik verdichtet — wirkt gefüllt/warm/hochwertig wie eine
+   echte Box, ohne echte Fotos vorzutäuschen. Sobald echte
+   Boxfotos existieren, ersetzt ein Foto einfach den Mosaik-
+   Block unten (siehe Kommentar dort).
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Hero — warmer Verlauf statt der neutralen .page-hero-Optik,
+   angelehnt an die Kraftpapier-/Karamell-Töne echter Boxen.
+   --------------------------------------------------------- */
+.giftbox-hero {
+  position: relative;
+  background: linear-gradient(135deg, #C9A96E 0%, #9B7B5A 55%, #5C3D1E 100%);
+  padding-block: var(--space-20) calc(var(--space-24) + 2.5rem);
+  text-align: center;
+  overflow: hidden;
+}
+
+.giftbox-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin-inline: auto;
+  padding-inline: var(--container-px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.giftbox-hero__logo {
+  width: 110px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+  margin-bottom: var(--space-2);
+}
+
+.giftbox-hero__eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #FBF3DE;
+}
+
+.giftbox-hero__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.1;
+}
+
+.giftbox-hero__subtitle {
+  font-size: 1.0625rem;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.65;
+  max-width: 46ch;
+}
+
+/* Weicher Übergang zurück auf Creme — reine Deko, kein echtes Bild */
+.giftbox-hero__wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: 100%;
+  height: auto;
+  color: var(--color-bg);
+  display: block;
+}
+
+/* ---------------------------------------------------------
+   Mosaik — "Was in deine Box kommen kann". Ersetzt eine
+   generische Card-Reihe (laut Vorgabe keine Standard-Cards)
+   durch ein unregelmäßiges Farbfeld-Mosaik im Collage-Stil,
+   jede Kachel mit Label-Overlay wie .tasting-loop__label.
+   --------------------------------------------------------- */
+.giftbox-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 90px;
+  gap: var(--space-4);
+  margin-top: var(--space-10);
+}
+
+.giftbox-mosaic__tile {
+  position: relative;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: var(--shadow-card);
+}
+
+.giftbox-mosaic__tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(20, 14, 6, 0.55) 0%, transparent 60%);
+}
+
+.giftbox-mosaic__label {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #FFFFFF;
+}
+
+/* Vier Kacheln, unterschiedlich groß — Collage-Gefühl statt Raster */
+.giftbox-mosaic__tile--a { grid-column: span 2; grid-row: span 3; background: linear-gradient(135deg, #C8A96D 0%, #8B6B3D 100%); }
+.giftbox-mosaic__tile--b { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, #DFC08A 0%, #C9A96E 50%, #A07840 100%); }
+.giftbox-mosaic__tile--c { grid-column: span 1; grid-row: span 2; background: linear-gradient(135deg, #D4703A 0%, #8B3A10 100%); }
+.giftbox-mosaic__tile--d { grid-column: span 3; grid-row: span 1; background: linear-gradient(135deg, #C8524A 0%, #7A2020 100%); }
+
+@media (max-width: 768px) {
+  .giftbox-hero {
+    padding-block: var(--space-16) calc(var(--space-16) + 2rem);
+  }
+
+  .giftbox-mosaic {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 110px;
+  }
+
+  .giftbox-mosaic__tile--a { grid-column: span 2; grid-row: span 2; }
+  .giftbox-mosaic__tile--b { grid-column: span 1; grid-row: span 2; }
+  .giftbox-mosaic__tile--c { grid-column: span 1; grid-row: span 2; }
+  .giftbox-mosaic__tile--d { grid-column: span 2; grid-row: span 1; }
+}
