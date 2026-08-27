@@ -14,7 +14,7 @@ Backend bleibt vollständig deployed und unangetastet — Edge Functions, Stripe
 Pausiert ist ausschließlich die Sichtbarkeit im Frontend.
 
 **Wie es funktioniert:**
-- `config.js` liegt im `<head>` aller 8 Seiten (ohne `defer`/`async`) und hängt `gw-booking-off`
+- `config.js` liegt im `<head>` aller 9 Seiten (ohne `defer`/`async`) und hängt `gw-booking-off`
   bzw. `gw-booking-on` an `<html>`
 - `base.css` blendet darüber `[data-booking-only]` bzw. `[data-booking-off-only]` aus
 - Karten-Buttons auf `tastings.html` rendern als externe `<a>` statt Modal-Button (`main.js`, `renderTastingCards`)
@@ -24,10 +24,45 @@ Pausiert ist ausschließlich die Sichtbarkeit im Frontend.
 **Relaunch:** `bookingEnabled: true` setzen, `config.js` hochladen. Fertig.
 Vorher prüfen: Stripe-Live-Keys gesetzt (läuft aktuell im **Testmodus**), `WEBSITE_URL` korrekt,
 `tasting_slots` angelegt, Edge Functions erreichbar.
-Kontrolle, dass keine Marker verloren gingen: `grep -o 'data-booking-only' website/*.html | grep -v off-only | wc -l` → **34**,
-`grep -o 'data-booking-off-only' website/*.html | wc -l` → **14**.
+Kontrolle, dass keine Marker verloren gingen: `grep -o 'data-booking-only' website/*.html | wc -l` → **19**,
+`grep -o 'data-booking-off-only' website/*.html | wc -l` → **6**.
 
 **Nichts mit `data-booking-only` / `data-booking-off-only` löschen** — das ist der Rücksprung-Pfad.
+
+**Wichtig — Nav-CTA ist NICHT mehr Teil des Schalters (seit 27.08.2026):**
+Der prominente Button oben rechts in der Navigation zeigt seit der Einführung von
+„Gruppen & Events" **dauerhaft** dorthin, unabhängig von `bookingEnabled`. Das war
+ursprünglich anders (dort wechselte „Gutschein einlösen" ↔ „Tasting buchen"), wurde aber
+bewusst geändert — Gruppenanfragen sind ein eigenständiges Thema. Beim Relaunch taucht
+„Gutschein einlösen" wieder in Footer/Hero/Closing-CTA auf (weiterhin `data-booking-only`),
+aber **nicht** mehr im Nav-Slot — dort bleibt „Gruppen & Events" stehen.
+
+---
+
+## Gruppen- & Event-Anfragen (seit 27.08.2026)
+
+Neue Seite `website/gruppen-events.html` mit Formular (Name, E-Mail, Telefon, Anlass,
+Personenanzahl, Wunschtermin, Nachricht). Ersetzt den alten `kontakt.html#gruppen-anfrage`-
+Mailto-Umweg als primären Weg für Gruppenanfragen.
+
+**Versand:** neue Edge Function `supabase/functions/submit-group-inquiry/index.ts` —
+schickt die Formulardaten per Resend als E-Mail an `info@genusswerte-bonn.com`,
+`reply_to` ist die Absender-Adresse (direktes Antworten möglich). Keine DB-Schreibung,
+keine Speicherung — reine Weiterleitung.
+
+**⚠️ Muss noch deployed werden** — ist nur als Code im Repo vorhanden, aber (Stand jetzt)
+noch nicht auf Supabase live. Bis dahin zeigt das Formular beim Absenden einen
+Verbindungsfehler. Deploy z. B. über die Supabase CLI:
+```
+supabase functions deploy submit-group-inquiry
+```
+oder über das Supabase-Dashboard (Edge Functions → New Function → Code einfügen).
+`RESEND_API_KEY` ist als Secret bereits vorhanden (wird von anderen Functions mitgenutzt),
+kein neues Secret nötig.
+
+Frontend-Logik: `website/assets/js/group-inquiry-form.js`. Wiederverwendet komplett die
+bestehenden Formular-Klassen aus `components.css` (`.form-group`, `.form-input`, `.form-grid`,
+`.form-success` etc.) — keine neue CSS-Datei.
 
 ---
 
