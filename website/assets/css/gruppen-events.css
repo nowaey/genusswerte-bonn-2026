@@ -76,13 +76,19 @@
 .event-hero__photo {
   position: relative;
   overflow: hidden;
+  /* Gleicher Grundton wie .event-hero__text — bei object-fit:contain
+     bleibt ringsum Luft, die soll wie ein bewusster Rahmen wirken,
+     nicht wie ein Darstellungsfehler. */
+  background: var(--color-green-dark);
 }
 
 .event-hero__photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
+  /* contain statt cover: das Foto wird nicht mehr angeschnitten,
+     sondern komplett gezeigt (auf Wunsch, nachdem cover zu sehr
+     zugeschnitten wirkte). */
+  object-fit: contain;
   display: block;
 }
 
