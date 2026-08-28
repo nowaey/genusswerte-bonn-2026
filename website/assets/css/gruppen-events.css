@@ -26,7 +26,10 @@
 .event-hero {
   display: grid;
   grid-template-columns: 42% 58%;
-  min-height: 480px;
+  /* Feste statt min-height: das Foto ist quadratisch und würde bei
+     58% Spaltenbreite sonst seine eigene (viel größere) Zeilenhöhe
+     erzwingen, egal wie kompakt der Text links ist. */
+  height: 380px;
   background: var(--color-green-dark);
 }
 
@@ -34,16 +37,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--space-4);
-  padding: var(--space-12) var(--space-8);
+  gap: var(--space-3);
+  padding: var(--space-8);
 }
 
 .event-hero__logo {
-  width: 96px;
+  width: 76px;
   height: auto;
   filter: brightness(0) invert(1);
   opacity: 0.9;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
 }
 
 .event-hero__eyebrow {
@@ -135,16 +138,17 @@
 @media (max-width: 900px) {
   .event-hero {
     grid-template-columns: 1fr;
+    height: auto;
   }
 
   .event-hero__photo {
     order: -1;
-    height: 42vh;
-    min-height: 260px;
+    height: 34vh;
+    min-height: 220px;
   }
 
   .event-hero__text {
-    padding: var(--space-10) var(--container-px) var(--space-8);
+    padding: var(--space-8) var(--container-px);
   }
 
   .event-hero__subtitle {
