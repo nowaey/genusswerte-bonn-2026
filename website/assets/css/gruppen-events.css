@@ -36,7 +36,7 @@
 .event-hero__bg {
   position: absolute;
   inset: -8%;
-  background-image: url('../images/event-hero-cheers.jpg');
+  background-image: url('../images/event-hero-cheers-2.jpg');
   background-size: cover;
   background-position: center 40%;
   animation: kenBurns 26s ease-in-out infinite alternate;
