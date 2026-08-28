@@ -18,7 +18,7 @@ unten. Das ist der Teil, den man beim schnellen Überfliegen leicht übersieht �
 steht hier alles an einer Stelle.
 
 **Wie die Pause technisch funktioniert:**
-- `config.js` liegt im `<head>` aller 9 Seiten (ohne `defer`/`async`) und hängt `gw-booking-off`
+- `config.js` liegt im `<head>` aller 10 Seiten (ohne `defer`/`async`) und hängt `gw-booking-off`
   bzw. `gw-booking-on` an `<html>`
 - `base.css` blendet darüber `[data-booking-only]` bzw. `[data-booking-off-only]` aus
 - Karten-Buttons auf `tastings.html` rendern als externe `<a>` statt Modal-Button (`main.js`, `renderTastingCards`)
@@ -30,7 +30,7 @@ steht hier alles an einer Stelle.
   aber **nicht** im Nav-Slot — dort bleibt „Gruppen & Events" stehen. So ist es gewollt.
 
 **Nichts mit `data-booking-only` / `data-booking-off-only` löschen** — das ist der Rücksprung-Pfad.
-Kontrolle, dass keine Marker verloren gingen: `grep -o 'data-booking-only' website/*.html | wc -l` → **19**,
+Kontrolle, dass keine Marker verloren gingen: `grep -o 'data-booking-only' website/*.html | wc -l` → **20**,
 `grep -o 'data-booking-off-only' website/*.html | wc -l` → **6**.
 
 ### ✅ RELAUNCH-CHECKLISTE — komplett, in dieser Reihenfolge
@@ -72,6 +72,14 @@ Audit + Härtungsdurchgang. **`submit-group-inquiry` ist deployed und live-getes
 (CORS-Allowlist + Rate-Limit per curl bestätigt: fremde Origin wird abgewiesen, 8.
 Anfrage/Stunde bekommt `429`). **Die anderen 5 Functions sind nur Code im Repo, noch
 nicht deployed** — das ist Schritt 1 der Relaunch-Checkliste oben.
+
+⚠️ **`submit-giftbox-inquiry`** (neu, 28.08.2026, für `geschenkboxen.html`) ist im
+selben bereits gehärteten Muster gebaut (eigener CORS-Aufruf pro Request, `esc()`,
+Längen-Deckel, Rate-Limit über dieselbe `check_rate_limit()`-RPC mit Bucket-Präfix
+`giftbox-inquiry:`) — **aber Code liegt nur im Repo, noch nicht deployed**. Gehört
+NICHT zur Buchungssystem-Pause (unabhängige Funktion, immer sichtbar), aber genauso
+wie die 5 offenen Functions: Dashboard-Deploy braucht den CORS-Block unten inline
+statt `import ... from '../_shared/cors.ts'`.
 
 **Was geändert wurde (gilt für alle 6 Functions gleichermaßen, ob schon deployed oder nicht):**
 1. **HTML-Injection behoben** — `stripe-webhook` und `schedule-voucher` interpolierten den
@@ -158,6 +166,35 @@ Formular-Klassen aus `components.css` — keine neue CSS-Datei.
 
 ---
 
+## Geschenkboxen (seit 28.08.2026) — Frontend fertig, Function NOCH NICHT deployed
+
+Eigene Seite `website/geschenkboxen.html` + eigener Nav-Punkt (zwischen Tastings und
+Kontakt, auf allen Seiten). Bewirbt individuell zusammengestellte Geschenkboxen —
+Anfrage per Formular oder Hinweis auf Vor-Ort-Zusammenstellung im Laden. Zusätzlich
+wurde auf allen Seiten ein expliziter „Startseite"-Nav-Link ergänzt (Logo-Klick allein
+war als Startseiten-Rücksprung nicht offensichtlich genug).
+
+**Bewusst kein generischer `.page-hero` + Formular-Look** (wie `gruppen-events.html`),
+sondern eigenes CSS `website/assets/css/geschenkboxen.css`: warmer Verlaufs-Hero
+(„Kraftpapier"-Farbtöne) + ein 4-teiliges Mosaik aus den bestehenden Marken-Farbverläufen
+aus `components.css`, KEIN Stockfoto. Hintergrund: Es gab reale Produktfotos vom Kunden
+im Chat, die aber nicht speicherbar waren (Bilder aus dem Chat lassen sich nicht auf die
+Festplatte holen) — deshalb Style/Stimmung nachgebaut statt Fotos vorgetäuscht. Sobald
+echte Boxfotos vorliegen, kann ein Foto den Mosaik-Block 1:1 ersetzen (Kommentar dazu
+direkt im CSS).
+
+**Versand:** Edge Function `supabase/functions/submit-giftbox-inquiry/index.ts` —
+fast identisch zu `submit-group-inquiry` (gleiches Muster, andere Felder: Name, E-Mail,
+Telefon, Anlass, Preisvorstellung, Nachricht), gleiche Rate-Limit-RPC mit eigenem
+Bucket-Präfix. **Code fertig, aber NICHT deployed** — siehe „Security-Härtung" oben für
+den Dashboard-Deploy-Ablauf (gleiches Vorgehen wie bei `submit-group-inquiry`: Strg+A,
+CORS-Block inline, „Enforce JWT Verification" aus, danach Zeile 1 gegenchecken).
+
+Frontend-Logik: `website/assets/js/giftbox-inquiry-form.js` (mirrort `group-inquiry-form.js`,
+POST an `/submit-giftbox-inquiry`).
+
+---
+
 ## Backend-Status (Stand: August 2026)
 
 Das komplette Payment-Flow läuft produktionsbereit:
@@ -180,6 +217,7 @@ oben in diesem Dokument.
 | `get-available-slots` | Website | Freie Termine laden |
 | `schedule-voucher` | Website | Termin atomar reservieren |
 | `submit-group-inquiry` | Website (`gruppen-events.html`) | Gruppen-/Event-Anfrage per E-Mail — **aktueller Stand deployed** |
+| `submit-giftbox-inquiry` | Website (`geschenkboxen.html`) | Geschenkbox-Anfrage per E-Mail — **Code fertig, NOCH NICHT deployed** |
 
 Alle Functions nutzen raw `fetch()` — **kein Stripe SDK** (inkompatibel mit Supabase Deno).  
 Shared CORS-Headers: `supabase/functions/_shared/cors.ts`
