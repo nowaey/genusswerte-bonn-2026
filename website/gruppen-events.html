@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/redeem.css">
+  <link rel="stylesheet" href="assets/css/gruppen-events.css">
   <!-- Buchungs-Schalter. MUSS im <head> und ohne defer/async stehen,
        damit ausgeblendete Elemente nicht kurz aufblitzen. -->
   <script src="assets/js/config.js"></script>
@@ -58,20 +59,54 @@
   <main id="main-content">
 
     <!-- =====================================================
-         PAGE HERO
+         HERO — echtes Ladenfoto statt .page-hero (das nutzen
+         alle anderen Unterseiten), gleiches Muster wie
+         .giftbox-hero auf geschenkboxen.html.
          ===================================================== -->
-    <div class="page-hero" aria-label="Gruppen und Events">
-      <img src="assets/images/genusswerte_bonn_logo_transparent.png"
-           alt="Genusswerte Bonn" class="page-hero__logo" width="130" height="39">
-      <span class="page-hero__eyebrow">Für größere Runden</span>
-      <h1 class="page-hero__title">Gruppen &amp; Events</h1>
-      <p class="page-hero__subtitle">Für private Gruppenveranstaltungen, Teams oder besondere Anlässe planen wir individuelle Genussmomente persönlich mit dir.</p>
-    </div>
+    <section class="event-hero" aria-label="Gruppen und Events">
+      <div class="event-hero__bg" aria-hidden="true"></div>
+      <div class="event-hero__inner">
+        <img src="assets/images/genusswerte_bonn_logo_transparent.png"
+             alt="Genusswerte Bonn" class="event-hero__logo" width="110" height="33">
+        <span class="event-hero__eyebrow">Für größere Runden</span>
+        <h1 class="event-hero__title">Gruppen &amp; Events</h1>
+        <p class="event-hero__subtitle">Für private Gruppenveranstaltungen, Teams oder besondere Anlässe planen wir individuelle Genussmomente persönlich mit dir.</p>
+      </div>
+      <svg class="event-hero__wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+        <path fill="currentColor" d="M0,32 C240,60 480,4 720,20 C960,36 1200,58 1440,28 L1440,60 L0,60 Z"/>
+      </svg>
+    </section>
+
+    <!-- =====================================================
+         COLLAGE — drei echte Momente aus dem Laden. Steht
+         bewusst VOR dem Formular, damit die Seite nicht wie
+         eine reine Anfrage-Seite wirkt.
+         ===================================================== -->
+    <section class="section" aria-label="Impressionen aus unseren Events">
+      <div class="container">
+        <div class="section__header text-center js-animate">
+          <span class="section__eyebrow">Echte Momente aus unserem Laden</span>
+          <h2 class="section__title">So können deine Genussmomente aussehen.</h2>
+          <p class="section__subtitle">Kleine Runden, gute Gespräche, gutes Glas &mdash; mitten in unserem Laden in Poppelsdorf.</p>
+        </div>
+        <div class="event-mosaic">
+          <figure class="event-mosaic__tile event-mosaic__tile--a">
+            <img src="assets/images/event-abend.jpg" alt="Gäste bei einem Tasting-Abend zwischen den Weinregalen bei Genusswerte Bonn" width="1100" height="1100" loading="lazy">
+          </figure>
+          <figure class="event-mosaic__tile event-mosaic__tile--b">
+            <img src="assets/images/event-aperitivo-detail.jpg" alt="Aperitivo-Tisch mit Wein, Blumen und Garnituren bei Genusswerte Bonn" width="1100" height="1599" loading="lazy">
+          </figure>
+          <figure class="event-mosaic__tile event-mosaic__tile--c">
+            <img src="assets/images/event-tischrunde.jpg" alt="Gruppe an einer Tischrunde bei einem Tasting bei Genusswerte Bonn" width="1100" height="1100" loading="lazy">
+          </figure>
+        </div>
+      </div>
+    </section>
 
     <!-- =====================================================
          ANFRAGEFORMULAR
          ===================================================== -->
-    <section class="section" id="formular" aria-label="Anfrageformular">
+    <section class="section section--alt" id="formular" aria-label="Anfrageformular">
       <div class="container">
 
         <div class="redemption-layout">
