@@ -59,21 +59,21 @@
   <main id="main-content">
 
     <!-- =====================================================
-         HERO — Split aus Volltonfarbe und Foto statt Bild mit
-         Text obendrauf (bewusst anderes Muster als geschenk-
-         boxen.html, siehe Kommentar in gruppen-events.css).
+         HERO — Vollbild-Foto mit zentriertem Text (siehe
+         Kommentar/Historie in gruppen-events.css).
          ===================================================== -->
     <section class="event-hero" aria-label="Gruppen und Events">
-      <div class="event-hero__text">
+      <div class="event-hero__bg" aria-hidden="true"></div>
+      <div class="event-hero__inner">
         <img src="assets/images/genusswerte_bonn_logo_transparent.png"
-             alt="Genusswerte Bonn" class="event-hero__logo" width="96" height="29">
+             alt="Genusswerte Bonn" class="event-hero__logo" width="110" height="33">
         <span class="event-hero__eyebrow">Für größere Runden</span>
-        <h1 class="event-hero__title">Gruppen &amp; Events</h1>
+        <h1 class="event-hero__title">Gruppen <span class="amp">&amp;</span> Events</h1>
         <p class="event-hero__subtitle">Für private Gruppenveranstaltungen, Teams oder besondere Anlässe planen wir individuelle Genussmomente persönlich mit dir.</p>
       </div>
-      <div class="event-hero__photo">
-        <img src="assets/images/event-hero-cheers.jpg" alt="Gäste stoßen mit einem Glas Wein an bei Genusswerte Bonn" width="1800" height="1013" loading="eager">
-      </div>
+      <svg class="event-hero__wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+        <path fill="currentColor" d="M0,32 C240,60 480,4 720,20 C960,36 1200,58 1440,28 L1440,60 L0,60 Z"/>
+      </svg>
     </section>
 
     <!-- =====================================================
@@ -91,7 +91,7 @@
       </div>
       <div class="event-filmstrip" role="list">
         <figure class="event-filmstrip__item" role="listitem">
-          <img src="assets/images/event-abend.jpg" alt="Gäste bei einem Tasting-Abend zwischen den Weinregalen bei Genusswerte Bonn" width="1100" height="1100" loading="lazy">
+          <img src="assets/images/event-abend-2.jpg" alt="Gäste bei einem Tasting-Abend zwischen den Weinregalen bei Genusswerte Bonn" width="1100" height="1100" loading="lazy">
         </figure>
         <figure class="event-filmstrip__item" role="listitem">
           <img src="assets/images/event-laden-aussen.jpg" alt="Genusswerte Bonn von außen bei einem Event, Gäste vor dem Laden" width="1100" height="1100" loading="lazy">

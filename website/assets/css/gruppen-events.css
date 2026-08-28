@@ -1,17 +1,18 @@
 /* =========================================================
    GRUPPEN-EVENTS.CSS — Genusswerte Bonn
-   Nur für gruppen-events.html. Bewusst NICHT dasselbe Rezept
-   wie geschenkboxen.css (Vollbild-Foto + Gradient-Overlay +
-   zentrierter Text + 3er-Grid) — diese Seite soll sich auch
-   von der Präsente-Seite absetzen, nicht wie eine Fortsetzung
-   derselben Vorlage wirken.
+   Nur für gruppen-events.html.
 
-   Stattdessen zwei andere Mechaniken:
-   1) Hero als Split (Foto | Volltonfarbe) statt Bild mit Text
-      obendrauf — kein Gradient-Overlay, kein Ken-Burns.
-   2) Statt eines Grids ein horizontal scrollbarer Filmstreifen,
-      der rechts über den Container hinaus ausbricht — wirkt wie
-      ein Durchblättern echter Abende, nicht wie eine Bildergalerie.
+   Hero-Historie: erst Vollbild-Foto + Gradient-Overlay + zentrierter
+   Text (wie geschenkboxen.css), dann auf Wunsch zu einem Split
+   (Foto | Volltonfarbe) geändert, um sich von der Präsente-Seite
+   abzusetzen — im direkten Vergleich gefiel die erste Variante
+   aber besser, deshalb zurück dazu. Grüner statt goldener Overlay-
+   Ton (die Fotos sind navy/dunkel, nicht Kraftpapier-warm wie bei
+   den Präsenten) — das ist der verbleibende Unterschied zu
+   geschenkboxen.css.
+
+   Der Filmstreifen (statt Grid) bleibt als Unterscheidungsmerkmal
+   bestehen.
 
    Fotos (28.08.2026, vom Kunden bereitgestellt, Originaldateien
    lagen in "Foto Event" auf dem Desktop), optimiert (JPEG, Breite
@@ -19,34 +20,66 @@
    ========================================================= */
 
 /* ---------------------------------------------------------
-   Hero — Split-Layout: links Volltonfarbe mit Text, rechts
-   ein einzelnes, ruhiges Foto. Kein Overlay noetig, weil Text
-   nie auf dem Bild liegt.
+   Hero — echtes Foto als Vollbild-Hintergrund, gleiches Muster
+   wie .hero auf index.html und .giftbox-hero auf geschenk-
+   boxen.html (Bild + Gradient-Overlay + Ken-Burns-Zoom, siehe
+   layout.css .hero__bg / @keyframes kenBurns).
    --------------------------------------------------------- */
 .event-hero {
-  display: grid;
-  grid-template-columns: 42% 58%;
-  /* Feste statt min-height: das Foto ist quadratisch und würde bei
-     58% Spaltenbreite sonst seine eigene (viel größere) Zeilenhöhe
-     erzwingen, egal wie kompakt der Text links ist. */
-  height: 520px;
-  background: var(--color-green-dark);
+  position: relative;
+  padding-block: var(--space-20) calc(var(--space-24) + 2.5rem);
+  text-align: center;
+  overflow: hidden;
+  background-color: #0a1410;
 }
 
-.event-hero__text {
+.event-hero__bg {
+  position: absolute;
+  inset: -8%;
+  background-image: url('../images/event-hero-cheers.jpg');
+  background-size: cover;
+  background-position: center 40%;
+  animation: kenBurns 26s ease-in-out infinite alternate;
+  z-index: 0;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .event-hero__bg {
+    animation: none;
+  }
+}
+
+.event-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg,
+    rgba(8, 18, 14, 0.82) 0%,
+    rgba(26, 48, 40, 0.58) 45%,
+    rgba(6, 14, 10, 0.78) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.event-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  margin-inline: auto;
+  padding-inline: var(--container-px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: var(--space-3);
-  padding: var(--space-8);
+  align-items: center;
+  gap: var(--space-4);
 }
 
 .event-hero__logo {
-  width: 76px;
+  width: 110px;
   height: auto;
   filter: brightness(0) invert(1);
-  opacity: 0.9;
-  margin-bottom: var(--space-1);
+  opacity: 0.92;
+  margin-bottom: var(--space-2);
 }
 
 .event-hero__eyebrow {
@@ -55,41 +88,36 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-gold-light);
+  color: #E9F0EA;
 }
 
 .event-hero__title {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 3.4vw, 2.875rem);
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
   font-weight: 700;
   color: #FFFFFF;
-  line-height: 1.12;
+  line-height: 1.1;
 }
 
 .event-hero__subtitle {
   font-size: 1.0625rem;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.88);
   line-height: 1.65;
-  max-width: 34ch;
+  max-width: 46ch;
 }
 
-.event-hero__photo {
-  position: relative;
-  overflow: hidden;
-  /* Gleicher Grundton wie .event-hero__text — bei object-fit:contain
-     bleibt ringsum Luft, die soll wie ein bewusster Rahmen wirken,
-     nicht wie ein Darstellungsfehler. */
-  background: var(--color-green-dark);
-}
-
-.event-hero__photo img {
+/* Weicher Übergang zurück auf Creme — z-index über dem
+   ::before-Overlay (das selbst z-index:1 hat). */
+.event-hero__wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
   width: 100%;
-  height: 100%;
-  /* contain statt cover: das Foto wird nicht mehr angeschnitten,
-     sondern komplett gezeigt (auf Wunsch, nachdem cover zu sehr
-     zugeschnitten wirkte). */
-  object-fit: contain;
+  height: auto;
+  color: var(--color-bg);
   display: block;
+  z-index: 2;
 }
 
 /* ---------------------------------------------------------
@@ -144,22 +172,7 @@
 
 @media (max-width: 900px) {
   .event-hero {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-
-  .event-hero__photo {
-    order: -1;
-    height: 34vh;
-    min-height: 220px;
-  }
-
-  .event-hero__text {
-    padding: var(--space-8) var(--container-px);
-  }
-
-  .event-hero__subtitle {
-    max-width: none;
+    padding-block: var(--space-16) calc(var(--space-16) + 2rem);
   }
 
   .event-filmstrip__item {
