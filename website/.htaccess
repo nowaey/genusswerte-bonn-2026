@@ -1,5 +1,15 @@
 # Genusswerte Bonn — .htaccess
 
+# HTTP -> HTTPS erzwingen. Ohne diese Regel liefert der Server HTTP
+# und HTTPS gleichermassen aus (28.08.2026 beim Live-Check festgestellt) —
+# der HSTS-Header oben greift erst NACH dem ersten HTTPS-Besuch, das
+# hier faengt auch den allerersten Aufruf per http:// ab.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
 # Disable directory browsing
 Options -Indexes
 
