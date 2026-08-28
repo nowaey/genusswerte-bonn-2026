@@ -131,6 +131,112 @@
 .giftbox-mosaic__tile--c { grid-column: span 1; grid-row: span 2; background: linear-gradient(135deg, #D4703A 0%, #8B3A10 100%); }
 .giftbox-mosaic__tile--d { grid-column: span 3; grid-row: span 1; background: linear-gradient(135deg, #C8524A 0%, #7A2020 100%); }
 
+/* ---------------------------------------------------------
+   Anlass-Chips — Schnellauswahl statt leerem Textfeld,
+   füllen einfach das bestehende #gb-anlass-Feld (giftbox-
+   inquiry-form.js). Lehnt sich an .variant-pill an
+   (components.css), aber interaktiv statt cursor:default.
+   --------------------------------------------------------- */
+.giftbox-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.giftbox-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.9rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-white);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+}
+
+.giftbox-chip:hover {
+  border-color: var(--color-gold);
+  color: var(--color-green);
+}
+
+.giftbox-chip.is-active {
+  border-color: var(--color-green);
+  background: var(--color-green);
+  color: var(--color-white);
+}
+
+/* ---------------------------------------------------------
+   Übergabe — Abholung oder Versand. Pill-Toggle auf
+   nativen Radios (Checkbox-Trick: Input visuell versteckt,
+   Label übernimmt die Optik — bleibt voll tastatur-/
+   screenreader-bedienbar).
+   --------------------------------------------------------- */
+.giftbox-fulfillment {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.giftbox-fulfillment__option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.giftbox-fulfillment__option span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-white);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+}
+
+.giftbox-fulfillment__option input:checked + span {
+  border-color: var(--color-green);
+  background: var(--color-green);
+  color: var(--color-white);
+}
+
+.giftbox-fulfillment__option input:focus-visible + span {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------
+   Grußkarte-Checkbox
+   --------------------------------------------------------- */
+.giftbox-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  margin: -0.25rem 0 var(--space-5);
+}
+
+.giftbox-checkbox input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--color-green);
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .giftbox-hero {
     padding-block: var(--space-16) calc(var(--space-16) + 2rem);

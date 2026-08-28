@@ -31,6 +31,30 @@
     return (window.GW_CONFIG && window.GW_CONFIG.apiBase) || '';
   }
 
+  /* --- Anlass-Chips: füllen nur das bestehende Textfeld,
+     kein eigener Formularwert nötig. --- */
+  var anlassInput = document.getElementById('gb-anlass');
+  var chips = form.querySelectorAll('.giftbox-chip');
+  for (var c = 0; c < chips.length; c++) {
+    chips[c].addEventListener('click', function () {
+      var alreadyActive = this.classList.contains('is-active');
+      for (var j = 0; j < chips.length; j++) { chips[j].classList.remove('is-active'); }
+      if (alreadyActive) {
+        anlassInput.value = '';
+      } else {
+        this.classList.add('is-active');
+        anlassInput.value = this.textContent.trim();
+      }
+      anlassInput.focus();
+    });
+  }
+  // Manuelle Eingabe hebt die Chip-Auswahl wieder auf, sobald sie nicht mehr passt.
+  anlassInput.addEventListener('input', function () {
+    for (var k = 0; k < chips.length; k++) {
+      chips[k].classList.toggle('is-active', chips[k].textContent.trim() === anlassInput.value.trim());
+    }
+  });
+
   function showErr(key) {
     errEl.textContent = ERROR_MESSAGES[key] || ERROR_MESSAGES.SEND_FAILED;
     errEl.hidden = false;
@@ -45,19 +69,34 @@
     e.preventDefault();
     clearErr();
 
+    var nachricht = document.getElementById('gb-nachricht').value.trim();
+
+    if (!document.getElementById('gb-name').value.trim()
+        || !document.getElementById('gb-email').value.trim()
+        || !nachricht) {
+      showErr('MISSING_FIELDS');
+      return;
+    }
+
+    /* Übergabe-Wahl und Grußkarten-Wunsch gibt es serverseitig
+       nicht als eigenes Feld (kein Umbau der Edge Function nötig,
+       kein neues System) — stattdessen als klar lesbare Zeilen
+       vor die eigentliche Nachricht gesetzt, damit sie in der
+       Anfrage-Mail sichtbar ankommen. */
+    var fulfillmentInput = form.querySelector('input[name="fulfillment"]:checked');
+    var extraLines = [];
+    if (fulfillmentInput) { extraLines.push('Übergabe: ' + fulfillmentInput.value); }
+    if (document.getElementById('gb-grusskarte').checked) { extraLines.push('Persönliche Grußkarte gewünscht: Ja'); }
+    var fullMessage = extraLines.length ? (extraLines.join('\n') + '\n\n' + nachricht) : nachricht;
+
     var payload = {
       name:      document.getElementById('gb-name').value.trim(),
       email:     document.getElementById('gb-email').value.trim(),
       phone:     document.getElementById('gb-telefon').value.trim(),
       occasion:  document.getElementById('gb-anlass').value.trim(),
       budget:    document.getElementById('gb-budget').value.trim(),
-      message:   document.getElementById('gb-nachricht').value.trim()
+      message:   fullMessage
     };
-
-    if (!payload.name || !payload.email || !payload.message) {
-      showErr('MISSING_FIELDS');
-      return;
-    }
 
     btn.disabled = true;
     btn.textContent = 'Wird gesendet …';

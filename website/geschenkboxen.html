@@ -108,9 +108,42 @@
     </section>
 
     <!-- =====================================================
+         SO LÄUFT'S AB — reuse von .how-it-works (siehe
+         tastings.html), damit sich der Block einfügt statt
+         wie ein neues Muster zu wirken. Erklärt bewusst nur
+         den bestehenden E-Mail-Anfrage-Ablauf — kein neues
+         Buchungssystem, keine echte Box-Auswahl (kommt später).
+         ===================================================== -->
+    <section class="section section--alt how-it-works" aria-label="So läuft eine Präsente-Anfrage ab">
+      <div class="container">
+        <div class="how-it-works__inner js-animate">
+          <span class="section__eyebrow">So läuft's ab</span>
+          <h2 class="how-it-works__title">In drei Schritten zu deinem Präsent.</h2>
+          <ol class="how-it-works__steps">
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">01</span>
+              <h3 class="how-it-works__step-title">Wünsche schildern</h3>
+              <p class="how-it-works__step-text">Erzähl uns Anlass, Budget und ob du Abholung im Laden oder Versand möchtest.</p>
+            </li>
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">02</span>
+              <h3 class="how-it-works__step-title">Wir schlagen vor</h3>
+              <p class="how-it-works__step-text">Du bekommst persönlich einen passenden Vorschlag per E-Mail oder Telefon &mdash; meist innerhalb von 1&ndash;2 Werktagen.</p>
+            </li>
+            <li class="how-it-works__step">
+              <span class="how-it-works__step-num">03</span>
+              <h3 class="how-it-works__step-title">Abholen oder verschickt bekommen</h3>
+              <p class="how-it-works__step-text">Nach deiner Bestätigung stellen wir die Box zusammen &mdash; wahlweise zur Abholung im Laden oder per Versand zu dir.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
          ANFRAGEFORMULAR
          ===================================================== -->
-    <section class="section section--alt" id="formular" aria-label="Anfrageformular">
+    <section class="section" id="formular" aria-label="Anfrageformular">
       <div class="container">
 
         <div class="redemption-layout">
@@ -147,18 +180,43 @@
                            autocomplete="tel" placeholder="Optional">
                   </div>
 
-                  <div class="form-grid">
-                    <div class="form-group">
-                      <label class="form-label" for="gb-anlass">Anlass</label>
-                      <input class="form-input" type="text" id="gb-anlass" name="anlass"
-                             placeholder="Optional, z. B. Geburtstag, Dankeschön">
+                  <div class="form-group">
+                    <label class="form-label" for="gb-anlass">Anlass</label>
+                    <div class="giftbox-chips" role="group" aria-label="Anlass-Vorschläge (füllen das Feld unten)">
+                      <button type="button" class="giftbox-chip">Geburtstag</button>
+                      <button type="button" class="giftbox-chip">Dankeschön</button>
+                      <button type="button" class="giftbox-chip">Firmenevent</button>
+                      <button type="button" class="giftbox-chip">Jubiläum</button>
+                      <button type="button" class="giftbox-chip">Weihnachten</button>
                     </div>
-                    <div class="form-group">
-                      <label class="form-label" for="gb-budget">Preisvorstellung</label>
-                      <input class="form-input" type="text" id="gb-budget" name="budget"
-                             placeholder="Optional, z. B. ca. 40 € pro Box">
+                    <input class="form-input" type="text" id="gb-anlass" name="anlass"
+                           placeholder="Optional, z. B. Geburtstag, Dankeschön">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="gb-budget">Preisvorstellung</label>
+                    <input class="form-input" type="text" id="gb-budget" name="budget"
+                           placeholder="Optional, z. B. ca. 40 € pro Box">
+                  </div>
+
+                  <div class="form-group">
+                    <span class="form-label" id="gb-fulfillment-label">Abholung oder Versand?</span>
+                    <div class="giftbox-fulfillment" role="radiogroup" aria-labelledby="gb-fulfillment-label">
+                      <label class="giftbox-fulfillment__option">
+                        <input type="radio" name="fulfillment" value="Abholung im Laden" id="gb-fulfillment-pickup" checked>
+                        <span>Abholung im Laden</span>
+                      </label>
+                      <label class="giftbox-fulfillment__option">
+                        <input type="radio" name="fulfillment" value="Versand" id="gb-fulfillment-shipping">
+                        <span>Versand</span>
+                      </label>
                     </div>
                   </div>
+
+                  <label class="giftbox-checkbox" for="gb-grusskarte">
+                    <input type="checkbox" id="gb-grusskarte" name="grusskarte">
+                    <span>Mit persönlicher Grußkarte (kostenlos)</span>
+                  </label>
 
                   <div class="form-group">
                     <label class="form-label" for="gb-nachricht">
@@ -207,6 +265,11 @@
             <a class="btn btn--secondary" href="tel:+4922825908928" style="margin-top: 0.5rem; align-self: flex-start;">
               +49 228 2590 8928
             </a>
+          </div>
+
+          <div class="sidebar-block">
+            <h3>Für Firmen &amp; größere Mengen</h3>
+            <p>Kundendanke, Mitarbeitergeschenke oder gleich mehrere Boxen auf einmal &mdash; sag uns einfach, wie viele du brauchst, wir machen dir ein passendes Angebot.</p>
           </div>
 
         </div><!-- .redemption-layout -->
