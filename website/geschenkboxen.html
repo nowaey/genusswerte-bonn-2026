@@ -59,11 +59,14 @@
   <main id="main-content">
 
     <!-- =====================================================
-         HERO — bewusst kein .page-hero (das nutzen alle anderen
-         Unterseiten), sondern eine eigene, wärmere Bildsprache in
-         Kraftpapier-/Karamell-Tönen, siehe geschenkboxen.css
+         HERO — echtes Foto aus dem Laden (die handgeschriebene
+         "Präsente"-Tafel!) statt Farbverlauf, gleiches Muster wie
+         .hero auf index.html (Bild + Gradient-Overlay + Ken-Burns,
+         siehe layout.css). Bewusst kein .page-hero (das nutzen alle
+         anderen Unterseiten) — diese Seite soll sich abheben.
          ===================================================== -->
     <section class="giftbox-hero" aria-label="Präsente">
+      <div class="giftbox-hero__bg" aria-hidden="true"></div>
       <div class="giftbox-hero__inner">
         <img src="assets/images/genusswerte_bonn_logo_transparent.png"
              alt="Genusswerte Bonn" class="giftbox-hero__logo" width="110" height="33">
@@ -77,32 +80,28 @@
     </section>
 
     <!-- =====================================================
-         MOSAIK — "Was in deine Box kommen kann". Steht bewusst
-         VOR dem Formular, damit die Seite nicht wie eine reine
-         Anfrage-Seite wirkt. Sobald es echte Fotos eurer Boxen
-         gibt: .giftbox-mosaic__tile durch <img>-Kacheln ersetzen,
-         der Rest (Grid, Label-Overlay) bleibt gleich.
+         MOSAIK — drei echte Präsente aus dem Laden, als Collage
+         (mittlere Kachel versetzt statt gleichförmiger Karten-
+         reihe). Steht bewusst VOR dem Formular, damit die Seite
+         nicht wie eine reine Anfrage-Seite wirkt.
          ===================================================== -->
-    <section class="section" aria-label="Beispiele für deine Box">
+    <section class="section" aria-label="Beispiele für unsere Präsente">
       <div class="container">
         <div class="section__header text-center js-animate">
-          <span class="section__eyebrow">Ganz nach deinem Geschmack</span>
-          <h2 class="section__title">Was in deine Box kommen kann.</h2>
-          <p class="section__subtitle">Feinkost, Wein, Herzhaftes, Süßes &mdash; du sagst uns, worauf du Lust hast, wir stellen es liebevoll zusammen.</p>
+          <span class="section__eyebrow">Drei Beispiele aus unserem Laden</span>
+          <h2 class="section__title">So können deine Präsente aussehen.</h2>
+          <p class="section__subtitle">Jedes Präsent ist ein Unikat &mdash; wir stellen es genau nach deinen Wünschen zusammen. Das hier sind echte Beispiele, keine Kataloge.</p>
         </div>
         <div class="giftbox-mosaic">
-          <div class="giftbox-mosaic__tile giftbox-mosaic__tile--a">
-            <span class="giftbox-mosaic__label">Feinkost &amp; Käse</span>
-          </div>
-          <div class="giftbox-mosaic__tile giftbox-mosaic__tile--b">
-            <span class="giftbox-mosaic__label">Wein &amp; Prickelndes</span>
-          </div>
-          <div class="giftbox-mosaic__tile giftbox-mosaic__tile--c">
-            <span class="giftbox-mosaic__label">Snacks &amp; Herzhaftes</span>
-          </div>
-          <div class="giftbox-mosaic__tile giftbox-mosaic__tile--d">
-            <span class="giftbox-mosaic__label">Süßes zum Naschen</span>
-          </div>
+          <figure class="giftbox-mosaic__tile giftbox-mosaic__tile--a">
+            <img src="assets/images/praesent-korb-pink.jpg" alt="Genusswerte-Präsent mit Gin, Chili-Sauce, Feingebäck und Snacks, in Cellophan verpackt" width="1100" height="1467" loading="lazy">
+          </figure>
+          <figure class="giftbox-mosaic__tile giftbox-mosaic__tile--b">
+            <img src="assets/images/praesent-korb-gruen.jpg" alt="Genusswerte-Präsent mit Pesto, Gin, Cracker und italienischen Spezialitäten" width="1100" height="1627" loading="lazy">
+          </figure>
+          <figure class="giftbox-mosaic__tile giftbox-mosaic__tile--c">
+            <img src="assets/images/praesent-korb-bunt.jpg" alt="Genusswerte-Präsent mit Spirituosen, Feinkost und zwei Tassen" width="1100" height="1130" loading="lazy">
+          </figure>
         </div>
       </div>
     </section>

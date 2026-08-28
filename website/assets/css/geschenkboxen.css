@@ -6,31 +6,61 @@
    "präsente Kategorie" abheben (Auftrag), nicht wie eine Kopie
    der Anfrage-Seiten wirken.
 
-   Kein echtes Fotomaterial verfügbar — deshalb bewusst KEIN
-   Stockfoto vorgetäuscht. Stattdessen: dieselbe Farbverlauf-
-   Sprache, die im Rest der Seite schon als Bild-Platzhalter
-   dient (siehe components.css .card__image--*), zu einem
-   Mosaik verdichtet — wirkt gefüllt/warm/hochwertig wie eine
-   echte Box, ohne echte Fotos vorzutäuschen. Sobald echte
-   Boxfotos existieren, ersetzt ein Foto einfach den Mosaik-
-   Block unten (siehe Kommentar dort).
+   Echte Fotos (28.08.2026, vom Kunden bereitgestellt, Original-
+   dateien lagen in "Fotos Präsente" auf dem Desktop) — Hero nutzt
+   das Ladenfoto mit der handgeschriebenen "Präsente"-Tafel, das
+   Mosaik drei echte Präsentkörbe. Bilder liegen optimiert (JPEG,
+   Breite 1100–1600px) in assets/images/praesent-*.jpg.
    ========================================================= */
 
 /* ---------------------------------------------------------
-   Hero — warmer Verlauf statt der neutralen .page-hero-Optik,
-   angelehnt an die Kraftpapier-/Karamell-Töne echter Boxen.
+   Hero — echtes Ladenfoto statt Farbverlauf, gleiches Muster
+   wie .hero auf index.html (Bild + Gradient-Overlay + Ken-
+   Burns-Zoom, siehe layout.css .hero__bg / @keyframes kenBurns).
    --------------------------------------------------------- */
 .giftbox-hero {
   position: relative;
-  background: linear-gradient(135deg, #C9A96E 0%, #9B7B5A 55%, #5C3D1E 100%);
   padding-block: var(--space-20) calc(var(--space-24) + 2.5rem);
   text-align: center;
   overflow: hidden;
+  background-color: #1a0e04; /* Fallback, bis das Bild geladen ist */
+}
+
+.giftbox-hero__bg {
+  position: absolute;
+  inset: -8%;
+  background-image: url('../images/praesent-laden-theke.jpg');
+  background-size: cover;
+  background-position: center 42%;
+  animation: kenBurns 26s ease-in-out infinite alternate;
+  z-index: 0;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .giftbox-hero__bg {
+    animation: none;
+  }
+}
+
+/* Gradient-Overlay fürs Lesen — wärmer/heller als bei .hero auf
+   index.html (Kraftpapier-/Karamell-Ton statt neutralem Dunkel),
+   damit die Foto-Stimmung erhalten bleibt. */
+.giftbox-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg,
+    rgba(46, 27, 8, 0.80) 0%,
+    rgba(94, 61, 22, 0.58) 45%,
+    rgba(32, 18, 6, 0.76) 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .giftbox-hero__inner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 640px;
   margin-inline: auto;
   padding-inline: var(--container-px);
@@ -72,7 +102,9 @@
   max-width: 46ch;
 }
 
-/* Weicher Übergang zurück auf Creme — reine Deko, kein echtes Bild */
+/* Weicher Übergang zurück auf Creme — reine Deko, kein echtes Bild.
+   z-index über dem ::before-Overlay (das selbst z-index:1 hat und
+   sonst trotz späterer DOM-Position davorläge). */
 .giftbox-hero__wave {
   position: absolute;
   left: 0;
@@ -82,54 +114,44 @@
   height: auto;
   color: var(--color-bg);
   display: block;
+  z-index: 2;
 }
 
 /* ---------------------------------------------------------
-   Mosaik — "Was in deine Box kommen kann". Ersetzt eine
-   generische Card-Reihe (laut Vorgabe keine Standard-Cards)
-   durch ein unregelmäßiges Farbfeld-Mosaik im Collage-Stil,
-   jede Kachel mit Label-Overlay wie .tasting-loop__label.
+   Mosaik — drei echte Präsentkörbe. Bewusst keine gleichförmige
+   3-Karten-Reihe (laut Vorgabe keine Standard-Cards): mittlere
+   Kachel ist nach unten versetzt, das ergibt den Collage-Rhythmus.
+   Seitenverhältnis 3:4 passt zu allen drei Fotos (leichter Crop
+   bei --b und --c, unproblematisch dank durchgehend hellem/
+   neutralem Hintergrund auf den Produktfotos).
    --------------------------------------------------------- */
 .giftbox-mosaic {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 90px;
-  gap: var(--space-4);
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
   margin-top: var(--space-10);
 }
 
 .giftbox-mosaic__tile {
   position: relative;
+  margin: 0;
   border-radius: var(--radius-card);
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
   box-shadow: var(--shadow-card);
+  aspect-ratio: 3 / 4;
 }
 
-.giftbox-mosaic__tile::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(20, 14, 6, 0.55) 0%, transparent 60%);
+.giftbox-mosaic__tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.giftbox-mosaic__label {
-  position: relative;
-  z-index: 1;
-  padding: var(--space-4);
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: #FFFFFF;
+/* Mittlere Kachel versetzt = Collage-Gefühl statt Standard-Card-Reihe */
+.giftbox-mosaic__tile--b {
+  margin-top: var(--space-8);
 }
-
-/* Vier Kacheln, unterschiedlich groß — Collage-Gefühl statt Raster */
-.giftbox-mosaic__tile--a { grid-column: span 2; grid-row: span 3; background: linear-gradient(135deg, #C8A96D 0%, #8B6B3D 100%); }
-.giftbox-mosaic__tile--b { grid-column: span 2; grid-row: span 2; background: linear-gradient(135deg, #DFC08A 0%, #C9A96E 50%, #A07840 100%); }
-.giftbox-mosaic__tile--c { grid-column: span 1; grid-row: span 2; background: linear-gradient(135deg, #D4703A 0%, #8B3A10 100%); }
-.giftbox-mosaic__tile--d { grid-column: span 3; grid-row: span 1; background: linear-gradient(135deg, #C8524A 0%, #7A2020 100%); }
 
 /* ---------------------------------------------------------
    Anlass-Chips — Schnellauswahl statt leerem Textfeld,
@@ -226,13 +248,18 @@
     padding-block: var(--space-16) calc(var(--space-16) + 2rem);
   }
 
+  /* Drei Spalten mit Crop wirken auf Schmalbildschirmen zu klein
+     und der Versatz geht verloren — stattdessen sauber gestapelt. */
   .giftbox-mosaic {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 110px;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
   }
 
-  .giftbox-mosaic__tile--a { grid-column: span 2; grid-row: span 2; }
-  .giftbox-mosaic__tile--b { grid-column: span 1; grid-row: span 2; }
-  .giftbox-mosaic__tile--c { grid-column: span 1; grid-row: span 2; }
-  .giftbox-mosaic__tile--d { grid-column: span 2; grid-row: span 1; }
+  .giftbox-mosaic__tile {
+    aspect-ratio: 4 / 3;
+  }
+
+  .giftbox-mosaic__tile--b {
+    margin-top: 0;
+  }
 }
