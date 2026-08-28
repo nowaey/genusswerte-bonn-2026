@@ -78,16 +78,15 @@
       return;
     }
 
-    /* Übergabe-Wahl und Grußkarten-Wunsch gibt es serverseitig
-       nicht als eigenes Feld (kein Umbau der Edge Function nötig,
-       kein neues System) — stattdessen als klar lesbare Zeilen
-       vor die eigentliche Nachricht gesetzt, damit sie in der
-       Anfrage-Mail sichtbar ankommen. */
+    /* Übergabe-Wahl gibt es serverseitig nicht als eigenes Feld
+       (kein Umbau der Edge Function nötig, kein neues System) —
+       stattdessen als klar lesbare Zeile vor die eigentliche
+       Nachricht gesetzt, damit sie in der Anfrage-Mail sichtbar
+       ankommt. */
     var fulfillmentInput = form.querySelector('input[name="fulfillment"]:checked');
-    var extraLines = [];
-    if (fulfillmentInput) { extraLines.push('Übergabe: ' + fulfillmentInput.value); }
-    if (document.getElementById('gb-grusskarte').checked) { extraLines.push('Persönliche Grußkarte gewünscht: Ja'); }
-    var fullMessage = extraLines.length ? (extraLines.join('\n') + '\n\n' + nachricht) : nachricht;
+    var fullMessage = fulfillmentInput
+      ? ('Übergabe: ' + fulfillmentInput.value + '\n\n' + nachricht)
+      : nachricht;
 
     var payload = {
       name:      document.getElementById('gb-name').value.trim(),

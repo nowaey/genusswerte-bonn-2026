@@ -180,6 +180,12 @@
   display: flex;
   gap: var(--space-2);
   flex-wrap: wrap;
+  /* .form-group-Geschwister haben serienweise 0px Abstand
+     zueinander (kein margin auf .form-group in components.css,
+     nur der interne Label→Feld-gap greift) — funktioniert bei
+     Text-Labels optisch meist noch, bei diesen soliden Pills
+     nicht mehr. Deshalb hier explizit Luft nach unten. */
+  margin-bottom: var(--space-3);
 }
 
 .giftbox-fulfillment__option input {
@@ -213,28 +219,6 @@
 .giftbox-fulfillment__option input:focus-visible + span {
   outline: 2px solid var(--color-gold);
   outline-offset: 2px;
-}
-
-/* ---------------------------------------------------------
-   Grußkarte-Checkbox
-   --------------------------------------------------------- */
-.giftbox-checkbox {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  margin: -0.25rem 0 var(--space-5);
-}
-
-.giftbox-checkbox input {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  accent-color: var(--color-green);
-  cursor: pointer;
 }
 
 @media (max-width: 768px) {
