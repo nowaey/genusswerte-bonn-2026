@@ -148,6 +148,25 @@
     }, 4500);
   }
 
+  /* --- Event-Loop (gruppen-events.html, nur Mobile sichtbar) --
+     Gleiches Prinzip wie initTastingLoop(), eigene Funktion statt
+     Wiederverwendung, weil .tasting-loop__slide global selektiert
+     (nicht auf einen Container beschränkt) — zwei unabhängige
+     Loops mit derselben Klasse würden sich sonst eine gemeinsame
+     Reihenfolge teilen statt getrennt zu laufen. -------------- */
+  function initEventLoop() {
+    var slides = document.querySelectorAll('.event-loop__slide');
+    if (slides.length < 2) return;
+
+    var current = 0;
+
+    setInterval(function () {
+      slides[current].classList.remove('is-active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('is-active');
+    }, 4500);
+  }
+
   /* --- Tasting Cards & Modal ----------------------------- */
   var EUR = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' });
   var MAX_PERSONS = 6;
@@ -365,6 +384,7 @@
     initSmoothScroll();
     initScrollAnimations();
     initTastingLoop();
+    initEventLoop();
     initOpeningHoursToday();
     renderTastingCards();
     initTastingModal();

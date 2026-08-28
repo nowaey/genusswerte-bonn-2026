@@ -88,7 +88,26 @@
           <h2 class="section__title">Ein Abend bei uns.</h2>
           <p class="section__subtitle">Volle Tische, offene Flaschen, gute Gespräche &mdash; genau das erwartet euch auch.</p>
         </div>
+
+        <!-- Nur auf Mobile sichtbar (siehe @media in gruppen-events.css) —
+             der Filmstreifen darunter ist auf Mobile zwar scrollbar, stand
+             aber ohne Hinweis einfach nur da. Automatischer Crossfade-Loop
+             statt Nebeneinander, gleiches Prinzip wie .tasting-loop auf
+             index.html, eigene Klassen wegen abweichender Maße/Kontext. -->
+        <div class="event-loop" role="img" aria-label="Impressionen von unseren Events">
+          <div class="event-loop__slide is-active">
+            <img src="assets/images/event-abend-2.jpg" alt="Gäste bei einem Tasting-Abend zwischen den Weinregalen bei Genusswerte Bonn" width="1100" height="1100" loading="lazy">
+          </div>
+          <div class="event-loop__slide">
+            <img src="assets/images/event-laden-aussen.jpg" alt="Genusswerte Bonn von außen bei einem Event, Gäste vor dem Laden" width="1100" height="1100" loading="lazy">
+          </div>
+          <div class="event-loop__slide">
+            <img src="assets/images/event-tischrunde.jpg" alt="Gruppe an einer Tischrunde bei einem Tasting bei Genusswerte Bonn" width="1100" height="1100" loading="lazy">
+          </div>
+        </div>
       </div>
+
+      <!-- Nur auf Desktop sichtbar (siehe @media) -->
       <div class="event-filmstrip" role="list">
         <figure class="event-filmstrip__item" role="listitem">
           <img src="assets/images/event-abend-2.jpg" alt="Gäste bei einem Tasting-Abend zwischen den Weinregalen bei Genusswerte Bonn" width="1100" height="1100" loading="lazy">

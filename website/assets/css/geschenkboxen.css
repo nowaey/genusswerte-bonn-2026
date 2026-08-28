@@ -249,14 +249,13 @@
   }
 
   /* Drei Spalten mit Crop wirken auf Schmalbildschirmen zu klein
-     und der Versatz geht verloren — stattdessen sauber gestapelt. */
+     und der Versatz geht verloren — stattdessen sauber gestapelt.
+     Seitenverhältnis bleibt 3:4 wie auf Desktop (aus der Basis-
+     Regel geerbt) — die Körbe sind hochkant fotografiert, ein
+     Querformat-Crop hat unten (und oben) zu viel abgeschnitten. */
   .giftbox-mosaic {
     grid-template-columns: 1fr;
     gap: var(--space-4);
-  }
-
-  .giftbox-mosaic__tile {
-    aspect-ratio: 4 / 3;
   }
 
   .giftbox-mosaic__tile--b {
