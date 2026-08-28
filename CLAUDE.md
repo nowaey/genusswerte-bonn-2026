@@ -11,7 +11,7 @@ Backend ist **live**: Supabase Edge Functions + Stripe Checkout + Resend E-Mail.
 ## Geschäftsdaten
 - Adresse: Clemens-August-Straße 38–40, 53115 Bonn-Poppelsdorf
 - Telefon: 0228 2590 8928 · Instagram: @genusswerte.bonn
-- Öffnung: Di 12–19 · Mi 12–20 · Do–Sa 10–21 · Mo+So geschlossen
+- Öffnung: Di 12–19 · Mi 12–20 · Do 12–21 · Fr–Sa 10–21 · Mo+So geschlossen
 
 ## Design
 **Claim:** Taste – Discover – Enjoy  
