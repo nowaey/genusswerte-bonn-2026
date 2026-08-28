@@ -123,10 +123,17 @@ const ALLOWED_ORIGINS = [
 ]
 const ALLOWED_ORIGIN_SUFFIXES = ['.vercel.app']
 const ALLOWED_ORIGIN_PREFIXES = ['http://localhost:', 'http://127.0.0.1:']
+// Handy-Vorschau im selben WLAN (z.B. http://192.168.178.130:3000) — RFC1918-
+// private Adressbereiche sind vom oeffentlichen Internet aus nicht erreichbar/
+// faelschbar, Freigabe hier ist unbedenklich (28.08.2026 ergaenzt, nachdem die
+// Handy-Vorschau mit "Verbindung fehlgeschlagen" scheiterte).
+const LOCAL_NETWORK_ORIGIN_RE =
+  /^http:\/\/(192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3})(:\d+)?$/
 function isAllowedOrigin(origin) {
   if (ALLOWED_ORIGINS.includes(origin)) return true
   if (ALLOWED_ORIGIN_SUFFIXES.some((s) => origin.endsWith(s))) return true
   if (ALLOWED_ORIGIN_PREFIXES.some((p) => origin.startsWith(p))) return true
+  if (LOCAL_NETWORK_ORIGIN_RE.test(origin)) return true
   return false
 }
 function getCorsHeaders(origin) {

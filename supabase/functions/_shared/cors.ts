@@ -24,16 +24,26 @@ const ALLOWED_ORIGIN_SUFFIXES = [
 ]
 
 // Lokale Vorschau/Entwicklung (z.B. der browser-sync-Server aus der
-// lokalen Vorschau) — nur echtes localhost, keine Netzwerk-IPs.
+// lokalen Vorschau).
 const ALLOWED_ORIGIN_PREFIXES = [
   'http://localhost:',
   'http://127.0.0.1:',
 ]
 
+// Handy-Vorschau im selben WLAN (z.B. http://192.168.178.130:3000) —
+// nicht per fester IP eintragen, die aendert sich je nach Router/Netz.
+// RFC1918-private Adressbereiche sind vom oeffentlichen Internet aus
+// nicht erreichbar/faelschbar, ein Angreifer kann also nie eine echte
+// Anfrage mit einer solchen Origin an eine Website senden — Freigabe
+// hier ist unbedenklich, gleiche Risikoklasse wie localhost.
+const LOCAL_NETWORK_ORIGIN_RE =
+  /^http:\/\/(192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3})(:\d+)?$/
+
 function isAllowedOrigin(origin: string): boolean {
   if (ALLOWED_ORIGINS.includes(origin)) return true
   if (ALLOWED_ORIGIN_SUFFIXES.some((s) => origin.endsWith(s))) return true
   if (ALLOWED_ORIGIN_PREFIXES.some((p) => origin.startsWith(p))) return true
+  if (LOCAL_NETWORK_ORIGIN_RE.test(origin)) return true
   return false
 }
 
