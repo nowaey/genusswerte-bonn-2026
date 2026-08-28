@@ -29,7 +29,7 @@
   /* Feste statt min-height: das Foto ist quadratisch und würde bei
      58% Spaltenbreite sonst seine eigene (viel größere) Zeilenhöhe
      erzwingen, egal wie kompakt der Text links ist. */
-  height: 380px;
+  height: 520px;
   background: var(--color-green-dark);
 }
 
@@ -82,6 +82,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 30%;
   display: block;
 }
 
