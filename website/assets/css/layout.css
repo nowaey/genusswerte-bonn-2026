@@ -625,6 +625,12 @@
   object-position: center 70%;
 }
 
+.tasting-loop__slide:nth-child(4) img {
+  /* Aperitivo-Tisch: Fokus auf die Garnitur-Schale in der Bildmitte,
+     Blumenstrauß oben darf angeschnitten werden */
+  object-position: center 42%;
+}
+
 /* Label als eingebettetes Overlay am unteren Bildrand */
 .tasting-loop__label {
   position: absolute;
