@@ -11,7 +11,15 @@
    schlagen Anfragen von dort mit einem CORS-Fehler fehl.
    ========================================================= */
 
+// .com ist die tatsaechliche Produktions-Domain (bestaetigt ueber den
+// FTP-Zugang bei all-inkl: /www/genusswerte-bonn.com/ — .de zeigte
+// bislang nur eine Hosting-Platzhalterseite). .de bleibt zusaetzlich
+// erlaubt, falls sie spaeter mal auf dieselbe Seite umgeleitet wird —
+// schadet nicht, mehr Origins in der Liste sind kein Sicherheitsrisiko,
+// nur ein zu KURZE Liste blockiert echte Anfragen.
 const ALLOWED_ORIGINS = [
+  'https://genusswerte-bonn.com',
+  'https://www.genusswerte-bonn.com',
   'https://genusswerte-bonn.de',
   'https://www.genusswerte-bonn.de',
 ]

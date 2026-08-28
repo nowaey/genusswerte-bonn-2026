@@ -51,7 +51,7 @@ Deno.serve(async (req) => {
     }
 
     const stripeKey = Deno.env.get('STRIPE_SECRET_KEY')!
-    const websiteUrl = Deno.env.get('WEBSITE_URL') ?? 'https://genusswerte-bonn.de'
+    const websiteUrl = Deno.env.get('WEBSITE_URL') ?? 'https://genusswerte-bonn.com'
     const unitAmount = PRICE_PER_PERSON[tasting_type]
     const label = TASTING_LABELS[tasting_type]
     const personsLabel = `${persons} ${persons === 1 ? 'Person' : 'Personen'}`

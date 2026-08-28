@@ -50,8 +50,12 @@ Kontrolle, dass keine Marker verloren gingen: `grep -o 'data-booking-only' websi
      Settings) — springt beim Neu-Deploy manchmal wieder auf „an".
 2. **Stripe-Live-Keys setzen** — läuft aktuell im **Testmodus** (`STRIPE_SECRET_KEY` /
    `STRIPE_WEBHOOK_SECRET` in Supabase Secrets auf echte Live-Keys umstellen).
-3. **`WEBSITE_URL`-Secret prüfen** — muss auf die echte, aktuelle Produktions-Domain zeigen
-   (aktuell hinterlegt: `https://genusswerte-bonn.de`).
+3. **`WEBSITE_URL`-Secret prüfen** — muss auf die echte Produktions-Domain
+   `https://genusswerte-bonn.com` zeigen (**nicht** `.de`! Am 28.08.2026 festgestellt: `.de`
+   zeigte nie die echte Seite, nur eine all-inkl-Platzhalterseite — die tatsächliche Domain
+   ist laut FTP-Zugang `.com`, siehe `/www/genusswerte-bonn.com/`. Falls das Secret noch auf
+   `.de` steht, im Supabase Dashboard → Edge Functions → Secrets korrigieren — kann ich nicht
+   selbst prüfen, kein Dashboard-Zugriff).
 4. **`tasting_slots` anlegen** — über Admin Panel, sonst zeigt die Einlöseseite keine
    echten Termine.
 5. **`bookingEnabled: true`** in `website/assets/js/config.js` setzen, Datei per FTP hochladen.
@@ -73,6 +77,17 @@ Audit + Härtungsdurchgang. **`submit-group-inquiry` ist deployed und live-getes
 Anfrage/Stunde bekommt `429`). **Die anderen 5 Functions sind nur Code im Repo, noch
 nicht deployed** — das ist Schritt 1 der Relaunch-Checkliste oben.
 
+🚨 **28.08.2026 — Domain-Korrektur, betrifft die 2 bereits live deployten Functions:**
+Die echte Produktions-Domain ist `genusswerte-bonn.com` (bestätigt über FTP-Zugang,
+`/www/genusswerte-bonn.com/`), nicht `.de` — `.de` zeigte nie die echte Seite, nur eine
+all-inkl-Platzhalterseite. Die Dashboard-Versionen von `submit-group-inquiry` UND
+`submit-giftbox-inquiry` haben die alte, inline-codierte Origin-Allowlist mit nur `.de` —
+**das hätte auf der echten Live-Seite beide Formulare mit einem CORS-Fehler blockiert**
+(„Verbindung fehlgeschlagen"). Fix im Repo bereits gemacht (`_shared/cors.ts`, `.com`
+ergänzt), **beide Functions müssen mit dem korrigierten Code neu deployed werden** —
+gleicher Dashboard-Copy-Paste-Ablauf wie beim ersten Deploy, aktueller Inline-Block siehe
+unten.
+
 ⚠️ **`submit-giftbox-inquiry`** (neu, 28.08.2026, für `geschenkboxen.html`) ist im
 selben bereits gehärteten Muster gebaut (eigener CORS-Aufruf pro Request, `esc()`,
 Längen-Deckel, Rate-Limit über dieselbe `check_rate_limit()`-RPC mit Bucket-Präfix
@@ -86,9 +101,11 @@ statt `import ... from '../_shared/cors.ts'`.
    Kundennamen unescaped in HTML-E-Mails (`esc()`-Helper ergänzt, wie ihn `submit-group-inquiry`
    schon hatte).
 2. **CORS von `*` auf Allowlist** — `supabase/functions/_shared/cors.ts` exportiert
-   `getCorsHeaders(origin)` statt eines statischen `*`-Objekts. Erlaubt: `genusswerte-bonn.de`,
-   `*.vercel.app`, `localhost`. Jede Function berechnet `cors` pro Request neu (nicht auf
-   Modulebene — sonst Race Condition zwischen gleichzeitigen Requests unterschiedlicher Herkunft).
+   `getCorsHeaders(origin)` statt eines statischen `*`-Objekts. Erlaubt: `genusswerte-bonn.com`
+   (die echte Domain, seit 28.08.2026), `genusswerte-bonn.de` (zur Sicherheit mit drin),
+   `*.vercel.app`, `localhost`, lokale WLAN-IPs. Jede Function berechnet `cors` pro Request
+   neu (nicht auf Modulebene — sonst Race Condition zwischen gleichzeitigen Requests
+   unterschiedlicher Herkunft).
 3. **Stripe-Webhook: Replay-Schutz** — Signatur-Zeitstempel wird gegen ein 300s-Toleranzfenster
    geprüft (wie Stripes eigenes SDK), Vergleich läuft timing-safe.
 4. **Eingabelängen gedeckelt** — `schedule-voucher` und `submit-group-inquiry` lehnen
@@ -118,6 +135,8 @@ Zeile `import { getCorsHeaders } from '../_shared/cors.ts'`:
    nutzt stattdessen den gemeinsamen Import — bei CLI-Deploy die
    Repo-Datei verwenden, nicht diese hier zurueckspielen. */
 const ALLOWED_ORIGINS = [
+  'https://genusswerte-bonn.com',
+  'https://www.genusswerte-bonn.com',
   'https://genusswerte-bonn.de',
   'https://www.genusswerte-bonn.de',
 ]
@@ -233,7 +252,8 @@ Shared CORS-Headers: `supabase/functions/_shared/cors.ts`
 - `STRIPE_SECRET_KEY` — Stripe API Key
 - `STRIPE_WEBHOOK_SECRET` — Stripe Webhook Signing Secret
 - `RESEND_API_KEY` — Resend API Key
-- `WEBSITE_URL` — `https://genusswerte-bonn.de`
+- `WEBSITE_URL` — soll `https://genusswerte-bonn.com` sein (echte Domain, siehe Relaunch-
+  Checkliste Schritt 3 oben) — **ungeprüft, ob das Secret aktuell wirklich so gesetzt ist**
 
 ### E-Mail
 - Provider: Resend

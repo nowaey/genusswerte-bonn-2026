@@ -26,7 +26,7 @@ Den Projekt-Ref findest du in Supabase Dashboard → Settings → General.
 supabase secrets set STRIPE_SECRET_KEY=sk_live_...
 supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...
 supabase secrets set RESEND_API_KEY=re_...
-supabase secrets set WEBSITE_URL=https://genusswerte-bonn.de
+supabase secrets set WEBSITE_URL=https://genusswerte-bonn.com
 ```
 
 **Wichtig:** `SUPABASE_URL` und `SUPABASE_SERVICE_ROLE_KEY` werden automatisch
@@ -103,4 +103,4 @@ window.GW_CONFIG = {
 | `STRIPE_SECRET_KEY` | `sk_live_...` | Stripe Dashboard → API Keys |
 | `STRIPE_WEBHOOK_SECRET` | `whsec_...` | Stripe Dashboard → Webhooks |
 | `RESEND_API_KEY` | `re_...` | Resend Dashboard → API Keys |
-| `WEBSITE_URL` | `https://genusswerte-bonn.de` | Manuell |
+| `WEBSITE_URL` | `https://genusswerte-bonn.com` | Manuell |

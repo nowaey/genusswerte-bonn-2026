@@ -122,7 +122,7 @@ Deno.serve(async (req) => {
     if (vcErr) throw vcErr
 
     const resendKey = Deno.env.get('RESEND_API_KEY')
-    const websiteUrl = Deno.env.get('WEBSITE_URL') ?? 'https://genusswerte-bonn.de'
+    const websiteUrl = Deno.env.get('WEBSITE_URL') ?? 'https://genusswerte-bonn.com'
 
     if (resendKey && customerEmail) {
       await sendConfirmationEmail({
